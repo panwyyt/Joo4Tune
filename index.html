@@ -172,6 +172,8 @@
             max-width: 90%;
             width: 400px;
             margin: 20px;
+            overflow-y: auto;
+            max-height: 90vh;
         }
 
         .result-image {
@@ -204,6 +206,75 @@
             font-size: 14px;
             margin-top: 10px;
             line-height: 1.5;
+        }
+
+        /* Follow Prompt */
+        .follow-prompt {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .follow-content {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(255, 140, 148, 0.2);
+            text-align: center;
+            max-width: 90%;
+            width: 400px;
+        }
+
+        .heart-pulse {
+            animation: pulse 1.5s infinite;
+            font-size: 40px;
+            margin: 15px 0;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .follow-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 3px solid #ff8c94;
+            margin: 15px 0;
+        }
+
+        .follow-button {
+            background: #ff8c94;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .follow-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 140, 148, 0.3);
         }
 
         /* Flower Animation */
@@ -258,7 +329,7 @@
     <div class="quiz-page">
         <button class="back-button" onclick="previousQuestion()">↩</button>
         <div class="quiz-container">
-            <img src="https://pbs.twimg.com/profile_images/1888198211409707008/fzY_cxKR_400x400.jpg" alt="Hatchedboy Logo" class="logo">
+            <img src="https://pbs.twimg.com/profile_images/1888198211409707008/fzY_cxKR_400x400.jpg" alt="Hatchedboy Logo" class="logo"> 
             <h1>Joo4Tune - จู๋ทายใจ @hatchedboy 💖</h1>
             <div class="progress-container">
                 <div class="progress-bar"></div>
@@ -270,6 +341,30 @@
         <div class="flower" style="left: 50%; animation-duration: 12s;"></div>
         <div class="flower" style="left: 70%; animation-duration: 9s;"></div>
         <div class="flower" style="left: 90%; animation-duration: 11s;"></div>
+    </div>
+
+    <!-- Follow Prompt -->
+    <div class="follow-prompt">
+        <div class="follow-content">
+            <div class="heart-pulse">💖</div>
+            <h2 style="color: #ff8c94; margin: 10px 0;">ก่อนดูผลลัพธ์น้าา</h2>
+            <img src="https://pbs.twimg.com/profile_images/1888198211409707008/fzY_cxKR_400x400.jpg" 
+                 alt="Hatchedboy" 
+                 class="follow-image">
+            <p style="color: #666; line-height: 1.5; margin: 15px 0;">
+                ตามไปติดตามแฮชบอยกันต่อที่<br>
+                ทวิตเตอร์ของ @hatchedboy นะค้าบ 💕
+            </p>
+            <a href="https://x.com/hatchedboy" 
+               target="_blank" 
+               class="follow-button">
+               ตามไปกดติดตามเลย!
+            </a>
+            <button class="follow-button" 
+                    onclick="closeFollowPrompt()">
+                ดูผลลัพธ์ได้เลย
+            </button>
+        </div>
     </div>
 
     <!-- Result Page -->
@@ -365,6 +460,7 @@
             if (selectedAnswer) {
                 answers[currentQuestion] = parseInt(selectedAnswer.value);
                 currentQuestion++;
+                
                 if (currentQuestion < questions.length) {
                     showQuestion(currentQuestion);
                 } else {
@@ -397,10 +493,19 @@
                 "https://raw.githubusercontent.com/panwyyt/Joo4Tune/refs/heads/main/%E0%B8%84%E0%B8%B8%E0%B8%93%E0%B9%80%E0%B8%AB%E0%B8%A1%E0%B8%B2%E0%B8%B0%E0%B8%81%E0%B8%B1%E0%B8%9A%E0%B8%84%E0%B8%A7%E0%B8%A2%E0%B9%81%E0%B8%9A%E0%B8%9A%E0%B9%83%E0%B8%94/Two-Faced.png"
             ];
 
-            // Show result page
+            // Show follow prompt first
+            document.querySelector('.follow-prompt').style.display = 'flex';
             quizPage.style.display = 'none';
+            
+            // Set result image
+            setTimeout(() => {
+                document.querySelector('.result-image').src = resultUrls[uniqueIndex];
+            }, 100);
+        }
+
+        function closeFollowPrompt() {
+            document.querySelector('.follow-prompt').style.display = 'none';
             document.querySelector('.result-page').style.display = 'block';
-            document.querySelector('.result-image').src = resultUrls[uniqueIndex];
         }
 
         // Download functionality
