@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joo4Tune - จู๋ทายใจ 💖</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Kanit', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #fafafa;
+        }
+        /* Landing Page Styling */
+        .landing-page {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #fafafa;
+        }
+        .landing-page img {
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            cursor: pointer;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        .cute-animation {
+            position: absolute;
+            font-size: 2rem;
+            color: #ff8c94;
+            opacity: 0;
+            animation: floatUp 1s ease-out;
+            pointer-events: none;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(-100px); opacity: 0; }
+        }
+        /* Quiz Page Styling (Hidden Initially) */
+        .quiz-page {
+            display: none;
+        }
+        .quiz-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            max-width: 90%;
+            width: 400px;
+            position: relative;
+            z-index: 1;
+            margin: 20px;
+        }
+        .logo {
+            display: block;
+            margin: 0 auto 20px auto;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #ff8c94;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #ff8c94;
+        }
+        .question {
+            margin-bottom: 20px;
+            display: none;
+            transition: opacity 0.5s ease;
+        }
+        .question.active {
+            display: block;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .options label {
+            background-color: #f5e3e6;
+            padding: 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .options label:hover {
+            background-color: #ffd1dc;
+        }
+        .options input[type="radio"] {
+            display: none;
+        }
+        .options input[type="radio"]:checked + label {
+            background-color: #ff8c94;
+            color: #fff;
+        }
+        .flower {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: url('https://www.icegif.com/wp-content/uploads/2023/08/icegif-142.gif') no-repeat center/contain;
+            animation: fall linear infinite;
+            z-index: 0;
+        }
+        @keyframes fall {
+            0% { transform: translateY(-10vh); }
+            100% { transform: translateY(110vh); }
+        }
+        /* Responsive Adjustments */
+        @media (max-width: 480px) {
+            .quiz-container {
+                padding: 15px;
+            }
+            .logo {
+                width: 80px;
+                height: 80px;
+            }
+            h1 {
+                font-size: 20px;
+            }
+            .options label {
+                padding: 8px;
+                font-size: 14px;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Landing Page -->
+    <div class="landing-page">
+        <img src="https://raw.githubusercontent.com/panwyyt/Joo4Tune/refs/heads/main/%E0%B8%84%E0%B8%B8%E0%B8%93%E0%B9%80%E0%B8%AB%E0%B8%A1%E0%B8%B2%E0%B8%B0%E0%B8%81%E0%B8%B1%E0%B8%9A%E0%B8%84%E0%B8%A7%E0%B8%A2%E0%B9%81%E0%B8%9A%E0%B8%9A%E0%B9%83%E0%B8%94/Landing%20Page.png" alt="Landing Image">
+    </div>
+
+    <!-- Quiz Page (Hidden Initially) -->
+    <div class="quiz-page">
+        <div class="quiz-container">
+            <img src="https://pbs.twimg.com/profile_images/1888198211409707008/fzY_cxKR_400x400.jpg" alt="Hatchedboy Logo" class="logo">
+            <h1>Joo4Tune - จู๋ทายใจ @hatchedboy 💖</h1>
+            <div id="question-container" class="question active"></div>
+        </div>
+        <div class="flower" style="left: 10%; animation-duration: 8s;"></div>
+        <div class="flower" style="left: 30%; animation-duration: 10s;"></div>
+        <div class="flower" style="left: 50%; animation-duration: 12s;"></div>
+        <div class="flower" style="left: 70%; animation-duration: 9s;"></div>
+        <div class="flower" style="left: 90%; animation-duration: 11s;"></div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Landing Page Logic
+        const landingPage = document.querySelector('.landing-page');
+        const quizPage = document.querySelector('.quiz-page');
+        const landingImage = landingPage.querySelector('img');
+        let clickCount = 0;
+
+        landingImage.addEventListener('click', (event) => {
+            clickCount++;
+            if (clickCount === 1) {
+                const cuteAnimation = document.createElement('div');
+                cuteAnimation.classList.add('cute-animation');
+                cuteAnimation.textContent = 'ดับเบิ้ลจิ้ม 💖';
+                event.target.insertAdjacentElement('afterend', cuteAnimation);
+                setTimeout(() => cuteAnimation.remove(), 1000);
+            } else if (clickCount === 2) {
+                landingPage.style.display = 'none';
+                quizPage.style.display = 'block';
+                showQuestion(currentQuestion);
+            }
+
+            setTimeout(() => clickCount = 0, 300); // Reset click count after 300ms
+        });
+
+        // Quiz Logic
+        const questions = [
+            "อวัยวะเพศของคุณกลิ่นแอบคล้ายอะไรนะ?",
+            "หากมีแฟนอยากให้ลีลาความเร้าร้อนบนเตียงเหมือนสัตว์ตัวไหน?",
+            "หากแฟนมอบค่ำคืนที่แซ่บซ่าส์ให้คุณ คุณจะตอบแทนด้วยอะไร?",
+            "อยากให้แฟนย้อมหมอยแฟนซีสีอะไร?",
+            "นอกจากช่วยตัวเองแล้ว คุณชอบทำอะไรอีกบ้าง?",
+            "คุณโดนแฟนสะบาละฮึ้มจนปวดขาตื่นเช้ามาคุณคิดว่าอากาศจะเป็นแบบไหน?",
+            "เฟิร์สเดตที่ไหนดีนะ?",
+            "กระตุ้นเร้าช่วงต้นด้วยบทเพลงประเภทไหนดี?",
+            "อยากทำอะไรให้แฟนกิน/อยากให้แฟนทำอะไรให้กิน?",
+            "เดทที่สองแต่งชุดอะไรดี?"
+        ];
+        const options = [
+            ["🍫 ช็อกโกแลต", "🍿 ป๊อปคอร์น", "🍭 ลูกอม", "🥓 ส้มตำปลาร้า", "🍪 คุกกี้"],
+            ["🐶 แม่หมา", "🐱 แมวน้อย", "🐰 กระต่ายตาแดง", "🦉 นกฮูกเจ้าปัญญา", "🐢 เต่าต้วมเตี้ยม"],
+            ["💬 คุยกันพิลโล่ทอร์ก", "🎁 ให้ของขวัญล้ำค่ำ", "🤗 กอดขอบคุณ", "🍳 ทําอาหารให้ทาน", "🎵 ร้องเพลงโอเปร่า"],
+            ["🌈 สีรุ้ง LGBTQ+", "💗 สีชมพูรูทวาร", "💙 สีฟ้าซึมเศร้า", "💚 สีเขียวช้ำโดนเตะ", "💛 สีเหลืองจีวร"],
+            ["📚 อ่านนิยายเกย์", "🎨 วาดรูปดวงตางดงาม", "🎮 เล่นเกม ROV", "🏀 เตะบอลแมนๆ", "🎤 ร้องเพลงถ่ายลงสตอรี่"],
+            ["☀️ แดดจ้าแยงตา", "🌧️ ฝนตกแซ่กๆลงบนหลังคาสังกะสี", "❄️ หิมะโฟมปลอมสงกรานต์ตกโปรยปราย", "🌙 ยังเป็นกลางคืนอยู่", "🌤️ เมฆคลุมคลึ้มแต่มีแดดแทงออกมา"],
+            ["🏖️ ชายหาดป่าตอง", "🏔️ ภูเขาไฟศรีสะเกษ", "🏰 เมืองเก่าอยุธยา", "🏞️ ธรรมชาติงดงาม ณ ห้วยขาแข้่ง", "🛍️ ห้างเจ้าสัวพันล้าน"],
+            ["🎧 เทย์เลอร์ สวิฟต์", "🎸 Joji", "🎼 มนต์แคน แก่นคูน", "🎹 เพลงเกี่ยวข้าว", "🎤 เพลงยูทูปสุ่มมา"],
+            ["🍣 อาหารญี่ปุ่น", "🍕 อาหารอิตาลี", "🍜 อาหารไทย", "🍔 อาหารฟาสต์ฟู้ด", "🍰 ของหวาน"],
+            ["👕 เสื้อยืดบ้านๆ", "👔 ชุดทางการเนี้ยบๆ", "👗 ชุดสวยหรูหรา", "👘 ชุดกิโมโนมัตเตะ", "🩳 ชุดนอนไม่ได้นอน"]
+        ];
+
+        let currentQuestion = 0;
+        const answers = [];
+
+        function showQuestion(index) {
+            const questionContainer = document.getElementById('question-container');
+            questionContainer.innerHTML = `
+                <p>${questions[index]}</p>
+                <div class="options">
+                    ${options[index].map((option, i) => `
+                        <input type="radio" name="q${index + 1}" id="q${index + 1}a${i + 1}" value="${i + 1}">
+                        <label for="q${index + 1}a${i + 1}">${option}</label>
+                    `).join('')}
+                </div>
+            `;
+
+            const radioButtons = document.querySelectorAll(`input[name="q${index + 1}"]`);
+            radioButtons.forEach(radio => {
+                radio.addEventListener('change', () => nextQuestion());
+            });
+        }
+
+        function nextQuestion() {
+            const selectedAnswer = document.querySelector(`input[name="q${currentQuestion + 1}"]:checked`);
+            if (selectedAnswer) {
+                answers[currentQuestion] = selectedAnswer.value;
+                currentQuestion++;
+                if (currentQuestion < questions.length) {
+                    showQuestion(currentQuestion);
+                } else {
+                    calculateResult();
+                }
+            }
+        }
+
+        function calculateResult() {
+            const sum = answers.reduce((total, value) => total + parseInt(value), 0);
+            const uniqueIndex = sum % 10;
+
+            const resultUrls = [
+                "https://raw.githubusercontent.com/panwyyt/Joo4Tune/refs/heads/main/%E0%B8%84%E0%B8%B8%E0%B8%93%E0%B9%80%E0%B8%AB%E0%B8%A1%E0%B8%B2%E0%B8%B0%E0%B8%81%E0%B8%B1%E0%B8%9A%E0%B8%84%E0%B8%A7%E0%B8%A2%E0%B9%81%E0%B8%9A%E0%B8%9A%E0%B9%83%E0%B8%94/Always%20the%20Victim.png",
+                "https://raw.githubusercontent.com/panwyyt/Joo4Tune/refs/heads/main/%E0%B8%84%E0%B8%B8%E0%B8%93%E0%B9%80%E0%B8%AB%E0%B8%A1%E0%B8%B2%E0%B8%B0%E0%B8%81%E0%B8%B1%E0%B8%9A%E0%B8%84%E0%B8%A7%E0%B8%A2%E0%B9%81%E0%B8%9A%E0%B8%9A%E0%B9%83%E0%B8%94/Constantly%20Negative.png",
+                "https://raw.githubusercontent.com/panwyyt/Joo4Tune/refs/heads/main/%E0%B8%84%E0%B8%B8%E0%B8%93%E0%B9%80%E0%B8%AB%E0%B8%A1%E0%B8%B2%E0%B8%B0%E0%B8%81%E0%B8%B1%E0%B8%9A%E0%B8%84%E0%B8%A7%E0%B8%A2%E0%B9%81%E0%B8%9A%E0%B8%9A%E0%B9%83%E0%B8%94/Disrespect%20Boundaries.png",
+                "https://raw.githubusercontent.com/panwyyt/Joo4Tune/refs/heads/main/%E0%B8%84%E0%B8%B8%E0%B8%93%E0%B9%80%E0%B8%AB%E0%B8%A1%E0%B8%B2%E0%B8%B0%E0%B8%81%E0%B8%B1%E0%B8%9A%E0%B8%84%E0%B8%A7%E0%B8%A2%E0%B9%81%E0%B8%9A%E0%B8%9A%E0%B9%83%E0%B8%94/Drains%20Your%20Energy.png",
+                "https://raw.githubusercontent.com/panwyyt/Joo4Tune/refs/heads/main/%E0%B8%84%E0%B8%B8%E0%B8%93%E0%B9%80%E0%B8%AB%E0%B8%A1%E0%B8%B2%E0%B8%B0%E0%B8%81%E0%B8%B1%E0%B8%9A%E0%B8%84%E0%B8%A7%E0%B8%A2%E0%B9%81%E0%B8%9A%E0%B8%9A%E0%B9%83%E0%B8%94/Excessively%20Controlling.png",
+                "https://raw.githubusercontent.com/panwyyt/Joo4Tune/refs/heads/main/%E0%B8%84%E0%B8%B8%E0%B8%93%E0%B9%80%E0%B8%AB%E0%B8%A1%E0%B8%B2%E0%B8%B0%E0%B8%81%E0%B8%B1%E0%B8%9A%E0%B8%84%E0%B8%A7%E0%B8%A2%E0%B9%81%E0%B8%9A%E0%B8%9A%E0%B9%83%E0%B8%94/Gaslighting.png",
+                "https://raw.githubusercontent.com/panwyyt/Joo4Tune/refs/heads/main/%E0%B8%84%E0%B8%B8%E0%B8%93%E0%B9%80%E0%B8%AB%E0%B8%A1%E0%B8%B2%E0%B8%B0%E0%B8%81%E0%B8%B1%E0%B8%9A%E0%B8%84%E0%B8%A7%E0%B8%A2%E0%B9%81%E0%B8%9A%E0%B8%9A%E0%B9%83%E0%B8%94/Jealous%20and%20Envious.png",
+                "https://raw.githubusercontent.com/panwyyt/Joo4Tune/refs/heads/main/%E0%B8%84%E0%B8%B8%E0%B8%93%E0%B9%80%E0%B8%AB%E0%B8%A1%E0%B8%B2%E0%B8%B0%E0%B8%81%E0%B8%B1%E0%B8%9A%E0%B8%84%E0%B8%A7%E0%B8%A2%E0%B9%81%E0%B8%9A%E0%B8%9A%E0%B9%83%E0%B8%94/Manipulate.png",
+                "https://raw.githubusercontent.com/panwyyt/Joo4Tune/refs/heads/main/%E0%B8%84%E0%B8%B8%E0%B8%93%E0%B9%80%E0%B8%AB%E0%B8%A1%E0%B8%B2%E0%B8%B0%E0%B8%81%E0%B8%B1%E0%B8%9A%E0%B8%84%E0%B8%A7%E0%B8%A2%E0%B9%81%E0%B8%9A%E0%B8%9A%E0%B9%83%E0%B8%94/Never%20Takes%20Responsibility.png",
+                "https://raw.githubusercontent.com/panwyyt/Joo4Tune/refs/heads/main/%E0%B8%84%E0%B8%B8%E0%B8%93%E0%B9%80%E0%B8%AB%E0%B8%A1%E0%B8%B2%E0%B8%B0%E0%B8%81%E0%B8%B1%E0%B8%9A%E0%B8%84%E0%B8%A7%E0%B8%A2%E0%B9%81%E0%B8%9A%E0%B8%9A%E0%B9%83%E0%B8%94/Two-Faced.png"
+            ];
+
+            window.location.href = resultUrls[uniqueIndex];
+        }
+    </script>
+</body>
+</html>
