@@ -316,10 +316,67 @@
                 font-size: 14px;
             }
         }
+        /* Enhanced Back Button */
+        .back-button {
+            position: absolute;
+            left: 20px;
+            top: 20px;
+            background: none;
+            border: none;
+            font-size: 28px;
+            color: #ff8c94;
+            cursor: pointer;
+            opacity: 0.8;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: none;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+        }
+
+        .back-button:hover {
+            opacity: 1;
+            transform: scale(1.15) translateX(-3px);
+            text-shadow: 0 0 8px rgba(255, 140, 148, 0.3);
+        }
+
+        .back-button::after {
+            content: "กลับไปแก้คําตอบ";
+            position: absolute;
+            left: 35px;
+            top: 50%;
+            transform: translateY(-50%);
+            white-space: nowrap;
+            background: #ff8c94;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 8px;
+            font-size: 14px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .back-button:hover::after {
+            opacity: 1;
+        }
+
+        /* Updated Follow Button Font */
+        .follow-button {
+            font-family: 'Kanit', sans-serif;
+            /* Rest of the styles remain same */
+        }
+        // Enhanced back button tooltip
+        document.querySelector('.back-button').addEventListener('mouseenter', function() {
+            if (currentQuestion > 0) {
+                this.style.display = 'block';
+            }
+        });
+        
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
+<button class="back-button" onclick="previousQuestion()">❮</button>
     <!-- Landing Page -->
     <div class="landing-page">
         <img src="https://raw.githubusercontent.com/panwyyt/Joo4Tune/refs/heads/main/%E0%B8%84%E0%B8%B8%E0%B8%93%E0%B9%80%E0%B8%AB%E0%B8%A1%E0%B8%B2%E0%B8%B0%E0%B8%81%E0%B8%B1%E0%B8%9A%E0%B8%84%E0%B8%A7%E0%B8%A2%E0%B9%81%E0%B8%9A%E0%B8%9A%E0%B9%83%E0%B8%94/Landing%20Page.png" alt="Landing Image">
