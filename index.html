@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Joo4Tune - จู๋ทายใจ 💖</title>
-     <link rel="icon" href="https://raw.githubusercontent.com/panwyyt/280Thread/main/Hatchedboy.ico" type="image/x-icon">
+    <link rel="icon" href="https://raw.githubusercontent.com/panwyyt/280Thread/main/Hatchedboy.ico" type="image/x-icon">
     <style>
         body, html {
             margin: 0;
@@ -17,7 +17,8 @@
             align-items: center;
             background-color: #fafafa;
         }
-        /* Landing Page Styling */
+
+        /* Landing Page */
         .landing-page {
             position: relative;
             width: 100%;
@@ -27,6 +28,7 @@
             align-items: center;
             background-color: #fafafa;
         }
+
         .landing-page img {
             max-width: 100%;
             max-height: 100%;
@@ -36,6 +38,7 @@
             border-radius: 10px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         }
+
         .cute-animation {
             position: absolute;
             font-size: 2rem;
@@ -44,14 +47,18 @@
             animation: floatUp 1s ease-out;
             pointer-events: none;
         }
+
         @keyframes floatUp {
             0% { transform: translateY(0); opacity: 1; }
             100% { transform: translateY(-100px); opacity: 0; }
         }
-        /* Quiz Page Styling (Hidden Initially) */
+
+        /* Quiz Page */
         .quiz-page {
             display: none;
+            position: relative;
         }
+
         .quiz-container {
             background-color: #fff;
             padding: 20px;
@@ -59,10 +66,45 @@
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             max-width: 90%;
             width: 400px;
-            position: relative;
-            z-index: 1;
             margin: 20px;
+            position: relative;
         }
+
+        /* Progress Bar */
+        .progress-container {
+            width: 100%;
+            height: 8px;
+            background-color: #f5e3e6;
+            border-radius: 4px;
+            margin: 15px 0 25px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background-color: #ff8c94;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        /* Back Button */
+        .back-button {
+            position: absolute;
+            left: 20px;
+            top: 20px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #ff8c94;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+            display: none;
+        }
+
+        .back-button:hover {
+            opacity: 1;
+        }
+
         .logo {
             display: block;
             margin: 0 auto 20px auto;
@@ -72,41 +114,99 @@
             object-fit: cover;
             border: 3px solid #ff8c94;
         }
+
         h1 {
             font-size: 24px;
             margin-bottom: 20px;
             color: #ff8c94;
+            text-align: center;
         }
+
         .question {
             margin-bottom: 20px;
             display: none;
             transition: opacity 0.5s ease;
         }
+
         .question.active {
             display: block;
         }
+
         .options {
             display: flex;
             flex-direction: column;
             gap: 10px;
         }
+
         .options label {
             background-color: #f5e3e6;
-            padding: 10px;
+            padding: 12px;
             border-radius: 10px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: all 0.3s ease;
+            font-size: 15px;
         }
+
         .options label:hover {
             background-color: #ffd1dc;
+            transform: translateY(-2px);
         }
+
         .options input[type="radio"] {
             display: none;
         }
+
         .options input[type="radio"]:checked + label {
             background-color: #ff8c94;
             color: #fff;
         }
+
+        /* Result Page */
+        .result-page {
+            display: none;
+            text-align: center;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            max-width: 90%;
+            width: 400px;
+            margin: 20px;
+        }
+
+        .result-image {
+            max-width: 100%;
+            border-radius: 15px;
+            margin: 20px 0;
+            border: 3px solid #ff8c94;
+            box-shadow: 0 4px 15px rgba(255, 140, 148, 0.2);
+        }
+
+        .download-button {
+            background-color: #ff8c94;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 15px 0;
+            transition: all 0.3s ease;
+        }
+
+        .download-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 140, 148, 0.3);
+        }
+
+        .download-instruction {
+            color: #666;
+            font-size: 14px;
+            margin-top: 10px;
+            line-height: 1.5;
+        }
+
+        /* Flower Animation */
         .flower {
             position: absolute;
             width: 30px;
@@ -115,24 +215,33 @@
             animation: fall linear infinite;
             z-index: 0;
         }
+
         @keyframes fall {
             0% { transform: translateY(-10vh); }
             100% { transform: translateY(110vh); }
         }
-        /* Responsive Adjustments */
+
         @media (max-width: 480px) {
             .quiz-container {
                 padding: 15px;
             }
+
             .logo {
                 width: 80px;
                 height: 80px;
             }
+
             h1 {
                 font-size: 20px;
             }
+
             .options label {
-                padding: 8px;
+                padding: 10px;
+                font-size: 14px;
+            }
+
+            .download-button {
+                padding: 10px 20px;
                 font-size: 14px;
             }
         }
@@ -145,11 +254,15 @@
         <img src="https://raw.githubusercontent.com/panwyyt/Joo4Tune/refs/heads/main/%E0%B8%84%E0%B8%B8%E0%B8%93%E0%B9%80%E0%B8%AB%E0%B8%A1%E0%B8%B2%E0%B8%B0%E0%B8%81%E0%B8%B1%E0%B8%9A%E0%B8%84%E0%B8%A7%E0%B8%A2%E0%B9%81%E0%B8%9A%E0%B8%9A%E0%B9%83%E0%B8%94/Landing%20Page.png" alt="Landing Image">
     </div>
 
-    <!-- Quiz Page (Hidden Initially) -->
+    <!-- Quiz Page -->
     <div class="quiz-page">
+        <button class="back-button" onclick="previousQuestion()">↩</button>
         <div class="quiz-container">
             <img src="https://pbs.twimg.com/profile_images/1888198211409707008/fzY_cxKR_400x400.jpg" alt="Hatchedboy Logo" class="logo">
             <h1>Joo4Tune - จู๋ทายใจ @hatchedboy 💖</h1>
+            <div class="progress-container">
+                <div class="progress-bar"></div>
+            </div>
             <div id="question-container" class="question active"></div>
         </div>
         <div class="flower" style="left: 10%; animation-duration: 8s;"></div>
@@ -159,7 +272,13 @@
         <div class="flower" style="left: 90%; animation-duration: 11s;"></div>
     </div>
 
-    <!-- JavaScript -->
+    <!-- Result Page -->
+    <div class="result-page">
+        <img src="https://via.placeholder.com/400" alt="ผลลัพธ์" class="result-image">
+        <button class="download-button" onclick="downloadResult()">ดาวน์โหลดผลลัพธ์</button>
+        <p class="download-instruction">หากปุ่มดาวน์โหลดไม่ทํางาน<br>กดค้างที่รูปภาพแล้วเลือก "บันทึกลงรูปภาพ"</p>
+    </div>
+
     <script>
         // Landing Page Logic
         const landingPage = document.querySelector('.landing-page');
@@ -180,32 +299,32 @@
                 quizPage.style.display = 'block';
                 showQuestion(currentQuestion);
             }
-
-            setTimeout(() => clickCount = 0, 300); // Reset click count after 300ms
+            setTimeout(() => clickCount = 0, 300);
         });
 
         // Quiz Logic
         const questions = [
             "อวัยวะเพศของคุณกลิ่นแอบคล้ายอะไรนะ?",
             "หากมีแฟนอยากให้ลีลาความเร้าร้อนบนเตียงเหมือนสัตว์ตัวไหน?",
-            "หากแฟนมอบค่ำคืนที่แซ่บซ่าส์ให้คุณ คุณจะตอบแทนด้วยอะไร?",
+            "หากแฟนมอบค่ําคืนที่แซ่บซ่าส์ให้คุณ คุณจะตอบแทนด้วยอะไร?",
             "อยากให้แฟนย้อมหมอยแฟนซีสีอะไร?",
-            "นอกจากช่วยตัวเองแล้ว คุณชอบทำอะไรอีกบ้าง?",
+            "นอกจากช่วยตัวเองแล้ว คุณชอบทําอะไรอีกบ้าง?",
             "คุณโดนแฟนสะบาละฮึ้มจนปวดขาตื่นเช้ามาคุณคิดว่าอากาศจะเป็นแบบไหน?",
             "เฟิร์สเดตที่ไหนดีนะ?",
             "กระตุ้นเร้าช่วงต้นด้วยบทเพลงประเภทไหนดี?",
-            "อยากทำอะไรให้แฟนกิน/อยากให้แฟนทำอะไรให้กิน?",
+            "อยากทําอะไรให้แฟนกิน/อยากให้แฟนทําอะไรให้กิน?",
             "เดทที่สองแต่งชุดอะไรดี?"
         ];
+
         const options = [
-            ["🍫 ช็อกโกแลต", "🍿 ป๊อปคอร์น", "🍭 ลูกอม", "🥓 ส้มตำปลาร้า", "🍪 คุกกี้"],
+            ["🍫 ช็อกโกแลต", "🍿 ป๊อปคอร์น", "🍭 ลูกอม", "🥓 ส้มตําปลาร้า", "🍪 คุกกี้"],
             ["🐶 แม่หมา", "🐱 แมวน้อย", "🐰 กระต่ายตาแดง", "🦉 นกฮูกเจ้าปัญญา", "🐢 เต่าต้วมเตี้ยม"],
-            ["💬 คุยกันพิลโล่ทอร์ก", "🎁 ให้ของขวัญล้ำค่ำ", "🤗 กอดขอบคุณ", "🍳 ทําอาหารให้ทาน", "🎵 ร้องเพลงโอเปร่า"],
-            ["🌈 สีรุ้ง LGBTQ+", "💗 สีชมพูรูทวาร", "💙 สีฟ้าซึมเศร้า", "💚 สีเขียวช้ำโดนเตะ", "💛 สีเหลืองจีวร"],
+            ["💬 คุยกัน Pillow Talk", "🎁 ให้ของขวัญล้ําค่ํา", "🤗 กอดขอบคุณ", "🍳 ทําอาหารให้ทาน", "🎵 ร้องเพลงโอเปร่า"],
+            ["🌈 สีรุ้ง LGBTQ+", "💗 สีชมพูรูทวาร", "💙 สีฟ้าซึมเศร้า", "💚 สีเขียวช้ําโดนเตะ", "💛 สีเหลืองจีวร"],
             ["📚 อ่านนิยายเกย์", "🎨 วาดรูปดวงตางดงาม", "🎮 เล่นเกม ROV", "🏀 เตะบอลแมนๆ", "🎤 ร้องเพลงถ่ายลงสตอรี่"],
             ["☀️ แดดจ้าแยงตา", "🌧️ ฝนตกแซ่กๆลงบนหลังคาสังกะสี", "❄️ หิมะโฟมปลอมสงกรานต์ตกโปรยปราย", "🌙 ยังเป็นกลางคืนอยู่", "🌤️ เมฆคลุมคลึ้มแต่มีแดดแทงออกมา"],
-            ["🏖️ ชายหาดป่าตอง", "🏔️ ภูเขาไฟศรีสะเกษ", "🏰 เมืองเก่าอยุธยา", "🏞️ ธรรมชาติงดงาม ณ ห้วยขาแข้่ง", "🛍️ ห้างเจ้าสัวพันล้าน"],
-            ["🎧 เทย์เลอร์ สวิฟต์", "🎸 Joji", "🎼 มนต์แคน แก่นคูน", "🎹 เพลงเกี่ยวข้าว", "🎤 เพลงยูทูปสุ่มมา"],
+            ["🏖️ ชายหาดป่าตอง", "🏔️ ภูเขาไฟศรีสะเกษ", "🏰 เมืองเก่าอยุธยา", "🏞️ ธรรมชาติงดงาม ณ ห้วยขาแข้ง", "🛍️ ห้างเจ้าสัวพันล้าน"],
+            ["🎧 เทย์เลอร์ สวิฟต์", "🎸 Joji", "🎼 มนต์แคน แก่นคูน", "🎹 เพลงเคียวเกี่ยวข้าว", "🎤 เพลงติ๊กต๊อกเทสดี"],
             ["🍣 อาหารญี่ปุ่น", "🍕 อาหารอิตาลี", "🍜 อาหารไทย", "🍔 อาหารฟาสต์ฟู้ด", "🍰 ของหวาน"],
             ["👕 เสื้อยืดบ้านๆ", "👔 ชุดทางการเนี้ยบๆ", "👗 ชุดสวยหรูหรา", "👘 ชุดกิโมโนมัตเตะ", "🩳 ชุดนอนไม่ได้นอน"]
         ];
@@ -214,17 +333,27 @@
         const answers = [];
 
         function showQuestion(index) {
+            // Update progress bar
+            const progressPercent = ((index + 1) / questions.length) * 100;
+            document.querySelector('.progress-bar').style.width = `${progressPercent}%`;
+
+            // Show/hide back button
+            document.querySelector('.back-button').style.display = index > 0 ? 'block' : 'none';
+
+            // Question setup
             const questionContainer = document.getElementById('question-container');
             questionContainer.innerHTML = `
                 <p>${questions[index]}</p>
                 <div class="options">
                     ${options[index].map((option, i) => `
-                        <input type="radio" name="q${index + 1}" id="q${index + 1}a${i + 1}" value="${i + 1}">
+                        <input type="radio" name="q${index + 1}" id="q${index + 1}a${i + 1}" value="${i + 1}"
+                            ${answers[index] === (i + 1) ? 'checked' : ''}>
                         <label for="q${index + 1}a${i + 1}">${option}</label>
                     `).join('')}
                 </div>
             `;
 
+            // Event listeners for radio buttons
             const radioButtons = document.querySelectorAll(`input[name="q${index + 1}"]`);
             radioButtons.forEach(radio => {
                 radio.addEventListener('change', () => nextQuestion());
@@ -234,7 +363,7 @@
         function nextQuestion() {
             const selectedAnswer = document.querySelector(`input[name="q${currentQuestion + 1}"]:checked`);
             if (selectedAnswer) {
-                answers[currentQuestion] = selectedAnswer.value;
+                answers[currentQuestion] = parseInt(selectedAnswer.value);
                 currentQuestion++;
                 if (currentQuestion < questions.length) {
                     showQuestion(currentQuestion);
@@ -244,8 +373,15 @@
             }
         }
 
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                showQuestion(currentQuestion);
+            }
+        }
+
         function calculateResult() {
-            const sum = answers.reduce((total, value) => total + parseInt(value), 0);
+            const sum = answers.reduce((total, value) => total + value, 0);
             const uniqueIndex = sum % 10;
 
             const resultUrls = [
@@ -261,7 +397,21 @@
                 "https://raw.githubusercontent.com/panwyyt/Joo4Tune/refs/heads/main/%E0%B8%84%E0%B8%B8%E0%B8%93%E0%B9%80%E0%B8%AB%E0%B8%A1%E0%B8%B2%E0%B8%B0%E0%B8%81%E0%B8%B1%E0%B8%9A%E0%B8%84%E0%B8%A7%E0%B8%A2%E0%B9%81%E0%B8%9A%E0%B8%9A%E0%B9%83%E0%B8%94/Two-Faced.png"
             ];
 
-            window.location.href = resultUrls[uniqueIndex];
+            // Show result page
+            quizPage.style.display = 'none';
+            document.querySelector('.result-page').style.display = 'block';
+            document.querySelector('.result-image').src = resultUrls[uniqueIndex];
+        }
+
+        // Download functionality
+        function downloadResult() {
+            const imageUrl = document.querySelector('.result-image').src;
+            const link = document.createElement('a');
+            link.href = imageUrl;
+            link.download = 'joo4tune-result.png';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         }
     </script>
 </body>
