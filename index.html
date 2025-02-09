@@ -89,20 +89,29 @@
         /* Back Button */
         .back-button {
             position: absolute;
-            left: 20px;
-            top: 20px;
-            background: none;
+            left: -15px;
+            top: -15px;
+            background: #fff;
             border: none;
-            font-size: 24px;
+            font-size: 28px;
             color: #ff8c94;
             cursor: pointer;
-            opacity: 0.7;
-            transition: opacity 0.3s ease;
-            display: none;
+            opacity: 0.8;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1;
         }
 
         .back-button:hover {
             opacity: 1;
+            transform: scale(1.15) translateX(-3px);
+            box-shadow: 0 4px 12px rgba(255, 140, 148, 0.3);
         }
 
         .logo {
@@ -270,6 +279,7 @@
             transition: all 0.3s ease;
             text-decoration: none;
             display: inline-block;
+            font-family: 'Kanit', sans-serif;
         }
 
         .follow-button:hover {
@@ -316,67 +326,18 @@
                 font-size: 14px;
             }
         }
-        /* Enhanced Back Button */
-        .back-button {
-            position: absolute;
-            left: 20px;
-            top: 20px;
-            background: none;
-            border: none;
-            font-size: 28px;
-            color: #ff8c94;
-            cursor: pointer;
-            opacity: 0.8;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            display: none;
-            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
-        }
-
-        .back-button:hover {
-            opacity: 1;
-            transform: scale(1.15) translateX(-3px);
-            text-shadow: 0 0 8px rgba(255, 140, 148, 0.3);
-        }
-
-        .back-button::after {
-            content: "กลับไปแก้คําตอบ";
-            position: absolute;
-            left: 35px;
-            top: 50%;
-            transform: translateY(-50%);
-            white-space: nowrap;
-            background: #ff8c94;
-            color: white;
-            padding: 5px 10px;
-            border-radius: 8px;
-            font-size: 14px;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.2s ease;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .back-button:hover::after {
-            opacity: 1;
-        }
-
-        /* Updated Follow Button Font */
-        .follow-button {
-            font-family: 'Kanit', sans-serif;
-            /* Rest of the styles remain same */
-        }
-        // Enhanced back button tooltip
-        document.querySelector('.back-button').addEventListener('mouseenter', function() {
-            if (currentQuestion > 0) {
-                this.style.display = 'block';
-            }
-        });
-        
+        /* Add this after existing .question styles */
+.question p {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #333;
+    line-height: 1.4;
+}
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
-<button class="back-button" onclick="previousQuestion()">❮</button>
     <!-- Landing Page -->
     <div class="landing-page">
         <img src="https://raw.githubusercontent.com/panwyyt/Joo4Tune/refs/heads/main/%E0%B8%84%E0%B8%B8%E0%B8%93%E0%B9%80%E0%B8%AB%E0%B8%A1%E0%B8%B2%E0%B8%B0%E0%B8%81%E0%B8%B1%E0%B8%9A%E0%B8%84%E0%B8%A7%E0%B8%A2%E0%B9%81%E0%B8%9A%E0%B8%9A%E0%B9%83%E0%B8%94/Landing%20Page.png" alt="Landing Image">
@@ -384,8 +345,8 @@
 
     <!-- Quiz Page -->
     <div class="quiz-page">
-        <button class="back-button" onclick="previousQuestion()">↩</button>
         <div class="quiz-container">
+            <button class="back-button" onclick="previousQuestion()">❮</button>
             <img src="https://pbs.twimg.com/profile_images/1888198211409707008/fzY_cxKR_400x400.jpg" alt="Hatchedboy Logo" class="logo"> 
             <h1>Joo4Tune - จู๋ทายใจ @hatchedboy 💖</h1>
             <div class="progress-container">
@@ -485,14 +446,9 @@
         const answers = [];
 
         function showQuestion(index) {
-            // Update progress bar
-            const progressPercent = ((index + 1) / questions.length) * 100;
-            document.querySelector('.progress-bar').style.width = `${progressPercent}%`;
-
-            // Show/hide back button
+            document.querySelector('.progress-bar').style.width = `${((index + 1) / questions.length) * 100}%`;
             document.querySelector('.back-button').style.display = index > 0 ? 'block' : 'none';
 
-            // Question setup
             const questionContainer = document.getElementById('question-container');
             questionContainer.innerHTML = `
                 <p>${questions[index]}</p>
@@ -505,9 +461,7 @@
                 </div>
             `;
 
-            // Event listeners for radio buttons
-            const radioButtons = document.querySelectorAll(`input[name="q${index + 1}"]`);
-            radioButtons.forEach(radio => {
+            document.querySelectorAll(`input[name="q${index + 1}"]`).forEach(radio => {
                 radio.addEventListener('change', () => nextQuestion());
             });
         }
@@ -550,11 +504,9 @@
                 "https://raw.githubusercontent.com/panwyyt/Joo4Tune/refs/heads/main/%E0%B8%84%E0%B8%B8%E0%B8%93%E0%B9%80%E0%B8%AB%E0%B8%A1%E0%B8%B2%E0%B8%B0%E0%B8%81%E0%B8%B1%E0%B8%9A%E0%B8%84%E0%B8%A7%E0%B8%A2%E0%B9%81%E0%B8%9A%E0%B8%9A%E0%B9%83%E0%B8%94/Two-Faced.png"
             ];
 
-            // Show follow prompt first
             document.querySelector('.follow-prompt').style.display = 'flex';
             quizPage.style.display = 'none';
             
-            // Set result image
             setTimeout(() => {
                 document.querySelector('.result-image').src = resultUrls[uniqueIndex];
             }, 100);
@@ -565,7 +517,6 @@
             document.querySelector('.result-page').style.display = 'block';
         }
 
-        // Download functionality
         function downloadResult() {
             const imageUrl = document.querySelector('.result-image').src;
             const link = document.createElement('a');
