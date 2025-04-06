@@ -3,529 +3,836 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Joo4Tune - จู๋ทายใจ 💖</title>
+    <title id="app-title">Joo4Tune - จู๋ทายใจ (เวอร์ชั่นกำเริบx2) 😈🔥</title>
     <link rel="icon" href="https://raw.githubusercontent.com/panwyyt/280Thread/main/Hatchedboy.ico" type="image/x-icon">
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Sans+KR:wght@400;500;700&family=Noto+Sans+Devanagari:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            overflow: hidden;
-            font-family: 'Kanit', sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: #fafafa;
+        /* Apply Kanit font by default, allow overrides */
+        body {
+            font-family: 'Kanit', 'Noto Sans SC', 'Noto Sans Devanagari', sans-serif; /* Added fallbacks */
+            background: linear-gradient(135deg, #fff1f2 0%, #ffe4e6 100%);
         }
+        /* Ensure Noto Sans is used for specific languages where Kanit might not have glyphs */
+        body[lang="zh"] { font-family: 'Noto Sans SC', sans-serif; }
+        body[lang="hi"] { font-family: 'Noto Sans Devanagari', sans-serif; }
+        body[lang="en"] { font-family: 'Kanit', sans-serif; } /* Keep Kanit for EN if desired, or change */
+        body[lang="th"] { font-family: 'Kanit', sans-serif; }
 
-        /* Landing Page */
-        .landing-page {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: #fafafa;
+
+        /* --- Existing Styles (float-up, heart-pulse, falling-element, custom-radio, question-text, fades) --- */
+         .float-up-animation {
+            position: fixed; font-size: 1.5rem; color: #f472b6; background-color: rgba(255, 255, 255, 0.8);
+            padding: 4px 8px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); opacity: 0;
+            animation: floatUp 1s ease-out forwards; pointer-events: none; font-weight: 600; z-index: 1000; white-space: nowrap;
         }
+        @keyframes floatUp { 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(-80px); opacity: 0; } }
+        .heart-pulse { animation: pulse 1.5s infinite; font-size: 3rem; color: #f472b6; margin-bottom: 1rem; }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
+        .falling-element { position: absolute; font-size: 2rem; animation: fall linear infinite; z-index: 0; opacity: 0.7; }
+        @keyframes fall { 0% { transform: translateY(-10vh) rotate(0deg); } 100% { transform: translateY(110vh) rotate(360deg); } }
+        .custom-radio input[type="radio"] { position: absolute; opacity: 0; width: 0; height: 0; }
+        .custom-radio label { display: block; background-color: #fce7f3; padding: 0.75rem 1rem; border-radius: 0.75rem; cursor: pointer; transition: all 0.3s ease; border: 2px solid transparent; font-size: 0.95rem; color: #52525b; text-align: center; }
+        .custom-radio label:hover { background-color: #fbcfe8; transform: translateY(-2px); box-shadow: 0 4px 10px rgba(244, 114, 182, 0.2); }
+        .custom-radio input[type="radio"]:checked + label { background: linear-gradient(to right, #f472b6, #ec4899); color: white; border-color: #db2777; font-weight: 600; box-shadow: 0 6px 15px rgba(236, 72, 153, 0.3); }
+        .custom-radio input[type="radio"]:focus + label { outline: 2px solid #f472b6; outline-offset: 2px; }
+        .question-text { font-size: 1.2rem; font-weight: 600; margin-bottom: 1.25rem; color: #3f3f46; line-height: 1.5; text-align: center; min-height: 3em; }
+        .fade-in { animation: fadeInAnimation 0.5s ease-in forwards; }
+        .fade-out { animation: fadeOutAnimation 0.3s ease-out forwards; }
+        @keyframes fadeInAnimation { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeOutAnimation { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-10px); } }
 
-        .landing-page img {
-            max-width: 100%;
-            max-height: 100%;
-            width: auto;
-            height: auto;
-            cursor: pointer;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-        }
+        html, body { height: 100%; margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; overflow: hidden; }
 
-        .cute-animation {
-            position: absolute;
-            font-size: 2rem;
-            color: #ff8c94;
-            opacity: 0;
-            animation: floatUp 1s ease-out;
-            pointer-events: none;
-        }
-
-        @keyframes floatUp {
-            0% { transform: translateY(0); opacity: 1; }
-            100% { transform: translateY(-100px); opacity: 0; }
-        }
-
-        /* Quiz Page */
-        .quiz-page {
-            display: none;
-            position: relative;
-        }
-
-        .quiz-container {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 20px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            max-width: 90%;
-            width: 400px;
-            margin: 20px;
-            position: relative;
-        }
-
-        /* Progress Bar */
-        .progress-container {
-            width: 100%;
-            height: 8px;
-            background-color: #f5e3e6;
-            border-radius: 4px;
-            margin: 15px 0 25px;
-        }
-
-        .progress-bar {
-            height: 100%;
-            background-color: #ff8c94;
-            border-radius: 4px;
-            transition: width 0.3s ease;
-        }
-
-        /* Back Button */
-        .back-button {
-            position: absolute;
-            left: -15px;
-            top: -15px;
-            background: #fff;
-            border: none;
-            font-size: 28px;
-            color: #ff8c94;
-            cursor: pointer;
-            opacity: 0.8;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: 1;
-        }
-
-        .back-button:hover {
-            opacity: 1;
-            transform: scale(1.15) translateX(-3px);
-            box-shadow: 0 4px 12px rgba(255, 140, 148, 0.3);
-        }
-
-        .logo {
-            display: block;
-            margin: 0 auto 20px auto;
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid #ff8c94;
-        }
-
-        h1 {
-            font-size: 24px;
-            margin-bottom: 20px;
-            color: #ff8c94;
-            text-align: center;
-        }
-
-        .question {
-            margin-bottom: 20px;
-            display: none;
-            transition: opacity 0.5s ease;
-        }
-
-        .question.active {
-            display: block;
-        }
-
-        .options {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .options label {
-            background-color: #f5e3e6;
-            padding: 12px;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 15px;
-        }
-
-        .options label:hover {
-            background-color: #ffd1dc;
-            transform: translateY(-2px);
-        }
-
-        .options input[type="radio"] {
-            display: none;
-        }
-
-        .options input[type="radio"]:checked + label {
-            background-color: #ff8c94;
-            color: #fff;
-        }
-
-        /* Result Page */
-        .result-page {
-            display: none;
-            text-align: center;
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            max-width: 90%;
-            width: 400px;
-            margin: 20px;
-            overflow-y: auto;
-            max-height: 90vh;
-        }
-
-        .result-image {
-            max-width: 100%;
-            border-radius: 15px;
-            margin: 20px 0;
-            border: 3px solid #ff8c94;
-            box-shadow: 0 4px 15px rgba(255, 140, 148, 0.2);
-        }
-
-        .download-button {
-            background-color: #ff8c94;
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 25px;
-            cursor: pointer;
-            font-size: 16px;
-            margin: 15px 0;
-            transition: all 0.3s ease;
-        }
-
-        .download-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(255, 140, 148, 0.3);
-        }
-
-        .download-instruction {
-            color: #666;
-            font-size: 14px;
-            margin-top: 10px;
-            line-height: 1.5;
-        }
-
-        /* Follow Prompt */
-        .follow-prompt {
-            display: none;
+        /* Language Selector Styles */
+        #language-selector-container {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.95);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-            animation: fadeIn 0.5s ease;
+            top: 10px;
+            right: 10px;
+            z-index: 1001; /* Above other elements */
         }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .follow-content {
-            background: white;
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 8px 30px rgba(255, 140, 148, 0.2);
-            text-align: center;
-            max-width: 90%;
-            width: 400px;
-        }
-
-        .heart-pulse {
-            animation: pulse 1.5s infinite;
-            font-size: 40px;
-            margin: 15px 0;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-            100% { transform: scale(1); }
-        }
-
-        .follow-image {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            border: 3px solid #ff8c94;
-            margin: 15px 0;
-        }
-
-        .follow-button {
-            background: #ff8c94;
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 25px;
+        #language-selector {
+            padding: 5px 8px;
+            border-radius: 8px;
+            border: 1px solid #fbcfe8; /* pink-200 */
+            background-color: white;
+            font-family: 'Kanit', sans-serif; /* Keep selector font consistent */
+            font-size: 0.8rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             cursor: pointer;
-            font-size: 16px;
-            margin: 10px;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-            font-family: 'Kanit', sans-serif;
+        }
+        #language-selector:focus {
+             outline: 2px solid #f472b6; /* pink-500 */
+             outline-offset: 1px;
         }
 
-        .follow-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(255, 140, 148, 0.3);
-        }
-
-        /* Flower Animation */
-        .flower {
-            position: absolute;
-            width: 30px;
-            height: 30px;
-            background: url('https://www.icegif.com/wp-content/uploads/2023/08/icegif-142.gif') no-repeat center/contain;
-            animation: fall linear infinite;
-            z-index: 0;
-        }
-
-        @keyframes fall {
-            0% { transform: translateY(-10vh); }
-            100% { transform: translateY(110vh); }
-        }
-
-        @media (max-width: 480px) {
-            .quiz-container {
-                padding: 15px;
-            }
-
-            .logo {
-                width: 80px;
-                height: 80px;
-            }
-
-            h1 {
-                font-size: 20px;
-            }
-
-            .options label {
-                padding: 10px;
-                font-size: 14px;
-            }
-
-            .download-button {
-                padding: 10px 20px;
-                font-size: 14px;
-            }
-        }
-        /* Add this after existing .question styles */
-.question p {
-    font-size: 1.3rem;
-    font-weight: 600;
-    margin-bottom: 15px;
-    color: #333;
-    line-height: 1.4;
-}
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
-<body>
-    <!-- Landing Page -->
-    <div class="landing-page">
-        <img src="https://raw.githubusercontent.com/panwyyt/Joo4Tune/refs/heads/main/%E0%B8%84%E0%B8%B8%E0%B8%93%E0%B9%80%E0%B8%AB%E0%B8%A1%E0%B8%B2%E0%B8%B0%E0%B8%81%E0%B8%B1%E0%B8%9A%E0%B8%84%E0%B8%A7%E0%B8%A2%E0%B9%81%E0%B8%9A%E0%B8%9A%E0%B9%83%E0%B8%94/Landing%20Page.png" alt="Landing Image">
+<body lang="th" class="flex items-center justify-center min-h-screen">
+
+    <div id="language-selector-container">
+        <select id="language-selector" onchange="changeLanguage(this.value)">
+            <option value="th">ไทย</option>
+            <option value="en">English</option>
+            <option value="zh">中文</option>
+            <option value="hi">हिन्दी</option>
+        </select>
     </div>
 
-    <!-- Quiz Page -->
-    <div class="quiz-page">
-        <div class="quiz-container">
-            <button class="back-button" onclick="previousQuestion()">❮</button>
-            <img src="https://pbs.twimg.com/profile_images/1888198211409707008/fzY_cxKR_400x400.jpg" alt="Hatchedboy Logo" class="logo"> 
-            <h1>Joo4Tune - จู๋ทายใจ @hatchedboy 💖</h1>
-            <div class="progress-container">
-                <div class="progress-bar"></div>
+    <div id="landing-page" class="landing-page text-center p-4 fade-in">
+        <img src="https://raw.githubusercontent.com/panwyyt/Joo4Tune/refs/heads/main/%E0%B8%84%E0%B8%B8%E0%B8%93%E0%B9%80%E0%B8%AB%E0%B8%A1%E0%B8%B2%E0%B8%B0%E0%B8%81%E0%B8%B1%E0%B8%9A%E0%B8%84%E0%B8%A7%E0%B8%A2%E0%B9%81%E0%B8%9A%E0%B8%9A%E0%B9%83%E0%B8%94/Landing%20Page.png"
+             alt="Landing Image"
+             id="landing-img"
+             class="max-w-xs sm:max-w-sm md:max-w-md mx-auto cursor-pointer rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 transform hover:scale-105">
+             <p id="landing-prompt" class="mt-4 text-pink-500 font-semibold"></p> </div>
+
+    <div id="quiz-page" class="quiz-page hidden relative w-full max-w-lg p-4">
+        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+            <div class="falling-element" style="left: 10%; animation-duration: 12s;">🌸</div>
+            <div class="falling-element" style="left: 25%; animation-duration: 15s; animation-delay: 2s;">💖</div>
+            <div class="falling-element" style="left: 40%; animation-duration: 10s;">✨</div>
+            <div class="falling-element" style="left: 60%; animation-duration: 14s; animation-delay: 1s;">🎀</div>
+            <div class="falling-element" style="left: 75%; animation-duration: 11s;">⭐</div>
+            <div class="falling-element" style="left: 90%; animation-duration: 13s; animation-delay: 3s;">🍓</div>
+        </div>
+        <div class="quiz-container relative bg-white p-5 sm:p-6 rounded-3xl shadow-xl border-2 border-pink-100 w-full z-10 max-h-[95vh] overflow-y-auto">
+            <img src="https://avatars.githubusercontent.com/u/86871974?s=400&u=94bc32ad2c62d929cea6972879b3f3f3d6e55faa&v=4" alt="Hatchedboy Logo" class="logo w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-4 rounded-full object-cover border-4 border-pink-300 shadow-md flex-shrink-0">
+            <h1 id="quiz-title" class="text-xl sm:text-2xl font-bold mb-4 text-center text-pink-600 flex-shrink-0"></h1>
+            <div class="progress-container w-full h-2.5 bg-pink-100 rounded-full my-4 overflow-hidden flex-shrink-0">
+                <div id="progress-bar" class="progress-bar h-full bg-gradient-to-r from-pink-400 to-rose-400 rounded-full transition-all duration-500 ease-out" style="width: 0%;"></div>
             </div>
-            <div id="question-container" class="question active"></div>
+             <div class="text-center mb-4 h-10 flex-shrink-0">
+                 <button id="back-button" onclick="previousQuestion()" class="back-button inline-flex items-center justify-center bg-pink-100 text-pink-600 rounded-full w-9 h-9 shadow-sm hover:bg-pink-200 hover:shadow-md hover:scale-110 transition-all duration-300" style="visibility: hidden;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-left"><path d="m15 18-6-6 6-6"/></svg>
+                 </button>
+            </div>
+            <div id="question-container" class="question-container mb-5 flex-grow"> </div>
         </div>
-        <div class="flower" style="left: 10%; animation-duration: 8s;"></div>
-        <div class="flower" style="left: 30%; animation-duration: 10s;"></div>
-        <div class="flower" style="left: 50%; animation-duration: 12s;"></div>
-        <div class="flower" style="left: 70%; animation-duration: 9s;"></div>
-        <div class="flower" style="left: 90%; animation-duration: 11s;"></div>
     </div>
 
-    <!-- Follow Prompt -->
-    <div class="follow-prompt">
-        <div class="follow-content">
+    <div id="follow-prompt" class="follow-prompt hidden fixed inset-0 bg-white bg-opacity-95 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="follow-content bg-white p-6 sm:p-8 rounded-3xl shadow-2xl text-center max-w-md w-full border-2 border-pink-200 transform scale-95 transition-transform duration-300 ease-out">
             <div class="heart-pulse">💖</div>
-            <h2 style="color: #ff8c94; margin: 10px 0;">ก่อนดูผลลัพธ์น้าา</h2>
-            <img src="https://pbs.twimg.com/profile_images/1888198211409707008/fzY_cxKR_400x400.jpg" 
-                 alt="Hatchedboy" 
-                 class="follow-image">
-            <p style="color: #666; line-height: 1.5; margin: 15px 0;">
-                ตามไปติดตามแฮชบอยกันต่อที่<br>
-                ทวิตเตอร์ของ @hatchedboy นะค้าบ 💕
-            </p>
-            <a href="https://x.com/hatchedboy" 
-               target="_blank" 
-               class="follow-button">
-               ตามไปกดติดตามเลย!
-            </a>
-            <button class="follow-button" 
-                    onclick="closeFollowPrompt()">
-                ดูผลลัพธ์ได้เลย
-            </button>
+            <h2 id="follow-title" class="text-xl sm:text-2xl font-semibold text-pink-600 mb-3"></h2>
+            <img src="https://avatars.githubusercontent.com/u/86871974?s=400&u=94bc32ad2c62d929cea6972879b3f3f3d6e55faa&v=4"
+                 alt="Hatchedboy"
+                 class="follow-image w-24 h-24 sm:w-28 sm:h-28 mx-auto rounded-full border-4 border-pink-300 my-4 shadow-md">
+            <p id="follow-text" class="text-zinc-600 leading-relaxed mb-6 text-sm sm:text-base">
+                </p>
+            <div class="flex flex-col sm:flex-row gap-3 justify-center">
+                 <a id="follow-button-link" href="https://x.com/hatchedboy"
+                   target="_blank"
+                   class="follow-button inline-block bg-gradient-to-r from-pink-500 to-rose-500 text-white font-semibold py-2.5 px-6 rounded-full shadow-md hover:shadow-lg hover:scale-105 transform transition duration-300 ease-out text-sm sm:text-base">
+                    </a>
+                 <button id="follow-button-close" class="follow-button bg-pink-100 text-pink-600 font-semibold py-2.5 px-6 rounded-full shadow-sm hover:bg-pink-200 hover:shadow-md hover:scale-105 transform transition duration-300 ease-out text-sm sm:text-base"
+                         onclick="closeFollowPrompt()">
+                    </button>
+            </div>
         </div>
     </div>
 
-    <!-- Result Page -->
-    <div class="result-page">
-        <img src="https://via.placeholder.com/400" alt="ผลลัพธ์" class="result-image">
-        <button class="download-button" onclick="downloadResult()">ดาวน์โหลดผลลัพธ์</button>
-        <p class="download-instruction">หากปุ่มดาวน์โหลดไม่ทํางาน<br>กดค้างที่รูปภาพแล้วเลือก "บันทึกลงรูปภาพ"</p>
+    <div id="result-page" class="result-page hidden text-center p-4 sm:p-6 bg-white rounded-3xl shadow-xl max-w-md w-full border-2 border-pink-100 overflow-y-auto max-h-[90vh]">
+         <div id="loading-indicator" class="text-pink-500 my-10">
+            <svg class="animate-spin h-8 w-8 text-pink-500 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            <p id="loading-text" class="mt-2 font-medium"></p>
+        </div>
+        <img id="result-image" src="" alt="Result" class="result-image hidden max-w-full w-full rounded-2xl my-5 border-4 border-pink-200 shadow-lg">
+        <button id="download-button" onclick="downloadResult()" class="download-button hidden bg-gradient-to-r from-pink-500 to-rose-500 text-white font-semibold py-2.5 px-6 rounded-full shadow-md hover:shadow-lg hover:scale-105 transform transition duration-300 ease-out text-sm sm:text-base mt-2 mb-3">
+             </button>
+        <p id="download-instruction" class="download-instruction hidden text-zinc-500 text-xs sm:text-sm leading-relaxed">
+             </p>
+        <button id="restart-button" onclick="restartQuiz()" class="mt-6 text-sm text-pink-500 hover:text-pink-700 font-medium transition duration-200">
+             </button>
     </div>
 
     <script>
-        // Landing Page Logic
-        const landingPage = document.querySelector('.landing-page');
-        const quizPage = document.querySelector('.quiz-page');
-        const landingImage = landingPage.querySelector('img');
-        let clickCount = 0;
-
-        landingImage.addEventListener('click', (event) => {
-            clickCount++;
-            if (clickCount === 1) {
-                const cuteAnimation = document.createElement('div');
-                cuteAnimation.classList.add('cute-animation');
-                cuteAnimation.textContent = 'ดับเบิ้ลจิ้ม 💖';
-                event.target.insertAdjacentElement('afterend', cuteAnimation);
-                setTimeout(() => cuteAnimation.remove(), 1000);
-            } else if (clickCount === 2) {
-                landingPage.style.display = 'none';
-                quizPage.style.display = 'block';
-                showQuestion(currentQuestion);
+        // --- Translations Object ---
+        const translations = {
+            th: {
+                title: "Joo4Tune - จู๋ทายใจ (เวอร์ชั่นกำเริบx2) 😈🔥",
+                landingPrompt: "ดับเบิ้ลจิ้มเพื่อเริ่ม!",
+                quizTitle: "Joo4Tune - จู๋ทายใจ @hatchedboy 💖",
+                followTitle: "แวะแป๊ปนึงนะตัวเอง!",
+                followText: `ก่อนไปดูว่าจู๋แบบไหนที่คู่ควร<br>ไปกดติดตาม <strong class="text-pink-500">@hatchedboy</strong> ที่ X (ทวิตเตอร์เดิม) <br>ให้ชื่นใจหน่อยสิค้าบ 💕 จะได้มีแรงทำคอนเทนต์ต่อ!`,
+                followButtonLink: "จัดไป! กดติดตามเดี๋ยวนี้",
+                followButtonClose: "ใจร้อน... ขอดูผลเลยละกัน",
+                loadingText: "หมุนติ้วๆ... คำทำนายกำลังมา!",
+                resultImageAlt: "ผลลัพธ์",
+                downloadButton: "เซฟรูปไปอวดเพื่อน!",
+                downloadInstruction: `ถ้าปุ่มไม่ทำงาน จิ้มค้างที่รูปแล้วกดเซฟนะ (มือถือ) <br> หรือ คลิกขวา > บันทึกรูปภาพฯ (คอม)`,
+                restartButton: "อยากเล่นอีกรอบเหรอ? จัดไป!",
+                questions: [
+                    "สมมติว่าจู๋มีกลิ่นได้... ของคุณน่าจะหอมตุ่ยๆ คล้ายอะไร?", // Q1
+                    "ลีลาบนเตียงที่อยากให้แฟนมอบให้... ขอแบบสัตว์โลกน่ารักตัวไหนดี?", // Q2
+                    "โดนจัดหนักจนฟินสุดๆ คืนนี้จะ 'เปย์' แฟนกลับด้วยอะไรดี?", // Q3
+                    "ถ้าแฟนยอมทำสีขนน้องชายให้... อยากได้สีสุดจี๊ดแบบไหน?", // Q4
+                    "นอกจากการ 'นวดน้องชาย' แล้ว... กิจกรรมยามว่างสุดโปรดของคุณคือ?", // Q5
+                    "ศึกรักเมื่อคืนทำเอาเดี้ยง... ตื่นมาเจอสภาพอากาศแบบไหนที่ 'ใช่เลย'?", // Q6
+                    "เดทแรกสุดแซ่บ... อยากนัดเจอที่ไหนให้มันเร้าใจ?", // Q7
+                    "เพลงเปิดศึก... อยากได้แนวไหนมาบิ้วท์อารมณ์ก่อนเริ่ม?", // Q8
+                    "มื้ออาหารสุดสยิว... อยากปรนเปรอ (หรือถูกปรนเปรอ) ด้วยเมนูใด?", // Q9
+                    "เดทสองต้องปังกว่าเดิม... จะใส่ชุดอะไรไปยั่ว เอ้ย! ไปเจอดี?", // Q10
+                    "ถ้าเลือก 'ของเล่น' มาเสริมรักได้ชิ้นนึง จะเอาอะไร?", // Q11
+                    "เสียงครางแบบไหนที่ทำให้ 'ใจสั่น' ที่สุด?", // Q12
+                    "ถ้าจูบกันแล้วรสชาติเหมือนอาหาร... อยากให้เป็นรสอะไร?", // Q13
+                    "สถานการณ์ไหนที่ทำให้ 'ปึ๋งปั๋ง' ได้ง่ายสุด?", // Q14
+                    "ถ้าต้องสักลายเกี่ยวกับ 'เรื่องอย่างว่า'... จะสักรูปอะไร?", // Q15
+                    "คำพูดติดปากตอนกำลัง 'เข้าด้ายเข้าเข็ม' คือ?", // Q16
+                    "ถ้าเลือก 'พลังวิเศษ' มาใช้ตอนมีเซ็กส์ได้ จะเอาพลังอะไร?", // Q17
+                    "ชอบ 'บรรยากาศ' แบบไหนที่สุดตอนกำลังจะเริ่ม?", // Q18
+                    "ถ้าเปรียบ 'สมรรถภาพ' ตัวเองเป็นรถ... จะเป็นรถอะไร?", // Q19
+                    "'ความลับ' สุดยอดเกี่ยวกับเรื่องเซ็กส์ของคุณคือ?", // Q20
+                    "ถ้าเลือกตัวละครในหนัง/การ์ตูนมาเป็น 'คู่ขา' หนึ่งคืน จะเลือกใคร?", // Q21
+                    "คิดว่า 'ขนาด' สำคัญไหม? (ตอบตามจริง!)", // Q22
+                    "ถ้าต้อง 'มีอะไรกัน' ในที่สาธารณะแบบลับๆ จะเลือกที่ไหน?", // Q23
+                    "'ชุดชั้นใน' แบบไหนที่เห็นแล้วใจเต้นแรง?", // Q24
+                    "ถ้า 'จู๋' พูดได้ อยากให้มันพูดว่าอะไร?", // Q25
+                    "ชอบ 'เล้าโลม' นานๆ หรือ 'เข้าประเด็น' เลย?", // Q26
+                    "ถ้าให้คะแนน 'ความหื่น' ของตัวเอง 1-10 จะให้เท่าไหร่?", // Q27
+                    "อุปกรณ์ประกอบฉากที่คิดว่า 'เซ็กซี่' ที่สุด?", // Q28
+                    "ถ้าตื่นมาแล้วสลับร่างกับแฟน 1 วัน... สิ่งแรกที่จะทำคือ?", // Q29
+                    "คำถามสุดท้าย... คิดว่าผลลัพธ์จะออกมาเป็น 'จู๋' แบบไหน?" // Q30
+                ],
+                options: [
+                    ["🍫 ช็อกโกแลต (หอมหวานน่ากิน)", "🍿 ป๊อปคอร์น (กลิ่นเนยๆ เค็มๆ)", "🍭 ลูกอม (หวานเจี๊ยบชื่นใจ)", "🥓 ส้มตำปลาร้า (นัวๆ ท้าทายจมูก)", "🍪 คุกกี้ (หอมกรุ่นเหมือนเพิ่งอบ)"], // A1
+                    ["🐶 หมาน้อย (อ้อนเก่ง ขี้เล่น)", "🐱 แมวเหมียว (คลอเคลีย ยั่วๆ)", "🐰 กระต่ายป่า (ซุกซน พลังเยอะ)", "🦉 นกฮูก (สุขุม รอบคอบ แต่ถึงใจ)", "🐢 เต่าทะเล (ช้าๆ แต่มั่นคง)"], // A2
+                    ["💬 นอนคุยกระหนุงกระหนิง", "🎁 ของขวัญแทนใจ (ชิ้นใหญ่ๆ!)", "🤗 กอดแน่นๆ ฟัดๆ", "🍳 ทำอาหารเช้าถึงเตียง", "🎵 ร้องเพลงกล่อม (หรือแร็ป?)"], // A3
+                    ["🌈 สีรุ้ง (สดใสทุกเฉด)", "💗 สีชมพูบานเย็น (หวานแหวว)", "💙 สีน้ำเงินมหาสมุทร (ลึกลับน่าค้นหา)", "💚 สีเขียวนีออน (แสบตาไปเลย!)", "💛 สีทอง (อร่ามดั่งทองคำ)"], // A4
+                    ["📚 อ่านนิยายวายฟินๆ", "🎨 วาดรูปสื่ออารมณ์", "🎮 ไถ ROV/FreeFire จนตาแฉะ", "🏀 ออกกำลังกายเรียกเหงื่อ", "🎤 ซ้อมร้องเพลงประกวด"], // A5
+                    ["☀️ แดดเปรี้ยง (ร้อนแรงต่อเนื่อง)", "🌧️ ฝนพรำ (โรแมนติก ชวนซุก)", "❄️ หิมะตก (อยากกอดให้อุ่น)", "🌙 กลางคืนต่อเลยได้ไหม?", "🌤️ ฟ้าหลังฝน (สดชื่น สบายตัว)"], // A6
+                    ["🏖️ ทะเลสวย น้ำใส (แอบส่องชุดว่ายน้ำ)", "🏔️ ยอดดอยดูดาว (บรรยากาศดี)", "🏰 เมืองเก่า (ขลังๆ มีเรื่องเล่า)", "🏞️ น้ำตกกลางป่า (ธรรมชาติสุดๆ)", "🛍️ ห้างหรู (เดินชิล แอร์เย็น)"], // A7
+                    ["🎧 ป๊อปสากลจังหวะดีๆ", "🎸 อินดี้ฟังสบาย (แต่แอบเซ็กซี่)", "🎼 ลูกทุ่งโจ๊ะๆ", "🎹 เพลงบรรเลงเคลิ้มๆ", "🎤 เพลงไวรัล TikTok (เต้นตามได้!)"], // A8
+                    ["🍣 ซูชิ/ซาชิมิ (สดชื่น ละมุนลิ้น)", "🍕 พิซซ่า/พาสต้า (อิ่ม อร่อย ชีสเยิ้ม)", "🍜 ก๋วยเตี๋ยว/ส้มตำ (แซ่บๆ ถึงใจ)", "🍔 เบอร์เกอร์/ฟรายส์ (ง่ายๆ แต่ฟิน)", "🍰 เค้ก/ไอศกรีม (ตบท้ายหวานๆ)"], // A9
+                    ["👕 เสื้อยืดกางเกงเก่าๆ (เซอร์ๆ)", "👔 เชิ้ตเรียบๆ (ดูดีมีภูมิฐาน)", "👗 ชุดเปิดนิดโชว์หน่อย (เซ็กซี่ขยี้ใจ)", "👘 ชุดแฟนซี (เอาฮา หรือเอาจริง?)", "🩳 ชุดนอน (ไม่ได้นอน!)"], // A10
+                    ["🥚 ไข่สั่นจั๊กจี้", "🥒 แตงกวาสดจากสวน", "🕹️ จอยเกม (เอาไว้กดท่าไม้ตาย?)", "✋ มือเปล่า (คลาสสิค!)", "🥖 ขนมปังฝรั่งเศส (ยาวๆ ใหญ่ๆ)"], // A11
+                    ["🎶 เสียงสูงปรี๊ด", "🗣️ เสียงทุ้มกระซิบ", "😂 เสียงหัวเราะคิกคัก", "🤐 เงียบกริบ (ลุ้นเอาเอง)", "🐷 เสียงเหมือนหมูโดนน้ำร้อน"], // A12
+                    ["🌶️ ต้มยำกุ้ง (แซ่บซี๊ด)", "🍦 ไอติมวนิลา (หวานละมุน)", "☕ กาแฟดำ (ขมแต่ดี)", "🍺 เบียร์เย็นๆ (ซ่าถึงใจ)", "🍬 ทุเรียน (หอม...มั้ง?)"], // A13
+                    ["🚿 ตอนอาบน้ำด้วยกัน", "👀 ตอนเผลอสบตากัน", "💪 ตอนเห็นเหงื่อตอนออกกำลังกาย", "😴 ตอนแอบมองตอนหลับ", "🍳 ตอนทำอาหารในครัว"], // A14
+                    ["🔥 รูปไฟลุกโชน", "🐍 รูปงูเลื้อย", "🍑 รูปพีชกลมๆ", "🍆 รูปมะเขือม่วง", "🚫 ไม่สัก! (กลัวเจ็บ)"], // A15
+                    ["\"อ๊าาา!\" (คลาสสิค)", "\"ที่รัก...\" (หวานๆ)", "\"เร็วอีก!\" (สายโหด)", "\"สุดยอด!\" (ชมเก่ง)", "\"... (เงียบ ตั้งใจทำ)\""], // A16
+                    ["🚀 พลังความเร็วสูง", "💪 พลังอึดถึกทน", "✨ พลังสร้างภาพลวงตา", "🧠 พลังอ่านใจ", "⏳ พลังหยุดเวลา"], // A17
+                    ["🕯️ แสงเทียนสลัวๆ", "💡 ไฟสว่างจ้า (เห็นชัดๆ)", "🌃 วิวเมืองตอนกลางคืน", "🌳 ท่ามกลางธรรมชาติ", "🎉 เสียงดัง ปาร์ตี้ๆ"], // A18
+                    ["🏎️ รถแข่ง F1 (เร็ว แรง)", "🚜 รถไถ (ลุยได้ทุกสภาพ)", "🚲 จักรยาน (เรื่อยๆ ชิลๆ)", "🚂 รถไฟ (ยาวๆ ไป)", "🛵 มอเตอร์ไซค์ (คล่องตัว ซอกแซก)"], // A19
+                    ["🤫 ชอบลองท่าแปลกๆ", "😍 แอบดูหนังโป๊บ่อยๆ", "😬 ไม่เคยถึงจุดสุดยอด", "😂 เคยหลับคาอกแฟน", "🤥 โกหกแฟนว่าฟิน"], // A20
+                    ["🦸 กัปตันอเมริกา (หุ่นแน่น)", "🧙 แฮร์รี่ พอตเตอร์ (มีเวทมนตร์)", "🥷 นารูโตะ (มีคาถาแยกเงา)", "👸 เอลซ่า (เย็นๆ ดี)", "👾 Shrek (ตัวใหญ่ อบอุ่น?)"], // A21
+                    ["👍 สำคัญมาก!", "👌 สำคัญปานกลาง", "🤷 ไม่สำคัญเท่าลีลา", "🤔 แล้วแต่อารมณ์", "😂 ขอใหญ่ไว้ก่อน อุ่นใจ"], // A22
+                    ["🎬 โรงหนังแถวหลังสุด", "🚻 ห้องน้ำห้าง", "🌳 พุ่มไม้ในสวนสาธารณะ", "🚗 ในรถที่จอดลับตาคน", "🙅 ไม่เอา! เสี่ยงเกินไป"], // A23
+                    ["👙 บิกินี่ตัวจิ๋ว", "🎀 ลูกไม้ซีทรู", "⚫ สีดำเรียบๆ แต่ดึงดูด", "🐯 ลายเสือดาวสุดแซ่บ", "⚪ ไม่ใส่เลย (ดีที่สุด!)"], // A24
+                    ["“นายท่าน สุดยอด!”", "“ขอพักแป๊บ เหนื่อย”", "“ตรงนั้นแหละ ดี!”", "“เมื่อไหร่จะโต?”", "“วันนี้ขอลาป่วย”"], // A25
+                    ["⏳ เล้าโลมนานๆ ฟินกว่า", "🚀 เข้าเรื่องเลย เสียเวลา", "☯️ แล้วแต่สถานการณ์", "🤔 ขอแบบผสมๆ", "🤷 อีกฝ่ายนำเลยจ้า"], // A26
+                    ["1-3 (ใสๆ วัยรุ่นชอบ)", "4-6 (พอประมาณ กรุบกริบ)", "7-8 (หื่นนะ แต่เก็บอาการ)", "9 (เก็บอาการไม่ค่อยอยู่)", "10+ (ทะลุปรอทไปเลยจ้า!)"], // A27
+                    ["🍓 สตรอว์เบอร์รี/วิปครีม", "⛓️ โซ่ แส้ กุญแจมือ", "👔 เนคไท/เชิ้ตขาว", "👠 รองเท้าส้นสูง", "🕯️ เทียนไข (ร้อนๆ)"], // A28
+                    ["👀 สำรวจร่างกายตัวเอง (ร่างใหม่)", "🤳 ถ่ายรูปเก็บไว้", "💪 ลองใช้พลัง (?) ของอีกฝ่าย", "🤫 แอบดูมือถือแฟน", "😂 ทำตัวปกติ (เนียนๆ)"], // A29
+                    ["😇 แบบเทพบุตรจุติ", "😈 แบบปีศาจเจ้าเลห์", "😂 แบบตลกโบ๊ะบ๊ะ", "🤔 แบบลึกลับน่าค้นหา", "🤷 แบบไหนก็ได้ ขอให้ใช้ได้ดี!"] // A30
+                ]
+            },
+            en: {
+                title: "Joo4Tune - Penis Personality Test (Naughty x2 Ver.) 😈🔥",
+                landingPrompt: "Double-tap to start!",
+                quizTitle: "Joo4Tune - Penis Personality @hatchedboy 💖",
+                followTitle: "Wait a sec, darling!",
+                followText: `Before seeing which penis type you deserve...<br>Go follow <strong class="text-pink-500">@hatchedboy</strong> on X (formerly Twitter)<br>to cheer him up! 💕 So he has the energy to make more content!`,
+                followButtonLink: "Okay! Following now!",
+                followButtonClose: "Impatient... Show me the results!",
+                loadingText: "Spinning... Your prophecy is coming!",
+                resultImageAlt: "Result",
+                downloadButton: "Save image to show off!",
+                downloadInstruction: `If the button doesn't work, long-press the image and save (mobile) <br> or Right-click > Save image as... (desktop)`,
+                restartButton: "Wanna play again? Let's go!",
+                questions: [
+                    "If your penis could have a scent... what faint aroma would it resemble?", // Q1
+                    "What cute animal's bedroom style would you want your partner to emulate?", // Q2
+                    "After an amazing night, how would you 'reward' your partner?", // Q3
+                    "If your partner agreed to dye their pubic hair... what wild color would you choose?", // Q4
+                    "Besides 'massaging your little brother', what's your favorite pastime?", // Q5
+                    "Last night's love battle left you sore... waking up to what weather feels 'just right'?", // Q6
+                    "For a sizzling first date... where would you meet to make it exciting?", // Q7
+                    "Battle prelude music... what genre gets you in the mood?", // Q8
+                    "For a sensual meal... what menu would you like to serve (or be served)?", // Q9
+                    "Second date needs to be hotter... what outfit would you wear to tease, oops, meet them?", // Q10
+                    "If you could pick one 'toy' to enhance lovemaking, what would it be?", // Q11
+                    "Which moaning sound makes your 'heart tremble' the most?", // Q12
+                    "If kissing tasted like food... what flavor would you want?", // Q13
+                    "Which situation gets you 'excited' most easily?", // Q14
+                    "If you had to get a tattoo related to 'that kind of stuff'... what would you get?", // Q15
+                    "What's your go-to phrase when things are 'getting heated'?", // Q16
+                    "If you could have one 'superpower' during sex, what would it be?", // Q17
+                    "What's your favorite 'atmosphere' when things are about to start?", // Q18
+                    "If you compared your 'prowess' to a vehicle... what would it be?", // Q19
+                    "What's your ultimate 'secret' regarding sex?", // Q20
+                    "If you could choose a movie/cartoon character as a 'partner' for one night, who?", // Q21
+                    "Does 'size' matter? (Be honest!)", // Q22
+                    "If you had to secretly 'do it' in public, where would you choose?", // Q23
+                    "What type of 'underwear' makes your heart race when you see it?", // Q24
+                    "If your 'penis' could talk, what would you want it to say?", // Q25
+                    "Do you prefer long 'foreplay' or getting 'straight to the point'?", // Q26
+                    "If you rated your own 'horniness' from 1-10, what would it be?", // Q27
+                    "What prop do you find the 'sexiest'?", // Q28
+                    "If you woke up having swapped bodies with your partner for a day... what's the first thing you'd do?", // Q29
+                    "Final question... what kind of 'penis' result do you think you'll get?" // Q30
+                ],
+                options: [
+                    ["🍫 Chocolate (Sweet & edible)", "🍿 Popcorn (Buttery & salty)", "🍭 Candy (Sugary sweet)", "🥓 Fermented Fish Som Tum (Pungent & challenging)", "🍪 Cookie (Warm & fresh-baked)"], // A1
+                    ["🐶 Puppy (Needy & playful)", "🐱 Kitten (Cuddly & teasing)", "🐰 Wild Rabbit (Mischievous & energetic)", "🦉 Owl (Calm, wise, but intense)", "🐢 Sea Turtle (Slow & steady)"], // A2
+                    ["💬 Pillow talk cuddles", "🎁 A precious gift (Big one!)", "🤗 Tight hugs & nuzzles", "🍳 Breakfast in bed", "🎵 Serenade (or rap?)"], // A3
+                    ["🌈 Rainbow (Bright all shades)", "💗 Hot Pink (Sweet)", "💙 Ocean Blue (Mysterious)", "💚 Neon Green (Eye-catching!)", "💛 Gold (Shining like gold)"], // A4
+                    ["📚 Reading steamy novels", "🎨 Drawing expressive art", "🎮 Grinding Mobile Games", "🏀 Working out, getting sweaty", "🎤 Practicing singing"], // A5
+                    ["☀️ Blazing Sun (Continuing heat)", "🌧️ Gentle Rain (Romantic & cozy)", "❄️ Snowfall (Want to cuddle for warmth)", "🌙 Can we continue at night?", "🌤️ Sun after rain (Refreshed & comfy)"], // A6
+                    ["🏖️ Beautiful Beach (Spying on swimsuits)", "🏔️ Mountain Top Stargazing (Good vibes)", "🏰 Old City (Mystical & historic)", "🏞️ Waterfall in Forest (Very natural)", "🛍️ Luxury Mall (Chill walk, cool air)"], // A7
+                    ["🎧 Upbeat International Pop", "🎸 Chill Indie (but secretly sexy)", "🎼 Thai Country Dance Music", "🎹 Dreamy Instrumental", "🎤 Viral TikTok Song (Can dance along!)"], // A8
+                    ["🍣 Sushi/Sashimi (Fresh & delicate)", "🍕 Pizza/Pasta (Filling, tasty, cheesy)", "🍜 Noodles/Som Tum (Spicy & satisfying)", "🍔 Burger/Fries (Simple but fulfilling)", "🍰 Cake/Ice Cream (Sweet ending)"], // A9
+                    ["👕 Old T-shirt & pants (Casual)", "👔 Simple Shirt (Neat & respectable)", "👗 Slightly revealing dress (Sexy & heart-pounding)", "👘 Fancy Costume (For laughs or serious?)", "🩳 Lingerie (Ready for action!)"], // A10
+                    ["🥚 Vibrating Egg (Ticklish)", "🥒 Fresh Cucumber", "🕹️ Game Controller (For special moves?)", "✋ Bare Hands (Classic!)", "🥖 Baguette (Long & large)"], // A11
+                    ["🎶 High-pitched Squeal", "🗣️ Deep Whisper", "😂 Giggles", "🤐 Complete Silence (Suspenseful)", "🐷 Like a pig in hot water"], // A12
+                    ["🌶️ Tom Yum Goong (Spicy & sour)", "🍦 Vanilla Ice Cream (Sweet & smooth)", "☕ Black Coffee (Bitter but good)", "🍺 Cold Beer (Refreshing)", "🍬 Durian (Fragrant...maybe?)"], // A13
+                    ["🚿 Showering together", "👀 Accidental eye contact", "💪 Seeing sweat during exercise", "😴 Sneaking a peek while sleeping", "🍳 Cooking in the kitchen"], // A14
+                    ["🔥 Blazing Fire", "🐍 Slithering Snake", "🍑 Round Peach", "🍆 Purple Eggplant", "🚫 No tattoo! (Afraid of pain)"], // A15
+                    ["\"Aaaah!\" (Classic)", "\"Darling...\" (Sweet)", "\"Faster!\" (Dominant)", "\"Amazing!\" (Complimentary)", "\"... (Silent, focused)\""], // A16
+                    ["🚀 Super Speed", "💪 Super Endurance", "✨ Illusion Creation", "🧠 Mind Reading", "⏳ Time Stop"], // A17
+                    ["🕯️ Dim Candlelight", "💡 Bright Lights (See everything)", "🌃 City Night View", "🌳 Amidst Nature", "🎉 Loud Party Vibe"], // A18
+                    ["🏎️ F1 Racer (Fast & furious)", "🚜 Tractor (Goes anywhere)", "🚲 Bicycle (Chill & steady)", "🚂 Train (Long journey)", "🛵 Scooter (Agile & nimble)"], // A19
+                    ["🤫 Like trying weird positions", "😍 Secretly watch porn often", "😬 Never reached orgasm", "😂 Fell asleep on partner", "🤥 Lied to partner about finishing"], // A20
+                    ["🦸 Captain America (Great body)", "🧙 Harry Potter (Has magic)", "🥷 Naruto (Shadow clone jutsu)", "👸 Elsa (Cooling)", "👾 Shrek (Big & warm?)"], // A21
+                    ["👍 Very important!", "👌 Moderately important", "🤷 Technique over size", "🤔 Depends on the mood", "😂 Bigger is better, just in case"], // A22
+                    ["🎬 Back row of the cinema", "🚻 Mall restroom", "🌳 Bush in a park", "🚗 Parked car out of sight", "🙅 No way! Too risky"], // A23
+                    ["👙 Tiny Bikini", "🎀 See-through Lace", "⚫ Simple but attractive Black", "🐯 Sexy Leopard Print", "⚪ Nothing at all (The best!)"], // A24
+                    ["“Master, you're the best!”", "“Need a break, tired”", "“Right there, yes!”", "“When will I grow up?”", "“Calling in sick today”"], // A25
+                    ["⏳ Long foreplay is better", "🚀 Get straight to it, waste of time", "☯️ Depends on the situation", "🤔 A mix of both", "🤷 Let the partner lead"], // A26
+                    ["1-3 (Innocent youth)", "4-6 (Moderate amount)", "7-8 (Horny, but hiding it)", "9 (Can barely hide it)", "10+ (Off the charts!)"], // A27
+                    ["🍓 Strawberries/Whipped Cream", "⛓️ Chains, Whips, Handcuffs", "👔 Necktie/White Shirt", "👠 High Heels", "🕯️ Candle Wax (Hot)"], // A28
+                    ["👀 Explore my (new) body", "🤳 Take pictures", "💪 Try out their 'power' (?)", "🤫 Check partner's phone", "😂 Act normal (Be sneaky)"], // A29
+                    ["😇 Like a descended angel", "😈 Like a cunning devil", "😂 Like a goofy clown", "🤔 Like mysterious & intriguing", "🤷 Any type is fine, as long as it works well!"] // A30
+                ]
+            },
+            zh: {
+                title: "Joo4Tune - 丁丁性格测试 (淘气x2版) 😈🔥",
+                landingPrompt: "双击开始！",
+                quizTitle: "Joo4Tune - 丁丁性格 @hatchedboy 💖",
+                followTitle: "亲爱的，请稍等！",
+                followText: `在看你配得上哪种丁丁之前...<br>请先去 X (前Twitter) 关注 <strong class="text-pink-500">@hatchedboy</strong><br>给他打打气！💕 这样他才有精力创作更多内容！`,
+                followButtonLink: "好的！现在就关注！",
+                followButtonClose: "没耐心... 直接看结果！",
+                loadingText: "转圈圈... 你的预言正在生成！",
+                resultImageAlt: "结果",
+                downloadButton: "保存图片去炫耀！",
+                downloadInstruction: `如果按钮无效，请长按图片保存（手机）<br> 或 右键 > 图片另存为... （电脑）`,
+                restartButton: "想再玩一次？来吧！",
+                questions: [
+                    "假设你的丁丁有气味……它淡淡的香气会像什么？", // Q1
+                    "你希望伴侣模仿哪种可爱动物的床上风格？", // Q2
+                    "经过一个美妙的夜晚，你会如何“奖励”你的伴侣？", // Q3
+                    "如果伴侣同意染他们的阴毛……你会选择什么狂野的颜色？", // Q4
+                    "除了“按摩小弟弟”之外，你最喜欢的消遣是什么？", // Q5
+                    "昨晚的爱情大战让你酸痛……醒来时什么样的天气感觉“刚刚好”？", // Q6
+                    "为了一个火热的初次约会……你想在哪里见面让它更刺激？", // Q7
+                    "战斗前奏音乐……什么类型的音乐能让你进入状态？", // Q8
+                    "对于一顿感性的餐点……你想提供（或被提供）什么菜单？", // Q9
+                    "第二次约会需要更火辣……你会穿什么衣服去挑逗，哦不，去见他们？", // Q10
+                    "如果你能选择一个“玩具”来增强爱意，你会选什么？", // Q11
+                    "哪种呻吟声最让你“心颤”？", // Q12
+                    "如果接吻尝起来像食物……你希望是什么味道？", // Q13
+                    "哪种情况最容易让你“兴奋”？", // Q14
+                    "如果你必须纹一个与“那种事”相关的纹身……你会纹什么图案？", // Q15
+                    "当事情“升温”时，你常用的口头禅是什么？", // Q16
+                    "如果你在性爱中能拥有一种“超能力”，会是什么？", // Q17
+                    "当事情即将开始时，你最喜欢什么样的“氛围”？", // Q18
+                    "如果你把自己的“能力”比作一辆车……它会是什么车？", // Q19
+                    "关于性，你最大的“秘密”是什么？", // Q20
+                    "如果你能选择一个电影/卡通人物作为一晚的“伴侣”，会选谁？", // Q21
+                    "你认为“尺寸”重要吗？（说实话！）", // Q22
+                    "如果你必须偷偷地在公共场合“做”，你会选择哪里？", // Q23
+                    "看到哪种类型的“内衣”会让你心跳加速？", // Q24
+                    "如果你的“丁丁”会说话，你希望它说什么？", // Q25
+                    "你喜欢长时间的“前戏”还是“直奔主题”？", // Q26
+                    "如果你给自己打分（1-10分），你的“性欲”有多强？", // Q27
+                    "你觉得什么道具最“性感”？", // Q28
+                    "如果你醒来和伴侣互换了身体一天……你会做的第一件事是什么？", // Q29
+                    "最后一个问题……你认为你会得到什么样的“丁丁”结果？" // Q30
+                ],
+                options: [
+                    ["🍫 巧克力 (香甜可口)", "🍿 爆米花 (奶油咸香)", "🍭 糖果 (甜蜜蜜)", "🥓 臭鱼酱青木瓜沙拉 (浓郁挑战嗅觉)", "🍪 饼干 (刚出炉的温暖香气)"], // A1
+                    ["🐶 小狗 (黏人爱玩)", "🐱 小猫 (依偎挑逗)", "🐰 野兔 (淘气精力充沛)", "🦉 猫头鹰 (冷静智慧但激烈)", "🐢 海龟 (缓慢而稳定)"], // A2
+                    ["💬 枕边情话依偎", "🎁 珍贵的礼物 (大份的!)", "🤗 紧紧拥抱和蹭蹭", "🍳 床上早餐", "🎵 小夜曲 (或说唱?)"], // A3
+                    ["🌈 彩虹 (所有颜色都鲜艳)", "💗 亮粉色 (甜美)", "💙 海洋蓝 (神秘)", "💚 霓虹绿 (亮瞎眼!)", "💛 金色 (像金子一样闪耀)"], // A4
+                    ["📚 阅读热门小说", "🎨 画画表达情感", "🎮 沉迷手游", "🏀 运动流汗", "🎤 练习唱歌"], // A5
+                    ["☀️ 烈日炎炎 (持续高温)", "🌧️ 细雨绵绵 (浪漫舒适)", "❄️ 下雪 (想拥抱取暖)", "🌙 晚上可以继续吗?", "🌤️ 雨后阳光 (清新舒适)"], // A6
+                    ["🏖️ 美丽海滩 (偷看泳装)", "🏔️ 山顶观星 (氛围好)", "🏰 古城 (神秘有历史)", "🏞️ 森林瀑布 (非常自然)", "🛍️ 豪华商场 (悠闲散步，冷气足)"], // A7
+                    ["🎧 节奏感强的国际流行乐", "🎸 轻松的独立音乐 (但暗藏性感)", "🎼 泰国乡村舞曲", "🎹 梦幻的器乐", "🎤 病毒式 TikTok 歌曲 (可以跟着跳!)"], // A8
+                    ["🍣 寿司/生鱼片 (新鲜细腻)", "🍕 披萨/意大利面 (饱腹美味，芝士浓郁)", "🍜 面条/青木瓜沙拉 (辣得过瘾)", "🍔 汉堡/薯条 (简单但满足)", "🍰 蛋糕/冰淇淋 (甜蜜收尾)"], // A9
+                    ["👕 旧T恤和裤子 (休闲)", "👔 简单的衬衫 (整洁体面)", "👗 稍微暴露的裙子 (性感撩人)", "👘 化装服 (搞笑还是认真?)", "🩳 性感内衣 (准备行动!)"], // A10
+                    ["🥚 震动蛋 (痒痒的)", "🥒 新鲜黄瓜", "🕹️ 游戏手柄 (用来放大招?)", "✋ 赤手空拳 (经典!)", "🥖 法棍面包 (又长又大)"], // A11
+                    ["🎶 高亢尖叫", "🗣️ 低沉耳语", "😂 轻笑", "🤐 完全沉默 (充满悬念)", "🐷 像热水烫猪"], // A12
+                    ["🌶️ 冬阴功汤 (酸辣刺激)", "🍦 香草冰淇淋 (香甜顺滑)", "☕ 黑咖啡 (苦涩但好)", "🍺 冰啤酒 (清爽)", "🍬 榴莲 (香...大概吧?)"], // A13
+                    ["🚿 一起洗澡", "👀 不经意的眼神接触", "💪 看到运动时的汗水", "😴 睡觉时偷偷看", "🍳 在厨房做饭"], // A14
+                    ["🔥 熊熊烈火", "🐍 蜿蜒的蛇", "🍑 圆圆的桃子", "🍆 紫色茄子", "🚫 不纹身! (怕疼)"], // A15
+                    ["“啊啊啊!” (经典)", "“亲爱的...” (甜蜜)", "“再快点!” (主导型)", "“太棒了!” (赞美型)", "“... (沉默，专注)”"], // A16
+                    ["🚀 超级速度", "💪 超级耐力", "✨ 制造幻觉", "🧠 读心术", "⏳ 时间停止"], // A17
+                    ["🕯️ 昏暗烛光", "💡 明亮灯光 (看得清楚)", "🌃 城市夜景", "🌳 大自然中", "🎉 喧闹派对氛围"], // A18
+                    ["🏎️ F1赛车 (速度与激情)", "🚜 拖拉机 (无所不能)", "🚲 自行车 (悠闲稳定)", "🚂 火车 (长途旅行)", "🛵 踏板车 (灵活敏捷)"], // A19
+                    ["🤫 喜欢尝试奇怪姿势", "😍 经常偷偷看片", "😬 从未达到高潮", "😂 在伴侣怀里睡着过", "🤥 骗伴侣说自己到了"], // A20
+                    ["🦸 美国队长 (身材好)", "🧙 哈利波特 (会魔法)", "🥷 鸣人 (影分身术)", "👸 艾莎 (冰冰凉)", "👾 史莱克 (高大温暖?)"], // A21
+                    ["👍 非常重要!", "👌 中等重要", "🤷 技巧比尺寸重要", "🤔 看心情", "😂 越大越好，以防万一"], // A22
+                    ["🎬 电影院最后一排", "🚻 商场洗手间", "🌳 公园灌木丛", "🚗 停在隐蔽处的车里", "🙅 不行! 太冒险了"], // A23
+                    ["👙 迷你比基尼", "🎀 透视蕾丝", "⚫ 简单但吸引人的黑色", "🐯 性感豹纹", "⚪ 什么都不穿 (最好!)"], // A24
+                    ["“主人，你最棒了!”", "“需要休息一下，累了”", "“就是那里，对!”", "“我什么时候才能长大?”", "“今天请病假”"], // A25
+                    ["⏳ 长时间前戏更好", "🚀 直奔主题，浪费时间", "☯️ 看情况", "🤔 两者结合", "🤷 让伴侣主导"], // A26
+                    ["1-3 (清纯少年)", "4-6 (适度)", "7-8 (色，但隐藏着)", "9 (几乎藏不住)", "10+ (爆表了!)"], // A27
+                    ["🍓 草莓/鲜奶油", "⛓️ 链条、鞭子、手铐", "👔 领带/白衬衫", "👠 高跟鞋", "🕯️ 蜡烛 (热的)"], // A28
+                    ["👀 探索我的(新)身体", "🤳 拍照留念", "💪 试试对方的“力量”(?)", "🤫 偷看伴侣手机", "😂 假装正常 (装蒜)"], // A29
+                    ["😇 像降临的天使", "😈 像狡猾的恶魔", "😂 像滑稽的小丑", "🤔 像神秘迷人", "🤷 什么类型都行，好用就行!"] // A30
+                ]
+            },
+            hi: {
+                title: "Joo4Tune - लिंग व्यक्तित्व परीक्षण (शरारती x2 संस्करण) 😈🔥",
+                landingPrompt: "शुरू करने के लिए डबल-टैप करें!",
+                quizTitle: "Joo4Tune - लिंग व्यक्तित्व @hatchedboy 💖",
+                followTitle: "एक सेकंड रुको, प्रिय!",
+                followText: `यह देखने से पहले कि आप किस प्रकार के लिंग के लायक हैं...<br>जाओ और X (पूर्व ट्विटर) पर <strong class="text-pink-500">@hatchedboy</strong> को फॉलो करो<br>उसे खुश करने के लिए! 💕 ताकि उसके पास और सामग्री बनाने की ऊर्जा हो!`,
+                followButtonLink: "ठीक है! अभी फॉलो कर रहा हूँ!",
+                followButtonClose: "अधीर... मुझे परिणाम दिखाओ!",
+                loadingText: "घूम रहा है... आपकी भविष्यवाणी आ रही है!",
+                resultImageAlt: "परिणाम",
+                downloadButton: "दिखाने के लिए छवि सहेजें!",
+                downloadInstruction: `यदि बटन काम नहीं करता है, तो छवि को लंबे समय तक दबाएं और सहेजें (मोबाइल) <br> या राइट-क्लिक करें > छवि को इस रूप में सहेजें... (डेस्कटॉप)`,
+                restartButton: "फिर से खेलना चाहते हैं? चलो चलें!",
+                questions: [
+                    "अगर आपके लिंग में गंध आ सकती... तो उसकी हल्की सुगंध किससे मिलती जुलती?", // Q1
+                    "आप अपने साथी से किस प्यारे जानवर की बेडरूम शैली का अनुकरण करवाना चाहेंगे?", // Q2
+                    "एक अद्भुत रात के बाद, आप अपने साथी को कैसे 'पुरस्कृत' करेंगे?", // Q3
+                    "अगर आपका साथी अपने जघन बाल रँगने के लिए सहमत हो... तो आप कौन सा जंगली रंग चुनेंगे?", // Q4
+                    "'छोटे भाई की मालिश' के अलावा, आपका पसंदीदा शगल क्या है?", // Q5
+                    "पिछली रात की प्रेम लड़ाई ने आपको थका दिया... किस मौसम में जागना 'बिल्कुल सही' लगता है?", // Q6
+                    "एक जोशीली पहली डेट के लिए... इसे रोमांचक बनाने के लिए आप कहाँ मिलेंगे?", // Q7
+                    "लड़ाई की प्रस्तावना संगीत... कौन सी शैली आपको मूड में लाती है?", // Q8
+                    "एक कामुक भोजन के लिए... आप कौन सा मेनू परोसना (या परोसा जाना) चाहेंगे?", // Q9
+                    "दूसरी डेट और भी गर्म होनी चाहिए... आप उन्हें छेड़ने, उफ़, मिलने के लिए कौन सी पोशाक पहनेंगे?", // Q10
+                    "यदि आप प्रेम-प्रसंग को बढ़ाने के लिए एक 'खिलौना' चुन सकते हैं, तो वह क्या होगा?", // Q11
+                    "कौन सी कराहने की आवाज़ आपके 'दिल को सबसे ज़्यादा कंपकंपाती' है?", // Q12
+                    "अगर चूमने का स्वाद भोजन जैसा होता... तो आप कौन सा स्वाद चाहेंगे?", // Q13
+                    "कौन सी स्थिति आपको सबसे आसानी से 'उत्तेजित' करती है?", // Q14
+                    "अगर आपको 'उस तरह की चीज़ों' से संबंधित टैटू बनवाना पड़े... तो आप क्या बनवाएंगे?", // Q15
+                    "जब चीज़ें 'गरमागरम' हो रही हों तो आपका पसंदीदा वाक्यांश क्या है?", // Q16
+                    "यदि आप सेक्स के दौरान एक 'सुपरपावर' रख सकते हैं, तो वह क्या होगी?", // Q17
+                    "जब चीज़ें शुरू होने वाली हों तो आपको कौन सा 'माहौल' सबसे ज़्यादा पसंद है?", // Q18
+                    "यदि आप अपनी 'क्षमता' की तुलना किसी वाहन से करें... तो वह क्या होगा?", // Q19
+                    "सेक्स के संबंध में आपका परम 'रहस्य' क्या है?", // Q20
+                    "यदि आप एक रात के लिए 'साथी' के रूप में किसी फिल्म/कार्टून चरित्र को चुन सकते हैं, तो किसे?", // Q21
+                    "क्या 'आकार' मायने रखता है? (ईमानदारी से!)", // Q22
+                    "यदि आपको सार्वजनिक रूप से गुप्त रूप से 'यह' करना पड़े, तो आप कहाँ चुनेंगे?", // Q23
+                    "किस प्रकार का 'अंडरवियर' देखकर आपका दिल तेज़ी से धड़कता है?", // Q24
+                    "यदि आपका 'लिंग' बात कर सकता, तो आप क्या चाहेंगे कि वह कहे?", // Q25
+                    "क्या आप लंबा 'फोरप्ले' पसंद करते हैं या 'सीधे मुद्दे पर' आते हैं?", // Q26
+                    "यदि आप अपनी 'कामुकता' को 1-10 के पैमाने पर रेट करते हैं, तो यह क्या होगी?", // Q27
+                    "आपको कौन सा सहारा सबसे 'सेक्सी' लगता है?", // Q28
+                    "यदि आप एक दिन के लिए अपने साथी के साथ शरीर बदल कर जागते हैं... तो आप सबसे पहले क्या करेंगे?", // Q29
+                    "अंतिम प्रश्न... आपको क्या लगता है कि आपको किस प्रकार का 'लिंग' परिणाम मिलेगा?" // Q30
+                ],
+                options: [
+                    ["🍫 चॉकलेट (मीठा और खाने योग्य)", "🍿 पॉपकॉर्न (मक्खन जैसा और नमकीन)", "🍭 कैंडी (चीनी जैसी मीठी)", "🥓 किण्वित मछली सोम तम (तीखी और चुनौतीपूर्ण)", "🍪 कुकी (गर्म और ताज़ा पकी हुई)"], // A1
+                    ["🐶 पिल्ला (ज़रूरतमंद और चंचल)", "🐱 बिल्ली का बच्चा (प्यारा और चिढ़ाने वाला)", "🐰 जंगली खरगोश (शरारती और ऊर्जावान)", "🦉 उल्लू (शांत, बुद्धिमान, लेकिन तीव्र)", "🐢 समुद्री कछुआ (धीमा और स्थिर)"], // A2
+                    ["💬 तकिया बात करते हुए गले लगना", "🎁 एक कीमती उपहार (बड़ा वाला!)", "🤗 कसकर गले लगना और सहलाना", "🍳 बिस्तर में नाश्ता", "🎵 लोरी (या रैप?)"], // A3
+                    ["🌈 इंद्रधनुष (सभी रंगों में चमकीला)", "💗 हॉट पिंक (मीठा)", "💙 ओशन ब्लू (रहस्यमय)", "💚 नियॉन ग्रीन (आंखों को लुभाने वाला!)", "💛 सोना (सोने की तरह चमकता हुआ)"], // A4
+                    ["📚 भाप से भरे उपन्यास पढ़ना", "🎨 अभिव्यंजक कला बनाना", "🎮 मोबाइल गेम्स पीसना", "🏀 कसरत करना, पसीना बहाना", "🎤 गायन का अभ्यास करना"], // A5
+                    ["☀️ तेज धूप (लगातार गर्मी)", "🌧️ हल्की बारिश (रोमांटिक और आरामदायक)", "❄️ बर्फबारी (गर्मी के लिए गले लगना चाहते हैं)", "🌙 क्या हम रात में जारी रख सकते हैं?", "🌤️ बारिश के बाद धूप (ताज़ा और आरामदायक)"], // A6
+                    ["🏖️ सुंदर समुद्र तट (स्विमसूट पर जासूसी करना)", "🏔️ माउंटेन टॉप स्टारगेज़िंग (अच्छा माहौल)", "🏰 पुराना शहर (रहस्यमय और ऐतिहासिक)", "🏞️ जंगल में झरना (बहुत प्राकृतिक)", "🛍️ लक्ज़री मॉल (ठंडी सैर, ठंडी हवा)"], // A7
+                    ["🎧 उत्साहित अंतर्राष्ट्रीय पॉप", "🎸 चिल इंडी (लेकिन गुप्त रूप से सेक्सी)", "🎼 थाई देशी नृत्य संगीत", "🎹 स्वप्निल वाद्य यंत्र", "🎤 वायरल टिकटॉक सॉन्ग (साथ में नाच सकते हैं!)"], // A8
+                    ["🍣 सुशी/साशिमी (ताज़ा और नाजुक)", "🍕 पिज़्ज़ा/पास्ता (भरने वाला, स्वादिष्ट, चीज़ी)", "🍜 नूडल्स/सोम तम (मसालेदार और संतोषजनक)", "🍔 बर्गर/फ्राइज़ (सरल लेकिन संतोषजनक)", "🍰 केक/आइसक्रीम (मीठा अंत)"], // A9
+                    ["👕 पुरानी टी-शर्ट और पैंट (आकस्मिक)", "👔 साधारण शर्ट (साफ और सम्मानजनक)", "👗 थोड़ी खुलासा करने वाली पोशाक (सेक्सी और दिल दहला देने वाली)", "👘 फैंसी पोशाक (हँसी के लिए या गंभीर?)", "🩳 अधोवस्त्र (कार्रवाई के लिए तैयार!)"], // A10
+                    ["🥚 वाइब्रेटिंग एग (गुदगुदी करने वाला)", "🥒 ताज़ा खीरा", "🕹️ गेम कंट्रोलर (विशेष चालों के लिए?)", "✋ नंगे हाथ (क्लासिक!)", "🥖 Baguette (लंबा और बड़ा)"], // A11
+                    ["🎶 ऊँची चीख़", "🗣️ गहरी फुसफुसाहट", "😂 खिलखिलाहट", "🤐 पूरी चुप्पी (सस्पेंसफुल)", "🐷 गर्म पानी में सुअर की तरह"], // A12
+                    ["🌶️ टॉम यम गूंग (मसालेदार और खट्टा)", "🍦 वनीला आइसक्रीम (मीठा और चिकना)", "☕ ब्लैक कॉफ़ी (कड़वा लेकिन अच्छा)", "🍺 ठंडी बीयर (ताज़ा)", "🍬 ड्यूरियन (सुगंधित...शायद?)"], // A13
+                    ["🚿 एक साथ नहाना", "👀 आकस्मिक आँख से संपर्क", "💪 व्यायाम के दौरान पसीना देखना", "😴 सोते समय चुपके से देखना", "🍳 रसोई में खाना बनाना"], // A14
+                    ["🔥 धधकती आग", "🐍 रेंगता हुआ साँप", "🍑 गोल आड़ू", "🍆 बैंगनी बैंगन", "🚫 कोई टैटू नहीं! (दर्द से डर लगता है)"], // A15
+                    ["\"आआआह!\" (क्लासिक)", "\"प्रिय...\" (मीठा)", "\"तेज़!\" (प्रमुख)", "\"अद्भुत!\" (प्रशंसात्मक)", "\"... (चुप, केंद्रित)\""], // A16
+                    ["🚀 सुपर स्पीड", "💪 सुपर धीरज", "✨ भ्रम निर्माण", "🧠 मन पढ़ना", "⏳ समय रोक"], // A17
+                    ["🕯️ मंद मोमबत्ती की रोशनी", "💡 तेज रोशनी (सब कुछ देखें)", "🌃 शहर का रात का दृश्य", "🌳 प्रकृति के बीच", "🎉 ज़ोरदार पार्टी का माहौल"], // A18
+                    ["🏎️ F1 रेसर (तेज़ और उग्र)", "🚜 ट्रैक्टर (कहीं भी जाता है)", "🚲 साइकिल (शांत और स्थिर)", "🚂 ट्रेन (लंबी यात्रा)", "🛵 स्कूटर (फुर्तीला और फुर्तीला)"], // A19
+                    ["🤫 अजीब पोज़िशन आज़माना पसंद है", "😍 चुपके से अक्सर पोर्न देखना", "😬 कभी ऑर्गेज्म तक नहीं पहुँचा", "😂 साथी पर सो गया", "🤥 साथी से खत्म होने के बारे में झूठ बोला"], // A20
+                    ["🦸 कैप्टन अमेरिका (शानदार शरीर)", "🧙 हैरी पॉटर (जादू है)", "🥷 नारुतो (शैडो क्लोन जुत्सु)", "👸 एल्सा (ठंडा करना)", "👾 श्रेक (बड़ा और गर्म?)"], // A21
+                    ["👍 बहुत महत्वपूर्ण!", "👌 मध्यम रूप से महत्वपूर्ण", "🤷 आकार से ज़्यादा तकनीक", "🤔 मूड पर निर्भर करता है", "😂 बस मामले में बड़ा बेहतर है"], // A22
+                    ["🎬 सिनेमा की पिछली पंक्ति", "🚻 मॉल का शौचालय", "🌳 पार्क में झाड़ी", "🚗 दृष्टि से ओझल खड़ी कार", "🙅 कोई रास्ता नहीं! बहुत जोखिम भरा"], // A23
+                    ["👙 छोटी बिकनी", "🎀 पारदर्शी फीता", "⚫ सरल लेकिन आकर्षक काला", "🐯 सेक्सी तेंदुआ प्रिंट", "⚪ कुछ भी नहीं (सबसे अच्छा!)"], // A24
+                    ["“मालिक, आप सबसे अच्छे हैं!”", "“ब्रेक चाहिए, थक गया हूँ”", "“वहीं, हाँ!”", "“मैं कब बड़ा होऊंगा?”", "“आज बीमार हूँ कहकर छुट्टी ले रहा हूँ”"], // A25
+                    ["⏳ लंबा फोरप्ले बेहतर है", "🚀 सीधे मुद्दे पर आओ, समय की बर्बादी", "☯️ स्थिति पर निर्भर करता है", "🤔 दोनों का मिश्रण", "🤷 साथी को नेतृत्व करने दें"], // A26
+                    ["1-3 (मासूम युवा)", "4-6 (मध्यम राशि)", "7-8 (कामुक, लेकिन छुपा रहा है)", "9 (मुश्किल से छुपा सकता है)", "10+ (चार्ट से बाहर!)"], // A27
+                    ["🍓 स्ट्रॉबेरी/व्हीप्ड क्रीम", "⛓️ जंजीरें, चाबुक, हथकड़ियाँ", "👔 नेकटाई/सफेद शर्ट", "👠 ऊँची एड़ी के जूते", "🕯️ मोमबत्ती का मोम (गर्म)"], // A28
+                    ["👀 मेरे (नए) शरीर का अन्वेषण करें", "🤳 तस्वीरें लें", "💪 उनकी 'शक्ति' (?) आज़माएं", "🤫 साथी का फ़ोन जांचें", "😂 सामान्य व्यवहार करें (चालाक बनें)"], // A29
+                    ["😇 एक उतरे हुए देवदूत की तरह", "😈 एक चालाक शैतान की तरह", "😂 एक मूर्ख मसखरे की तरह", "🤔 रहस्यमय और दिलचस्प की तरह", "🤷 कोई भी प्रकार ठीक है, जब तक यह अच्छी तरह से काम करता है!"], // A30
+                ]
             }
-            setTimeout(() => clickCount = 0, 300);
-        });
+        };
 
-        // Quiz Logic
-        const questions = [
-            "อวัยวะเพศของคุณกลิ่นแอบคล้ายอะไรนะ?",
-            "หากมีแฟนอยากให้ลีลาความเร้าร้อนบนเตียงเหมือนสัตว์ตัวไหน?",
-            "หากแฟนมอบค่ําคืนที่แซ่บซ่าส์ให้คุณ คุณจะตอบแทนด้วยอะไร?",
-            "อยากให้แฟนย้อมหมอยแฟนซีสีอะไร?",
-            "นอกจากช่วยตัวเองแล้ว คุณชอบทําอะไรอีกบ้าง?",
-            "คุณโดนแฟนสะบาละฮึ้มจนปวดขาตื่นเช้ามาคุณคิดว่าอากาศจะเป็นแบบไหน?",
-            "เฟิร์สเดตที่ไหนดีนะ?",
-            "กระตุ้นเร้าช่วงต้นด้วยบทเพลงประเภทไหนดี?",
-            "อยากทําอะไรให้แฟนกิน/อยากให้แฟนทําอะไรให้กิน?",
-            "เดทที่สองแต่งชุดอะไรดี?"
-        ];
+        // --- DOM Elements ---
+        // (Keep all existing DOM element variables)
+        const landingPage = document.getElementById('landing-page');
+        const quizPage = document.getElementById('quiz-page');
+        const resultPage = document.getElementById('result-page');
+        const followPrompt = document.getElementById('follow-prompt');
+        const landingImage = document.getElementById('landing-img');
+        const landingPromptText = document.getElementById('landing-prompt');
+        const questionContainer = document.getElementById('question-container');
+        const progressBar = document.getElementById('progress-bar');
+        const backButton = document.getElementById('back-button');
+        const resultImageElement = document.getElementById('result-image'); // Renamed for clarity
+        const downloadButton = document.getElementById('download-button');
+        const downloadInstruction = document.getElementById('download-instruction');
+        const loadingIndicator = document.getElementById('loading-indicator');
+        const loadingText = document.getElementById('loading-text');
+        const followPromptContent = followPrompt.querySelector('.follow-content');
+        const quizContainer = document.querySelector('.quiz-container');
+        const appTitle = document.getElementById('app-title');
+        const quizTitle = document.getElementById('quiz-title');
+        const followTitle = document.getElementById('follow-title');
+        const followText = document.getElementById('follow-text');
+        const followButtonLink = document.getElementById('follow-button-link');
+        const followButtonClose = document.getElementById('follow-button-close');
+        const restartButton = document.getElementById('restart-button');
 
-        const options = [
-            ["🍫 ช็อกโกแลต", "🍿 ป๊อปคอร์น", "🍭 ลูกอม", "🥓 ส้มตําปลาร้า", "🍪 คุกกี้"],
-            ["🐶 แม่หมา", "🐱 แมวน้อย", "🐰 กระต่ายตาแดง", "🦉 นกฮูกเจ้าปัญญา", "🐢 เต่าต้วมเตี้ยม"],
-            ["💬 คุยกัน Pillow Talk", "🎁 ให้ของขวัญล้ําค่ํา", "🤗 กอดขอบคุณ", "🍳 ทําอาหารให้ทาน", "🎵 ร้องเพลงโอเปร่า"],
-            ["🌈 สีรุ้ง LGBTQ+", "💗 สีชมพูรูทวาร", "💙 สีฟ้าซึมเศร้า", "💚 สีเขียวช้ําโดนเตะ", "💛 สีเหลืองจีวร"],
-            ["📚 อ่านนิยายเกย์", "🎨 วาดรูปดวงตางดงาม", "🎮 เล่นเกม ROV", "🏀 เตะบอลแมนๆ", "🎤 ร้องเพลงถ่ายลงสตอรี่"],
-            ["☀️ แดดจ้าแยงตา", "🌧️ ฝนตกแซ่กๆลงบนหลังคาสังกะสี", "❄️ หิมะโฟมปลอมสงกรานต์ตกโปรยปราย", "🌙 ยังเป็นกลางคืนอยู่", "🌤️ เมฆคลุมคลึ้มแต่มีแดดแทงออกมา"],
-            ["🏖️ ชายหาดป่าตอง", "🏔️ ภูเขาไฟศรีสะเกษ", "🏰 เมืองเก่าอยุธยา", "🏞️ ธรรมชาติงดงาม ณ ห้วยขาแข้ง", "🛍️ ห้างเจ้าสัวพันล้าน"],
-            ["🎧 เทย์เลอร์ สวิฟต์", "🎸 Joji", "🎼 มนต์แคน แก่นคูน", "🎹 เพลงเคียวเกี่ยวข้าว", "🎤 เพลงติ๊กต๊อกเทสดี"],
-            ["🍣 อาหารญี่ปุ่น", "🍕 อาหารอิตาลี", "🍜 อาหารไทย", "🍔 อาหารฟาสต์ฟู้ด", "🍰 ของหวาน"],
-            ["👕 เสื้อยืดบ้านๆ", "👔 ชุดทางการเนี้ยบๆ", "👗 ชุดสวยหรูหรา", "👘 ชุดกิโมโนมัตเตะ", "🩳 ชุดนอนไม่ได้นอน"]
-        ];
 
+        // --- State Variables ---
         let currentQuestion = 0;
-        const answers = [];
+        let answers = [];
+        let clickTimeout = null;
+        let clickCount = 0;
+        let activeFloatingText = null;
+        let currentLanguage = 'th'; // Default language
 
-        function showQuestion(index) {
-            document.querySelector('.progress-bar').style.width = `${((index + 1) / questions.length) * 100}%`;
-            document.querySelector('.back-button').style.display = index > 0 ? 'block' : 'none';
+        // --- Result URLs (Remain Constant) ---
+         const resultUrls = [
+             "https://raw.githubusercontent.com/panwyyt/Joo4Tune/refs/heads/main/%E0%B8%84%E0%B8%B8%E0%B8%93%E0%B9%80%E0%B8%AB%E0%B8%A1%E0%B8%B2%E0%B8%B0%E0%B8%81%E0%B8%B1%E0%B8%9A%E0%B8%84%E0%B8%A7%E0%B8%A2%E0%B9%81%E0%B8%9A%E0%B8%9A%E0%B9%83%E0%B8%94/Always%20the%20Victim.png",
+             "https://raw.githubusercontent.com/panwyyt/Joo4Tune/refs/heads/main/%E0%B8%84%E0%B8%B8%E0%B8%93%E0%B9%80%E0%B8%AB%E0%B8%A1%E0%B8%B2%E0%B8%B0%E0%B8%81%E0%B8%B1%E0%B8%9A%E0%B8%84%E0%B8%A7%E0%B8%A2%E0%B9%81%E0%B8%9A%E0%B8%9A%E0%B9%83%E0%B8%94/Constantly%20Negative.png",
+             "https://raw.githubusercontent.com/panwyyt/Joo4Tune/refs/heads/main/%E0%B8%84%E0%B8%B8%E0%B8%93%E0%B9%80%E0%B8%AB%E0%B8%A1%E0%B8%B2%E0%B8%B0%E0%B8%81%E0%B8%B1%E0%B8%9A%E0%B8%84%E0%B8%A7%E0%B8%A2%E0%B9%81%E0%B8%9A%E0%B8%9A%E0%B9%83%E0%B8%94/Disrespect%20Boundaries.png",
+             "https://raw.githubusercontent.com/panwyyt/Joo4Tune/refs/heads/main/%E0%B8%84%E0%B8%B8%E0%B8%93%E0%B9%80%E0%B8%AB%E0%B8%A1%E0%B8%B2%E0%B8%B0%E0%B8%81%E0%B8%B1%E0%B8%9A%E0%B8%84%E0%B8%A7%E0%B8%A2%E0%B9%81%E0%B8%9A%E0%B8%9A%E0%B9%83%E0%B8%94/Drains%20Your%20Energy.png",
+             "https://raw.githubusercontent.com/panwyyt/Joo4Tune/refs/heads/main/%E0%B8%84%E0%B8%B8%E0%B8%93%E0%B9%80%E0%B8%AB%E0%B8%A1%E0%B8%B2%E0%B8%B0%E0%B8%81%E0%B8%B1%E0%B8%9A%E0%B8%84%E0%B8%A7%E0%B8%A2%E0%B9%81%E0%B8%9A%E0%B8%9A%E0%B9%83%E0%B8%94/Excessively%20Controlling.png",
+             "https://raw.githubusercontent.com/panwyyt/Joo4Tune/refs/heads/main/%E0%B8%84%E0%B8%B8%E0%B8%93%E0%B9%80%E0%B8%AB%E0%B8%A1%E0%B8%B2%E0%B8%B0%E0%B8%81%E0%B8%B1%E0%B8%9A%E0%B8%84%E0%B8%A7%E0%B8%A2%E0%B9%81%E0%B8%9A%E0%B8%9A%E0%B9%83%E0%B8%94/Gaslighting.png",
+             "https://raw.githubusercontent.com/panwyyt/Joo4Tune/refs/heads/main/%E0%B8%84%E0%B8%B8%E0%B8%93%E0%B9%80%E0%B8%AB%E0%B8%A1%E0%B8%B2%E0%B8%B0%E0%B8%81%E0%B8%B1%E0%B8%9A%E0%B8%84%E0%B8%A7%E0%B8%A2%E0%B9%81%E0%B8%9A%E0%B8%9A%E0%B9%83%E0%B8%94/Jealous%20and%20Envious.png",
+             "https://raw.githubusercontent.com/panwyyt/Joo4Tune/refs/heads/main/%E0%B8%84%E0%B8%B8%E0%B8%93%E0%B9%80%E0%B8%AB%E0%B8%A1%E0%B8%B2%E0%B8%B0%E0%B8%81%E0%B8%B1%E0%B8%9A%E0%B8%84%E0%B8%A7%E0%B8%A%E0%B9%81%E0%B8%9A%E0%B8%9A%E0%B9%83%E0%B8%94/Manipulate.png",
+             "https://raw.githubusercontent.com/panwyyt/Joo4Tune/refs/heads/main/%E0%B8%84%E0%B8%B8%E0%B8%93%E0%B9%80%E0%B8%AB%E0%B8%A1%E0%B8%B2%E0%B8%B0%E0%B8%81%E0%B8%B1%E0%B8%9A%E0%B8%84%E0%B8%A7%E0%B8%A%E0%B9%81%E0%B8%9A%E0%B8%9A%E0%B9%83%E0%B8%94/Never%20Takes%20Responsibility.png",
+             "https://raw.githubusercontent.com/panwyyt/Joo4Tune/refs/heads/main/%E0%B8%84%E0%B8%B8%E0%B8%93%E0%B9%80%E0%B8%AB%E0%B8%A1%E0%B8%B2%E0%B8%B0%E0%B8%81%E0%B8%B1%E0%B8%9A%E0%B8%84%E0%B8%A7%E0%B8%A%E0%B9%81%E0%B8%9A%E0%B8%9A%E0%B9%83%E0%B8%94/Two-Faced.png"
+         ];
 
-            const questionContainer = document.getElementById('question-container');
-            questionContainer.innerHTML = `
-                <p>${questions[index]}</p>
-                <div class="options">
-                    ${options[index].map((option, i) => `
-                        <input type="radio" name="q${index + 1}" id="q${index + 1}a${i + 1}" value="${i + 1}"
-                            ${answers[index] === (i + 1) ? 'checked' : ''}>
-                        <label for="q${index + 1}a${i + 1}">${option}</label>
+        // --- Functions ---
+
+        /**
+         * Updates all user-facing text based on the current language.
+         */
+        function updateUIText() {
+            const lang = currentLanguage;
+            const t = translations[lang];
+            if (!t) {
+                console.error("Missing translations for language:", lang);
+                return;
+            }
+
+            document.body.lang = lang;
+            appTitle.textContent = t.title;
+
+            // Update landing page text
+            if (landingPromptText) landingPromptText.textContent = t.landingPrompt;
+
+            // Update quiz page text (only if quiz page is potentially visible)
+            if (quizTitle) quizTitle.textContent = t.quizTitle;
+            if (!quizPage.classList.contains('hidden') && currentQuestion < t.questions.length) {
+                 showQuestion(currentQuestion, false); // Update current question text without animation
+            }
+
+            // Update follow prompt text (ALWAYS update these elements when function is called)
+            if(followTitle) followTitle.textContent = t.followTitle;
+            if(followText) followText.innerHTML = t.followText;
+            if(followButtonLink) followButtonLink.textContent = t.followButtonLink;
+            if(followButtonClose) followButtonClose.textContent = t.followButtonClose;
+
+            // Update result page text (only if result page is potentially visible)
+             if (!resultPage.classList.contains('hidden')) {
+                 if(loadingText) loadingText.textContent = t.loadingText;
+                 if(resultImageElement) resultImageElement.alt = t.resultImageAlt;
+                 if(downloadButton) downloadButton.textContent = t.downloadButton;
+                 if(downloadInstruction) downloadInstruction.innerHTML = t.downloadInstruction;
+                 if(restartButton) restartButton.textContent = t.restartButton;
+             } else {
+                 // Ensure loading text is set even if result page is hidden initially
+                 if(loadingText) loadingText.textContent = t.loadingText;
+             }
+        }
+
+
+        /**
+         * Changes the current language and updates the UI.
+         * @param {string} langCode - The language code (e.g., 'en', 'th').
+         */
+        function changeLanguage(langCode) {
+            if (translations[langCode]) {
+                currentLanguage = langCode;
+                document.getElementById('language-selector').value = langCode;
+                updateUIText();
+            } else {
+                console.error("Language not supported:", langCode);
+            }
+        }
+
+
+        /**
+         * Displays a floating text animation near the click position.
+         */
+        function showFloatingText(text, event) {
+            if (activeFloatingText) {
+                activeFloatingText.remove();
+                activeFloatingText = null;
+            }
+            const animationElement = document.createElement('div');
+            animationElement.classList.add('float-up-animation');
+            animationElement.textContent = text;
+            document.body.appendChild(animationElement);
+            const textWidth = animationElement.offsetWidth;
+            const textHeight = animationElement.offsetHeight;
+            const clickX = event.clientX;
+            const clickY = event.clientY;
+            animationElement.style.left = `${clickX - textWidth / 2}px`;
+            animationElement.style.top = `${clickY - textHeight - 15}px`;
+            activeFloatingText = animationElement;
+            setTimeout(() => {
+                if (animationElement.parentNode) { animationElement.remove(); }
+                if (activeFloatingText === animationElement) { activeFloatingText = null; }
+            }, 1100);
+        }
+
+        /**
+         * Transitions from the landing page to the quiz page.
+         */
+        function startQuiz() {
+            landingPage.classList.remove('fade-in');
+            landingPage.classList.add('fade-out');
+            setTimeout(() => {
+                landingPage.classList.add('hidden');
+                landingPage.classList.remove('fade-out');
+                updateUIText(); // Update quiz title before showing
+                quizPage.classList.remove('hidden');
+                quizPage.classList.add('fade-in');
+                showQuestion(currentQuestion);
+                quizContainer.scrollTop = 0;
+            }, 300);
+        }
+
+        /**
+         * Displays the question and options for the given index.
+         */
+        function showQuestion(index, animate = true) {
+            const lang = currentLanguage;
+            const t = translations[lang];
+
+            if (!t || !t.questions || !t.options || index >= t.questions.length) {
+                console.error(`Missing translation or invalid index for language ${lang}, index ${index}`);
+                questionContainer.innerHTML = `<p class="text-red-500">Error loading question.</p>`;
+                return;
+            }
+
+            const progress = ((index + 1) / t.questions.length) * 100;
+            progressBar.style.width = `${progress}%`;
+            backButton.style.visibility = index > 0 ? 'visible' : 'hidden';
+
+            const questionText = t.questions[index];
+            const currentOptions = t.options[index];
+
+            const questionHTML = `
+                <p class="question-text">${index + 1}. ${questionText}</p>
+                <div class="options grid grid-cols-1 gap-3 mt-4">
+                    ${currentOptions.map((option, i) => `
+                        <div class="custom-radio">
+                            <input type="radio" name="q${index + 1}" id="q${index + 1}a${i + 1}" value="${i + 1}"
+                                   ${answers[index] === (i + 1) ? 'checked' : ''}>
+                            <label for="q${index + 1}a${i + 1}">${option}</label>
+                        </div>
                     `).join('')}
                 </div>
             `;
 
-            document.querySelectorAll(`input[name="q${index + 1}"]`).forEach(radio => {
-                radio.addEventListener('change', () => nextQuestion());
-            });
-        }
-
-        function nextQuestion() {
-            const selectedAnswer = document.querySelector(`input[name="q${currentQuestion + 1}"]:checked`);
-            if (selectedAnswer) {
-                answers[currentQuestion] = parseInt(selectedAnswer.value);
-                currentQuestion++;
-                
-                if (currentQuestion < questions.length) {
-                    showQuestion(currentQuestion);
+            const displayNewQuestion = () => {
+                questionContainer.innerHTML = questionHTML;
+                if (animate) {
+                    questionContainer.classList.remove('fade-out');
+                    questionContainer.classList.add('fade-in');
                 } else {
-                    calculateResult();
+                     questionContainer.classList.remove('fade-out', 'fade-in');
                 }
+                 document.querySelectorAll(`input[name="q${index + 1}"]`).forEach(radio => {
+                     radio.addEventListener('change', handleAnswerSelection);
+                 });
+                 quizContainer.scrollTop = 0;
+            };
+
+            if (animate) {
+                questionContainer.classList.remove('fade-in');
+                questionContainer.classList.add('fade-out');
+                setTimeout(displayNewQuestion, 200);
+            } else {
+                 displayNewQuestion();
             }
         }
 
+        /**
+         * Handles the selection of an answer and proceeds.
+         */
+         function handleAnswerSelection() {
+            const selectedAnswer = document.querySelector(`input[name="q${currentQuestion + 1}"]:checked`);
+            if (selectedAnswer) {
+                answers[currentQuestion] = parseInt(selectedAnswer.value);
+                setTimeout(() => {
+                    currentQuestion++;
+                    if (currentQuestion < translations[currentLanguage].questions.length) {
+                        showQuestion(currentQuestion);
+                    } else {
+                        showFollowPrompt();
+                    }
+                }, 250);
+            }
+        }
+
+        /**
+         * Navigates to the previous question.
+         */
         function previousQuestion() {
             if (currentQuestion > 0) {
+                const selectedAnswer = document.querySelector(`input[name="q${currentQuestion + 1}"]:checked`);
+                 if (selectedAnswer) { answers[currentQuestion] = parseInt(selectedAnswer.value); }
+                 else { answers[currentQuestion] = undefined; }
                 currentQuestion--;
                 showQuestion(currentQuestion);
             }
         }
 
-        function calculateResult() {
-            const sum = answers.reduce((total, value) => total + value, 0);
-            const uniqueIndex = sum % 10;
-
-            const resultUrls = [
-                "https://raw.githubusercontent.com/panwyyt/Joo4Tune/refs/heads/main/%E0%B8%84%E0%B8%B8%E0%B8%93%E0%B9%80%E0%B8%AB%E0%B8%A1%E0%B8%B2%E0%B8%B0%E0%B8%81%E0%B8%B1%E0%B8%9A%E0%B8%84%E0%B8%A7%E0%B8%A2%E0%B9%81%E0%B8%9A%E0%B8%9A%E0%B9%83%E0%B8%94/Always%20the%20Victim.png",
-                "https://raw.githubusercontent.com/panwyyt/Joo4Tune/refs/heads/main/%E0%B8%84%E0%B8%B8%E0%B8%93%E0%B9%80%E0%B8%AB%E0%B8%A1%E0%B8%B2%E0%B8%B0%E0%B8%81%E0%B8%B1%E0%B8%9A%E0%B8%84%E0%B8%A7%E0%B8%A2%E0%B9%81%E0%B8%9A%E0%B8%9A%E0%B9%83%E0%B8%94/Constantly%20Negative.png",
-                "https://raw.githubusercontent.com/panwyyt/Joo4Tune/refs/heads/main/%E0%B8%84%E0%B8%B8%E0%B8%93%E0%B9%80%E0%B8%AB%E0%B8%A1%E0%B8%B2%E0%B8%B0%E0%B8%81%E0%B8%B1%E0%B8%9A%E0%B8%84%E0%B8%A7%E0%B8%A2%E0%B9%81%E0%B8%9A%E0%B8%9A%E0%B9%83%E0%B8%94/Disrespect%20Boundaries.png",
-                "https://raw.githubusercontent.com/panwyyt/Joo4Tune/refs/heads/main/%E0%B8%84%E0%B8%B8%E0%B8%93%E0%B9%80%E0%B8%AB%E0%B8%A1%E0%B8%B2%E0%B8%B0%E0%B8%81%E0%B8%B1%E0%B8%9A%E0%B8%84%E0%B8%A7%E0%B8%A2%E0%B9%81%E0%B8%9A%E0%B8%9A%E0%B9%83%E0%B8%94/Drains%20Your%20Energy.png",
-                "https://raw.githubusercontent.com/panwyyt/Joo4Tune/refs/heads/main/%E0%B8%84%E0%B8%B8%E0%B8%93%E0%B9%80%E0%B8%AB%E0%B8%A1%E0%B8%B2%E0%B8%B0%E0%B8%81%E0%B8%B1%E0%B8%9A%E0%B8%84%E0%B8%A7%E0%B8%A2%E0%B9%81%E0%B8%9A%E0%B8%9A%E0%B9%83%E0%B8%94/Excessively%20Controlling.png",
-                "https://raw.githubusercontent.com/panwyyt/Joo4Tune/refs/heads/main/%E0%B8%84%E0%B8%B8%E0%B8%93%E0%B9%80%E0%B8%AB%E0%B8%A1%E0%B8%B2%E0%B8%B0%E0%B8%81%E0%B8%B1%E0%B8%9A%E0%B8%84%E0%B8%A7%E0%B8%A2%E0%B9%81%E0%B8%9A%E0%B8%9A%E0%B9%83%E0%B8%94/Gaslighting.png",
-                "https://raw.githubusercontent.com/panwyyt/Joo4Tune/refs/heads/main/%E0%B8%84%E0%B8%B8%E0%B8%93%E0%B9%80%E0%B8%AB%E0%B8%A1%E0%B8%B2%E0%B8%B0%E0%B8%81%E0%B8%B1%E0%B8%9A%E0%B8%84%E0%B8%A7%E0%B8%A2%E0%B9%81%E0%B8%9A%E0%B8%9A%E0%B9%83%E0%B8%94/Jealous%20and%20Envious.png",
-                "https://raw.githubusercontent.com/panwyyt/Joo4Tune/refs/heads/main/%E0%B8%84%E0%B8%B8%E0%B8%93%E0%B9%80%E0%B8%AB%E0%B8%A1%E0%B8%B2%E0%B8%B0%E0%B8%81%E0%B8%B1%E0%B8%9A%E0%B8%84%E0%B8%A7%E0%B8%A2%E0%B9%81%E0%B8%9A%E0%B8%9A%E0%B9%83%E0%B8%94/Manipulate.png",
-                "https://raw.githubusercontent.com/panwyyt/Joo4Tune/refs/heads/main/%E0%B8%84%E0%B8%B8%E0%B8%93%E0%B9%80%E0%B8%AB%E0%B8%A1%E0%B8%B2%E0%B8%B0%E0%B8%81%E0%B8%B1%E0%B8%9A%E0%B8%84%E0%B8%A7%E0%B8%A2%E0%B9%81%E0%B8%9A%E0%B8%9A%E0%B9%83%E0%B8%94/Never%20Takes%20Responsibility.png",
-                "https://raw.githubusercontent.com/panwyyt/Joo4Tune/refs/heads/main/%E0%B8%84%E0%B8%B8%E0%B8%93%E0%B9%80%E0%B8%AB%E0%B8%A1%E0%B8%B2%E0%B8%B0%E0%B8%81%E0%B8%B1%E0%B8%9A%E0%B8%84%E0%B8%A7%E0%B8%A2%E0%B9%81%E0%B8%9A%E0%B8%9A%E0%B9%83%E0%B8%94/Two-Faced.png"
-            ];
-
-            document.querySelector('.follow-prompt').style.display = 'flex';
-            quizPage.style.display = 'none';
-            
+        /**
+         * Shows the follow prompt modal.
+         */
+        function showFollowPrompt() {
+            quizPage.classList.remove('fade-in');
+            quizPage.classList.add('fade-out');
             setTimeout(() => {
-                document.querySelector('.result-image').src = resultUrls[uniqueIndex];
-            }, 100);
+                 quizPage.classList.add('hidden');
+                 quizPage.classList.remove('fade-out');
+                 // Update text *after* hiding quiz page and *before* showing prompt
+                 updateUIText(); // Call this ensures follow prompt text is set
+                 followPrompt.classList.remove('hidden');
+                 followPrompt.classList.add('flex', 'fade-in');
+                 setTimeout(() => { followPromptContent.style.transform = 'scale(1)'; }, 50);
+             }, 300);
         }
 
+
+        /**
+         * Closes the follow prompt and shows the result page.
+         */
         function closeFollowPrompt() {
-            document.querySelector('.follow-prompt').style.display = 'none';
-            document.querySelector('.result-page').style.display = 'block';
+             followPrompt.classList.remove('fade-in');
+             followPrompt.classList.add('fade-out');
+             followPromptContent.style.transform = 'scale(0.95)';
+             setTimeout(() => {
+                 followPrompt.classList.add('hidden');
+                 followPrompt.classList.remove('flex', 'fade-out');
+                 calculateAndShowResult();
+             }, 300);
         }
 
+        /**
+         * Calculates the result based on answers and displays the result page.
+         */
+        function calculateAndShowResult() {
+            resultPage.classList.remove('hidden');
+            resultPage.classList.add('fade-in');
+            updateUIText(); // Update result page text before showing content
+            loadingIndicator.style.display = 'block';
+            resultImageElement.style.display = 'none';
+            downloadButton.style.display = 'none';
+            downloadInstruction.style.display = 'none';
+
+            const numQuestions = translations.th.questions.length;
+            const finalAnswers = Array.from({ length: numQuestions }, (_, i) => answers[i] || 0);
+            const sum = finalAnswers.reduce((total, value) => total + value, 0);
+            const uniqueIndex = sum % resultUrls.length;
+
+            const img = new Image();
+            img.onload = () => {
+                resultImageElement.src = img.src;
+                loadingIndicator.style.display = 'none';
+                resultImageElement.style.display = 'block';
+                downloadButton.style.display = 'inline-block';
+                downloadInstruction.style.display = 'block';
+            };
+            img.onerror = () => {
+                 loadingIndicator.innerHTML = `<p class="text-red-500 font-medium">${translations[currentLanguage]?.loadingError || 'Oops! Could not load result image.'}</p>`;
+            };
+            if (uniqueIndex >= 0 && uniqueIndex < resultUrls.length) {
+                 img.src = resultUrls[uniqueIndex];
+            } else { img.onerror(); }
+        }
+
+        /**
+         * Initiates the download of the result image.
+         */
         function downloadResult() {
-            const imageUrl = document.querySelector('.result-image').src;
+            const imageUrl = resultImageElement.src;
+            if (!imageUrl || imageUrl.startsWith('data:')) return;
             const link = document.createElement('a');
             link.href = imageUrl;
-            link.download = 'joo4tune-result.png';
+            const filename = imageUrl.substring(imageUrl.lastIndexOf('/') + 1).split('?')[0] || 'joo4tune-result.png';
+            link.download = filename;
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
         }
+
+         /**
+         * Resets the quiz state and returns to the landing page.
+         */
+        function restartQuiz() {
+            resultPage.classList.remove('fade-in');
+            resultPage.classList.add('fade-out');
+            setTimeout(() => {
+                resultPage.classList.add('hidden');
+                resultPage.classList.remove('fade-out');
+                quizPage.classList.add('hidden');
+                currentQuestion = 0;
+                answers = Array(translations.th.questions.length).fill(undefined);
+                updateUIText(); // Update landing page text
+                landingPage.classList.remove('hidden');
+                landingPage.classList.add('fade-in');
+                progressBar.style.width = '0%';
+                backButton.style.visibility = 'hidden';
+                // Reset result page elements
+                resultImageElement.src = '';
+                resultImageElement.style.display = 'none';
+                downloadButton.style.display = 'none';
+                downloadInstruction.style.display = 'none';
+                loadingIndicator.style.display = 'block';
+             }, 300);
+        }
+
+
+        // --- Event Listeners ---
+        landingImage.addEventListener('click', (event) => {
+            clickCount++;
+            if (clickCount === 1) {
+                 showFloatingText(translations[currentLanguage]?.landingPrompt || "Double-tap!", event);
+                clickTimeout = setTimeout(() => { clickCount = 0; }, 400);
+            } else if (clickCount === 2) {
+                clearTimeout(clickTimeout);
+                clickCount = 0;
+                startQuiz();
+            }
+        });
+
+        // --- Initial Setup ---
+        function initializeApp() {
+            answers = Array(translations.th.questions.length).fill(undefined);
+            backButton.style.visibility = 'hidden';
+            updateUIText(); // Set initial UI text
+        }
+
+        document.addEventListener('DOMContentLoaded', initializeApp);
+
     </script>
 </body>
 </html>
