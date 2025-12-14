@@ -5,20 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Velvet Aura</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Noir: Meet your shadow.</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
     <style>
-        /* --- Apple iOS Design System Overrides --- */
+        /* --- Design System --- */
         :root {
-            --apple-bg: #000000;
-            --glass-bg: rgba(30, 30, 30, 0.65);
-            --glass-border: rgba(255, 255, 255, 0.12);
-            --primary-gradient: linear-gradient(135deg, #FF2D55 0%, #AF52DE 100%); /* Apple Pink to Purple */
-            --accent-glow: 0 0 20px rgba(175, 82, 222, 0.4);
+            --apple-bg: #050505;
+            --glass-bg: rgba(20, 20, 20, 0.8);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --primary-gradient: linear-gradient(135deg, #FF2D55 0%, #AF52DE 100%);
             --font-main: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", sans-serif;
+            --font-serif: "Playfair Display", serif;
         }
 
         body {
@@ -26,112 +26,89 @@
             background-color: var(--apple-bg);
             color: #ffffff;
             overflow: hidden;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
         }
 
-        /* Animated Mesh Background */
+        /* Background Animation */
         .mesh-bg {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
-            background: radial-gradient(circle at 50% 10%, #2d1b4e 0%, #000000 60%),
-                        radial-gradient(circle at 90% 90%, #1a0b2e 0%, #000000 50%);
+            background: radial-gradient(circle at 50% 0%, #1a0b2e 0%, #000000 70%);
             z-index: -1;
         }
         .orb {
             position: absolute;
             border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.6;
-            animation: floatOrb 10s infinite ease-in-out alternate;
+            filter: blur(90px);
+            opacity: 0.4;
+            animation: floatOrb 12s infinite ease-in-out alternate;
         }
-        .orb-1 { width: 300px; height: 300px; background: #5856D6; top: -50px; left: -50px; animation-duration: 12s; }
-        .orb-2 { width: 250px; height: 250px; background: #FF2D55; bottom: -50px; right: -50px; animation-duration: 15s; }
+        .orb-1 { width: 400px; height: 400px; background: #5856D6; top: -100px; left: -100px; }
+        .orb-2 { width: 300px; height: 300px; background: #FF2D55; bottom: -50px; right: -50px; animation-duration: 15s; }
         
         @keyframes floatOrb {
             0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(30px, 50px) scale(1.1); }
+            100% { transform: translate(40px, 60px) scale(1.1); }
         }
 
-        /* Glassmorphism Card */
+        /* Glass Card */
         .glass-card {
             background: var(--glass-bg);
-            backdrop-filter: blur(25px) saturate(180%);
-            -webkit-backdrop-filter: blur(25px) saturate(180%);
+            backdrop-filter: blur(40px) saturate(160%);
+            -webkit-backdrop-filter: blur(40px) saturate(160%);
             border: 1px solid var(--glass-border);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
         }
 
-        /* iOS Animations */
-        .view-transition { transition: all 0.5s cubic-bezier(0.32, 0.72, 0, 1); }
-        
-        .fade-enter { opacity: 0; transform: scale(0.95) translateY(10px); }
+        /* Animation Classes */
+        .view-transition { transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1); }
+        .fade-enter { opacity: 0; transform: scale(0.98) translateY(10px); }
         .fade-enter-active { opacity: 1; transform: scale(1) translateY(0); }
         .fade-exit { opacity: 1; transform: scale(1) translateY(0); }
-        .fade-exit-active { opacity: 0; transform: scale(1.05) translateY(-10px); pointer-events: none; }
+        .fade-exit-active { opacity: 0; transform: scale(1.02) translateY(-10px); pointer-events: none; }
 
-        /* Custom Radio Buttons (iOS Table View Style) */
+        /* Custom Radio Inputs */
         .ios-list-item input[type="radio"] { display: none; }
         .ios-list-item label {
             display: flex;
             align-items: center;
-            padding: 16px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 14px;
+            padding: 18px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
             cursor: pointer;
             transition: all 0.2s ease;
             font-weight: 500;
             font-size: 15px;
             border: 1px solid transparent;
+            color: rgba(255,255,255,0.8);
         }
-        .ios-list-item label:active { transform: scale(0.98); background: rgba(255, 255, 255, 0.1); }
+        .ios-list-item label:active { transform: scale(0.98); background: rgba(255, 255, 255, 0.08); }
         .ios-list-item input:checked + label {
-            background: rgba(175, 82, 222, 0.2);
-            border-color: #AF52DE;
+            background: rgba(175, 82, 222, 0.15);
+            border-color: rgba(175, 82, 222, 0.5);
             color: #fff;
-            box-shadow: 0 0 15px rgba(175, 82, 222, 0.3);
+            box-shadow: 0 0 20px rgba(175, 82, 222, 0.15);
         }
-        /* Checkmark */
-        .ios-list-item input:checked + label::after {
-            content: "✓";
-            margin-left: auto;
-            color: #AF52DE;
-            font-weight: bold;
-        }
-
+        
         /* Buttons */
-        .btn-apple {
+        .btn-main {
             background: var(--primary-gradient);
             border-radius: 100px;
             color: white;
             font-weight: 600;
-            letter-spacing: -0.01em;
-            box-shadow: 0 4px 15px rgba(255, 45, 85, 0.4);
-            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: transform 0.2s;
+            box-shadow: 0 4px 20px rgba(255, 45, 85, 0.3);
         }
-        .btn-apple:active { transform: scale(0.95); opacity: 0.9; }
+        .btn-main:active { transform: scale(0.96); opacity: 0.9; }
 
-        /* Progress Bar */
-        .progress-track { background: rgba(255,255,255,0.1); border-radius: 10px; }
-        .progress-fill { background: var(--primary-gradient); border-radius: 10px; box-shadow: 0 0 10px rgba(255, 45, 85, 0.5); }
+        /* Result Typography */
+        .archetype-title { font-family: var(--font-serif); letter-spacing: -0.02em; }
 
-        /* Language Picker - Segmented Control Style */
-        .segmented-control {
-            background: rgba(118, 118, 128, 0.24);
-            border-radius: 9px;
-            padding: 2px;
-            display: inline-flex;
-        }
-        .segmented-control select {
-            background: transparent;
-            color: white;
-            border: none;
-            font-size: 13px;
-            font-weight: 500;
-            padding: 4px 10px;
-            outline: none;
-            -webkit-appearance: none;
-        }
+        /* Trait Chart Bars */
+        .trait-row { display: flex; align-items: center; margin-bottom: 8px; }
+        .trait-label { width: 80px; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.6); text-align: left;}
+        .trait-bar-bg { flex: 1; height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden; margin-left: 10px; }
+        .trait-bar-fill { height: 100%; background: var(--primary-gradient); border-radius: 3px; width: 0; transition: width 1.5s ease-out; }
+        .trait-value { width: 30px; font-size: 10px; color: white; text-align: right; margin-left: 8px; font-weight: bold; }
     </style>
 </head>
 <body class="flex items-center justify-center min-h-screen">
@@ -141,73 +118,74 @@
         <div class="orb orb-2"></div>
     </div>
 
-    <div class="fixed top-6 right-6 z-50 segmented-control glass-card">
-        <select id="language-selector" onchange="changeLanguage(this.value)" class="focus:ring-0 cursor-pointer">
+    <div class="fixed top-6 right-6 z-50">
+        <select id="language-selector" onchange="changeLanguage(this.value)" class="bg-black/20 backdrop-blur-md text-white border border-white/10 rounded-full px-3 py-1 text-sm outline-none cursor-pointer">
             <option value="th" class="text-black">TH</option>
             <option value="en" class="text-black">EN</option>
         </select>
     </div>
 
     <div id="landing-page" class="view-transition absolute inset-0 flex flex-col items-center justify-center p-6 text-center z-10">
-        <div class="mb-8 relative">
-            <div class="absolute inset-0 bg-purple-500 blur-3xl opacity-30 rounded-full"></div>
+        <div class="mb-10 relative group">
+            <div class="absolute inset-0 bg-gradient-to-tr from-pink-500 to-purple-600 blur-[60px] opacity-40 rounded-full group-hover:opacity-60 transition-opacity duration-1000"></div>
             <img src="https://raw.githubusercontent.com/panwyyt/Joo4Tune/refs/heads/main/hatchedboy_logo.jpeg" 
-                 class="w-32 h-32 rounded-[28px] shadow-2xl relative z-10 border border-white/10" 
-                 alt="Velvet Aura Icon">
+                 class="w-36 h-36 rounded-[32px] shadow-2xl relative z-10 border border-white/10" 
+                 alt="Icon">
         </div>
         
-        <h1 class="text-4xl font-bold tracking-tight mb-2 bg-clip-text text-transparent bg-gradient-to-b from-white to-white/70">
-            Velvet Aura
+        <h1 class="text-5xl font-bold tracking-tight mb-3 bg-clip-text text-transparent bg-gradient-to-b from-white to-white/60 archetype-title">
+            Noir: Meet your shadow.
         </h1>
-        <p class="text-white/60 text-lg mb-12 font-light" id="app-slogan">Unveil your hidden desires.</p>
+        <p class="text-white/50 text-lg mb-12 font-light tracking-wide" id="app-slogan">Unveil your dark romantic archetype.</p>
 
-        <button onclick="startQuiz()" class="btn-apple px-10 py-4 text-lg w-full max-w-xs flex items-center justify-center gap-2">
-            <span id="start-btn-text">Start Experience</span>
+        <button onclick="startQuiz()" class="btn-main px-12 py-4 text-lg w-full max-w-xs flex items-center justify-center gap-3">
+            <span id="start-btn-text">Start Analysis</span>
             <i class="ph-bold ph-arrow-right"></i>
         </button>
         
-        <p class="mt-6 text-xs text-white/30 uppercase tracking-widest">Designed by Hatchedboy</p>
+        <p class="absolute bottom-8 text-[10px] text-white/20 uppercase tracking-[0.2em]">Designed by Hatchedboy</p>
     </div>
 
-    <div id="quiz-page" class="view-transition hidden absolute inset-0 flex flex-col z-20 bg-black/40 backdrop-blur-md">
+    <div id="quiz-page" class="view-transition hidden absolute inset-0 flex flex-col z-20 bg-black/60 backdrop-blur-lg">
         <div class="pt-14 pb-4 px-6 flex items-center justify-between">
-            <button onclick="previousQuestion()" id="back-button" class="text-white/70 hover:text-white transition-colors p-2 rounded-full hover:bg-white/10 opacity-0 pointer-events-none">
-                <i class="ph-bold ph-caret-left text-2xl"></i>
+            <button onclick="previousQuestion()" id="back-button" class="text-white/60 hover:text-white transition-colors p-2 rounded-full opacity-0 pointer-events-none">
+                <i class="ph-bold ph-arrow-left text-xl"></i>
             </button>
-            <div class="text-sm font-semibold text-white/90 tracking-wide">ASSESSMENT</div>
-            <div class="w-8"></div> </div>
+            <div class="text-xs font-bold text-white/40 tracking-[0.2em]">Noir: Meet your shadow.</div>
+            <div class="w-8"></div> 
+        </div>
 
-        <div class="px-6 mb-6">
-            <div class="progress-track h-1 w-full overflow-hidden">
-                <div id="progress-bar" class="progress-fill h-full w-0 transition-all duration-500 ease-out"></div>
+        <div class="px-6 mb-8">
+            <div class="h-1 w-full bg-white/5 rounded-full overflow-hidden">
+                <div id="progress-bar" class="h-full bg-gradient-to-r from-pink-500 to-purple-600 w-0 transition-all duration-500 ease-out"></div>
             </div>
         </div>
 
-        <div class="flex-1 overflow-y-auto px-6 pb-20 scrollbar-hide">
+        <div class="flex-1 overflow-y-auto px-6 pb-24 scrollbar-hide">
             <div id="question-container" class="max-w-md mx-auto fade-enter-active">
                 </div>
         </div>
     </div>
 
-    <div id="follow-prompt" class="view-transition hidden fixed inset-0 z-50 flex items-center justify-center p-6 bg-black/80 backdrop-blur-xl">
+    <div id="follow-prompt" class="view-transition hidden fixed inset-0 z-50 flex items-center justify-center p-6 bg-black/90 backdrop-blur-xl">
         <div class="glass-card rounded-[32px] p-8 w-full max-w-sm text-center transform scale-100 transition-all">
             <div class="w-16 h-16 bg-gradient-to-tr from-pink-500 to-purple-600 rounded-full mx-auto mb-6 flex items-center justify-center shadow-lg shadow-purple-500/30">
-                <i class="ph-fill ph-heart text-3xl text-white"></i>
+                <i class="ph-fill ph-lock-key text-3xl text-white"></i>
             </div>
             
-            <h2 id="follow-title" class="text-2xl font-bold mb-3 text-white">Wait a moment</h2>
-            <p id="follow-text" class="text-white/70 text-sm leading-relaxed mb-8">
-                Connect with the creator to unlock your aura results.
+            <h2 id="follow-title" class="text-2xl font-bold mb-3 text-white">Unlock Results</h2>
+            <p id="follow-text" class="text-white/60 text-sm leading-relaxed mb-8">
+                Your archetype has been analyzed.<br>Follow to reveal your true self.
             </p>
             
             <div class="space-y-3">
                 <a id="follow-button-link" href="https://x.com/hatchedboy" target="_blank"
-                   class="btn-apple w-full py-3.5 block text-sm shadow-none bg-white text-black hover:bg-gray-100 border-0">
-                   Follow @hatchedboy
+                   class="btn-main w-full py-3.5 block text-sm shadow-none bg-white text-black hover:bg-gray-100 border-0 flex items-center justify-center gap-2">
+                   <i class="ph-bold ph-x-logo"></i> Follow @hatchedboy
                 </a>
                 <button id="follow-button-close" onclick="closeFollowPrompt()"
-                        class="w-full py-3.5 text-sm font-medium text-white/50 hover:text-white transition-colors">
-                    Continue to Results
+                        class="w-full py-3.5 text-xs font-medium text-white/40 hover:text-white transition-colors uppercase tracking-widest">
+                    Skip & Reveal
                 </button>
             </div>
         </div>
@@ -217,31 +195,47 @@
         <div class="flex-1 overflow-y-auto px-6 pt-12 pb-10 flex flex-col items-center">
             
             <div id="loading-indicator" class="my-auto text-center">
-                <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-white mb-4"></div>
-                <p id="loading-text" class="text-white/60 text-sm tracking-wider animate-pulse">Analyzing Aura...</p>
+                <div class="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-r-2 border-purple-500 mb-6"></div>
+                <p id="loading-text" class="text-white/50 text-xs tracking-[0.2em] animate-pulse">ANALYZING SUBCONSCIOUS...</p>
             </div>
 
-            <div id="result-content" class="hidden w-full max-w-md flex flex-col items-center animate-fade-in-up">
-                <h2 class="text-3xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-pink-300 to-purple-300">Your Essence</h2>
+            <div id="result-content" class="hidden w-full max-w-md flex flex-col items-center animate-fade-in-up pb-10">
+                <p class="text-purple-400 text-xs font-bold tracking-[0.2em] mb-4 uppercase">Your True Essence</p>
                 
-                <div class="relative group w-full">
-                    <div class="absolute -inset-1 bg-gradient-to-r from-pink-600 to-purple-600 rounded-2xl blur opacity-40 group-hover:opacity-75 transition duration-1000 group-hover:duration-200"></div>
-                    <img id="result-image" src="" alt="Result" class="relative rounded-xl w-full shadow-2xl border border-white/10">
+                <div class="glass-card w-full p-8 rounded-[32px] border border-white/10 text-center relative overflow-hidden group">
+                    <div class="absolute -top-20 -left-20 w-40 h-40 bg-pink-500/20 blur-[50px] rounded-full"></div>
+                    <div class="absolute -bottom-20 -right-20 w-40 h-40 bg-purple-600/20 blur-[50px] rounded-full"></div>
+                    
+                    <div class="relative z-10">
+                        <h3 id="result-title-th" class="text-3xl font-bold text-white mb-2 leading-tight drop-shadow-lg"></h3>
+                        <p id="result-title-en" class="text-xs font-bold tracking-[0.3em] text-white/40 uppercase mb-8"></p>
+                        
+                        <div class="mb-6 flex justify-center">
+                            <span id="result-status" class="px-4 py-1.5 rounded-full bg-white/5 text-[10px] font-bold text-white/80 border border-white/10 uppercase tracking-widest shadow-inner">
+                                Status
+                            </span>
+                        </div>
+
+                        <div class="bg-black/30 rounded-xl p-5 mb-8 backdrop-blur-sm border border-white/5">
+                            <h4 class="text-[10px] font-bold text-white/50 tracking-[0.2em] uppercase mb-4 text-left">Trait Analysis</h4>
+                            <div id="trait-chart-container" class="space-y-3">
+                                </div>
+                        </div>
+
+                        <div class="text-left space-y-4">
+                            <p id="result-desc" class="text-white/80 text-sm leading-relaxed font-light"></p>
+                            
+                            <div class="mt-4 p-4 bg-purple-500/10 border-l-2 border-purple-500 rounded-r-lg">
+                                <p id="result-motto" class="text-purple-200 text-xs italic font-medium"></p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="mt-10 w-full space-y-4">
-                    <button id="download-button" onclick="downloadResult()" class="btn-apple w-full py-4 flex items-center justify-center gap-2">
-                        <i class="ph-bold ph-download-simple"></i>
-                        <span>Save to Photos</span>
-                    </button>
-                    
-                    <p id="download-instruction" class="text-center text-xs text-white/30">
-                        Tap and hold image to save if button is unavailable.
-                    </p>
-
-                    <button id="restart-button" onclick="restartQuiz()" class="w-full py-4 text-white/50 hover:text-white text-sm font-medium transition-colors flex items-center justify-center gap-2">
+                <div class="mt-8 w-full space-y-4">
+                    <button id="restart-button" onclick="restartQuiz()" class="w-full py-4 text-white/40 hover:text-white text-sm transition-colors flex items-center justify-center gap-2">
                         <i class="ph-bold ph-arrow-counter-clockwise"></i>
-                        <span>Restart Experience</span>
+                        <span>Analyze Again</span>
                     </button>
                 </div>
             </div>
@@ -249,230 +243,268 @@
     </div>
 
     <script>
-        // --- Translations (TH & EN Only) ---
+        // --- 1. Data Structure: Deep Psychology ---
+        // Stats: Dominance (อำนาจ), Deception (ซ่อนเร้น), Intensity (ความรุนแรง/ดราม่า), Narcissism (หลงตัวเอง)
+        
+        const resultsData = [
+            {
+                // Index 0: Puppeteer
+                titleTH: "The Puppeteer (จอมบงการ)",
+                titleEN: "Machiavellian Strategist",
+                stats: { dom: 95, dec: 90, int: 40, nar: 60 },
+                single: "คุณมีภาวะ 'Calculated Detachment' คุณไม่ได้โสดเพราะหาใครไม่ได้ แต่เพราะคุณมองมนุษย์เป็น 'ตัวแปร' ในสมการชีวิต คุณกลัวความวุ่นวาย (Chaos) จึงพยายามควบคุมทุกอย่างจนไม่มีใครกล้าเข้ามาในกำแพงที่คุณสร้าง",
+                taken: "ความรักของคุณคือ 'การปกครอง' (Governance) แฟนของคุณอาจรู้สึกปลอดภัยที่มีคุณคิดแทนทุกอย่าง แต่ลึกๆ เขากำลังสูญเสีย 'Self-Autonomy' หรือความเป็นตัวของตัวเองไป คุณกำลังเลี้ยงดูเขาหรือกำลังสร้างร่างอวตารของตัวเองกันแน่?",
+                motto: "\"Trust is good, but control is better.\""
+            },
+            {
+                // Index 1: Pessimist
+                titleTH: "The Pessimist (เมฆหมอกสีเทา)",
+                titleEN: "Nihilistic Lover",
+                stats: { dom: 20, dec: 30, int: 80, nar: 40 },
+                single: "คุณติดอยู่ในกับดัก 'Self-Fulfilling Prophecy' (คำทำนายที่เป็นจริงด้วยตนเอง) คุณเชื่อว่าความรักจะต้องจบไม่สวย พฤติกรรมของคุณจึงผลักไสคนดีๆ ออกไปโดยไม่รู้ตัว เพื่อพิสูจน์ว่า 'เห็นไหม ฉันคิดถูก' ว่าโลกนี้มันห่วยแตก",
+                taken: "คุณใช้ความเศร้าเป็นอาวุธ (Weaponized Melancholy) เพื่อเรียกร้องความสนใจและความมั่นใจจากคู่รัก แฟนของคุณกำลังแบกรับ 'Emotional Labor' ที่หนักอึ้ง เขาไม่ได้เป็นแค่แฟน แต่กำลังเป็นถังขยะรองรับอารมณ์ลบของคุณ",
+                motto: "\"Happiness is just a prelude to suffering.\""
+            },
+            {
+                // Index 2: Illusionist
+                titleTH: "The Illusionist (นักสร้างภาพลวงตา)",
+                titleEN: "The Gaslighter",
+                stats: { dom: 70, dec: 100, int: 50, nar: 80 },
+                single: "บุคลิกภาพของคุณจัดอยู่ในกลุ่ม 'Dark Charisma' คุณเสพติด 'Dopamine' จากการทำให้คนตกหลุมรักแล้วทิ้งขว้าง คุณไม่ได้ต้องการความรัก (Intimacy) แต่ต้องการการยอมรับ (Validation) ว่าคุณมีเสน่ห์ล้นเหลือ",
+                taken: "คุณกำลังทำลาย 'Reality Testing' ของคู่รักโดยไม่รู้ตัว การทำให้เขาสับสนว่าอะไรจริงไม่จริง (Gaslighting) เพื่อให้เขาพึ่งพาคุณทางความคิด เป็นรูปแบบหนึ่งของความรุนแรงทางจิตใจที่แนบเนียนที่สุด",
+                motto: "\"Truth is whatever I say it is.\""
+            },
+            {
+                // Index 3: Possessive
+                titleTH: "The Possessive (ปีศาจขี้หึง)",
+                titleEN: "Anxious-Preoccupied",
+                stats: { dom: 80, dec: 40, int: 100, nar: 50 },
+                single: "ความโสดของคุณเกิดจาก 'Fear of Abandonment' (กลัวการถูกทอดทิ้ง) อย่างรุนแรง คุณสแกนหา 'Red Flags' ในตัวคนอื่นละเอียดเกินไป จนมองข้ามคนปกติ และมักไปลงเอยกับคนที่ทำให้คุณต้องหึงหวงจริงๆ",
+                taken: "ความรักของคุณคือ 'Symbiosis' (การพึ่งพาอาศัยกันจนแยกไม่ออก) คุณมองว่าพื้นที่ส่วนตัวคือภัยคุกคาม พฤติกรรมเช็คมือถือหรือตามติด ไม่ใช่ความรัก แต่เป็นความพยายามบรรเทาความวิตกกังวล (Anxiety) ของตัวคุณเอง",
+                motto: "\"You belong to me, body and soul.\""
+            },
+            {
+                // Index 4: Libertine
+                titleTH: "The Libertine (นักรักผู้ไร้พันธะ)",
+                titleEN: "Dismissive-Avoidant",
+                stats: { dom: 40, dec: 60, int: 20, nar: 70 },
+                single: "คุณมีกลไกป้องกันตัวแบบ 'Emotional Distancing' การผูกมัดทำให้คุณรู้สึกเหมือนถูกขัง คุณเลือกความสัมพันธ์ฉาบฉวยเพราะมันปลอดภัยต่อหัวใจคุณ การ One Night Stand คือวิธีที่คุณจะได้ความใกล้ชิดโดยไม่ต้องจ่ายราคาทางอารมณ์",
+                taken: "คุณรักแฟนนะ แต่คุณรัก 'อิสระ' มากกว่า คุณมักสร้าง 'กำแพงล่องหน' ขึ้นมาเมื่อความสัมพันธ์เริ่มลึกซึ้งเกินไป คู่ของคุณมักรู้สึกเหงาแม้จะนอนอยู่ข้างๆ คุณ เพราะคุณไม่เคยเปิดประตูห้องหัวใจชั้นในสุดให้ใครเลย",
+                motto: "\"Catch feelings, not flights? No thanks.\""
+            },
+            {
+                // Index 5: Dictator
+                titleTH: "The Dictator (จอมเผด็จการ)",
+                titleEN: "Narcissistic Controller",
+                stats: { dom: 100, dec: 20, int: 60, nar: 90 },
+                single: "มาตรฐานของคุณไม่ใช่แค่สูง แต่เป็น 'Unrealistic Perfectionism' คุณมองหาคนรักที่เป็นเหมือนถ้วยรางวัล (Trophy) เพื่อเสริมอีโก้ตัวเอง การไม่มีใครดีพอสำหรับคุณ อาจแปลว่าคุณรักตัวเองมากจนไม่มีที่ว่างให้คนอื่น",
+                taken: "ความสัมพันธ์นี้มีศูนย์กลางอยู่ที่คุณ (Egocentric) คุณมองว่าความเห็นต่างคือการกบฏ แฟนของคุณค่อยๆ สูญเสียเสียงของตัวเองไป (Loss of Voice) เพื่อแลกกับความสงบสุข คุณไม่ได้ต้องการคู่ชีวิต คุณต้องการผู้ติดตาม",
+                motto: "\"My way or the highway.\""
+            },
+            {
+                // Index 6: Masquerade
+                titleTH: "The Masquerade (หน้ากากมายา)",
+                titleEN: "Social Chameleon",
+                stats: { dom: 30, dec: 95, int: 40, nar: 60 },
+                single: "คุณสูญเสีย 'Self-Identity' ไปกับการพยายามเป็นคนที่คนอื่นชอบ คุณโสดเพราะไม่มีใครรู้จักตัวตนที่แท้จริงของคุณ คุณเปลี่ยนสีไปเรื่อยๆ จนแม้แต่ตัวคุณเองก็จำไม่ได้ว่าหน้าสดของจิตวิญญาณคุณเป็นอย่างไร",
+                taken: "ความสัมพันธ์ของคุณตั้งอยู่บนรากฐานที่เปราะบาง เพราะคุณไม่เคยแสดงความเปราะบาง (Vulnerability) ให้แฟนเห็น เขาตกหลุมรัก 'บทบาท' ที่คุณแสดง ไม่ใช่ตัวคุณจริงๆ วันหนึ่งหน้ากากจะหลุด และนั่นคือหายนะ",
+                motto: "\"I am whoever you want me to be.\""
+            },
+            {
+                // Index 7: Tragic Hero
+                titleTH: "The Tragic Hero (ตัวเอกแสนอาภัพ)",
+                titleEN: "The Martyr Complex",
+                stats: { dom: 10, dec: 50, int: 90, nar: 70 },
+                single: "คุณเสพติดบทบาทผู้ถูกกระทำ (Victim Mentality) คุณมักเลือกคนที่ 'Emotionally Unavailable' เพื่อที่คุณจะได้เจ็บปวดและตอกย้ำความเชื่อที่ว่า 'ฉันช่างอาภัพ' จิตใต้สำนึกของคุณมองว่าความทุกข์คือความโรแมนติก",
+                taken: "คุณใช้ 'Guilt Trip' (การสร้างความรู้สึกผิด) เป็นเครื่องมือควบคุมแฟน คุณทำให้เขารู้สึกว่าเป็นหนี้บุญคุณหรือเป็นคนใจร้ายถ้าเขาไม่ตามใจคุณ นี่คือการบงการรูปแบบหนึ่งที่มาในคราบของน้ำตาและความอ่อนแอ",
+                motto: "\"Look at how much I suffer for love.\""
+            },
+            {
+                // Index 8: Energy Vampire
+                titleTH: "The Energy Vampire (แวมไพร์ดูดพลัง)",
+                titleEN: "Parasitic Attachment",
+                stats: { dom: 60, dec: 40, int: 70, nar: 80 },
+                single: "คุณไม่สามารถอยู่คนเดียวได้ (Monophobia) คุณโสดแต่ต้องมีคนคุยสำรองไว้เสมอ เพราะคุณต้องการ 'External Regulation' หรือคนมาช่วยจัดการอารมณ์ให้คุณ คุณมองคนอื่นเป็นแหล่งพลังงาน ไม่ใช่หุ้นส่วนชีวิต",
+                taken: "ความสัมพันธ์ของคุณเป็นแบบ 'Codependency' ฝ่ายเดียว คุณเรียกร้องเวลาและความใส่ใจจนแฟนเริ่มขาดอากาศหายใจ คุณกำลังสูบความเป็นตัวตนของเขามาเติมเต็มหลุมดำในใจคุณ ที่ถมเท่าไหร่ก็ไม่เต็ม",
+                motto: "\"I consume, therefore I exist.\""
+            },
+            {
+                // Index 9: Intruder
+                titleTH: "The Intruder (ผู้รุกล้ำ)",
+                titleEN: "Boundary Violator",
+                stats: { dom: 85, dec: 30, int: 85, nar: 60 },
+                single: "คุณขาดความเข้าใจเรื่อง 'Boundaries' (ขอบเขตส่วนบุคคล) ความพยายามที่จะ 'สนิท' เร็วเกินไปของคุณ (Oversharing/Overstepping) มักทำให้คนปกติรู้สึกไม่ปลอดภัยและถอยหนี คุณมองความเกรงใจว่าเป็นความห่างเหิน",
+                taken: "คุณเชื่อใน 'Enmeshment' หรือการที่คนสองคนต้องรวมเป็นเนื้อเดียวกันจนแยกไม่ออก การที่คุณรุกล้ำพื้นที่ส่วนตัวของแฟนไม่ใช่ความรัก แต่เป็นการไม่เคารพความเป็นมนุษย์ (Dehumanization) ของอีกฝ่าย",
+                motto: "\"Your secrets are mine to keep.\""
+            }
+        ];
+
+        // --- 2. Translations & Content (Emojis Added) ---
         const translations = {
             th: {
-                title: "Velvet Aura",
-                slogan: "ค้นพบตัวตนที่ซ่อนอยู่ในเงามืด",
-                startBtn: "เริ่มการทำนาย",
-                followTitle: "เดี๋ยวก่อน...",
-                followText: `ก่อนที่จะเปิดเผยตัวตนที่แท้จริงของคุณ<br>ติดตาม <strong class="text-pink-400">@hatchedboy</strong> บน X<br>เพื่อสนับสนุนผู้สร้างสรรค์`,
-                followLink: "ติดตามเลย",
-                followClose: "ดูผลลัพธ์",
-                loadingText: "กำลังวิเคราะห์คลื่นพลังงาน...",
-                saveBtn: "บันทึกรูปภาพ",
-                restartBtn: "เริ่มใหม่",
+                title: "Noir: Meet your shadow.",
+                slogan: "ค้นพบจิตใต้สำนึกด้านมืดของคุณ",
+                startBtn: "เริ่มการวิเคราะห์จิต",
+                followTitle: "ปลดล็อกผลลัพธ์",
+                followText: "การวิเคราะห์เสร็จสมบูรณ์<br>ติดตาม <strong class='text-purple-400'>@hatchedboy</strong> เพื่อเปิดอ่านแฟ้มลับ",
+                followLink: "ติดตามบน X",
+                followClose: "ดูผลลัพธ์ทันที",
+                loadingText: "กำลังวิเคราะห์ปมในใจ...",
+                restartBtn: "วิเคราะห์ใหม่อีกครั้ง",
+                statusQuestion: "สถานะหัวใจของคุณในตอนนี้?",
+                statusOptions: ["🖤 โสดสนิท / มีคนคุยแต่ไม่ชัดเจน", "💍 มีแฟนแล้ว / แต่งงานแล้ว / ไม่โสด"],
                 questions: [
-                    "หากกลิ่นกายเฉพาะจุดของคุณเป็นน้ำหอม... มันคือกลิ่นใด?",
-                    "สไตล์บนเตียงที่คุณโหยหา เปรียบได้กับสัตว์ชนิดใด?",
-                    "รางวัลสำหรับค่ำคืนอันยอดเยี่ยม คือสิ่งใด?",
-                    "สีสันที่บ่งบอกถึงความเร่าร้อนของคุณ?",
-                    "กิจกรรมยามว่างที่ช่วยปลุกเร้าจิตวิญญาณ?",
-                    "บรรยากาศหลังพายุรักสงบลง... คือแบบไหน?",
-                    "สถานที่เดทแรกที่กระตุ้นอะดรีนาลีนของคุณ?",
-                    "ท่วงทำนองที่ใช้บรรเลงก่อนเริ่มบทรัก?",
-                    "รสชาติอาหารที่เปรียบเสมือนเซ็กส์ของคุณ?",
-                    "เครื่องแต่งกายที่ใช้สะกดสายตาในเดทที่สอง?",
-                    "อุปกรณ์เสริมรสรักชิ้นโปรด?",
-                    "เสียงตอบรับที่ทำให้ใจคุณสั่นไหว?",
-                    "รสจูบของคุณหวานล้ำเหมือนสิ่งใด?",
-                    "สถานการณ์ที่จุดไฟปรารถนาได้เร็วที่สุด?",
-                    "สัญลักษณ์รอยสักที่สื่อถึงความเป็นคุณ?",
-                    "คำพูดติดปากในห้วงเวลาแห่งความสุข?",
-                    "พลังวิเศษที่คุณอยากมีในกิจกรรมรัก?",
-                    "แสงไฟแบบไหนที่สร้างอารมณ์ได้ดีที่สุด?",
-                    "หากสมรรถภาพคือเครื่องยนต์ คุณคือรถรุ่นไหน?",
-                    "ความลับสุดยอดที่คุณซ่อนไว้?",
-                    "คาแรคเตอร์ในฝันที่คุณอยากร่วมรักด้วย?",
-                    "ความสำคัญของ 'ขนาด' ในมุมมองคุณ?",
-                    "สถานที่สาธารณะที่คุณอยากลองเสี่ยง?",
-                    "ชุดชั้นในที่เห็นแล้วพ่ายแพ้ทันที?",
-                    "หากส่วนนั้นพูดได้ มันจะบอกว่า?",
-                    "จังหวะการเล้าโลมที่คุณโปรดปราน?",
-                    "ระดับความต้องการในตัวคุณ (1-10)?",
-                    "อุปกรณ์ประกอบฉากที่เซ็กซี่ที่สุด?",
-                    "สิ่งแรกที่ทำเมื่อสลับร่างกับคนรัก?",
-                    "คุณคิดว่าผลลัพธ์สุดท้ายจะเป็นเช่นไร?"
+                    "กลิ่นน้ำหอมที่บ่งบอกตัวตนของคุณ?",
+                    "สัตว์ที่เป็นสัญชาตญาณดิบของคุณบนเตียง?",
+                    "ของขวัญที่คุณอยากได้จากคนรัก?",
+                    "สีที่สื่อถึงความปรารถนาลึกๆ ของคุณ?",
+                    "กิจกรรมยามว่างที่ดึงดูดคุณ?",
+                    "สภาพอากาศที่ทำให้คุณรู้สึก 'มีอารมณ์'?",
+                    "สถานที่เดทแรกที่คุณจะพาเขาไปเชือด (เปรียบเปรย)?",
+                    "เพลงที่เปิดคลอตอนเริ่มบทรัก?",
+                    "รสชาติของเซ็กส์ในอุดมคติ?",
+                    "ชุดที่ใส่เพื่อฆ่าอีกฝ่ายให้ตายคาที่?",
+                    "ถ้าต้องใช้อุปกรณ์เสริม คุณจะเลือก?",
+                    "เสียงตอบรับที่คุณอยากได้ยิน?",
+                    "รสจูบของคุณเหมือนกับ...",
+                    "สถานการณ์ไหนที่จุดไฟคุณได้ไวที่สุด?",
+                    "รอยสักในร่มผ้าที่คุณอยากมี?",
+                    "คำพูดติดปากเวลาถึงจุดสุดยอด?",
+                    "พลังวิเศษที่คุณอยากใช้ในห้องนอน?",
+                    "แสงไฟแบบไหนที่ปลุกเร้าที่สุด?",
+                    "ถ้าลีลาของคุณเป็นรถ คุณคือรถรุ่นไหน?",
+                    "ความลับที่คุณไม่กล้าบอกแฟน?",
+                    "ตัวละครสมมติที่คุณอยาก One Night Stand ด้วย?",
+                    "ขนาดสำคัญไฉน?",
+                    "สถานที่สาธารณะที่ท้าทายที่สุด?",
+                    "ชุดชั้นในที่เห็นแล้วยอมจำนน?",
+                    "ถ้า 'น้อง' ของคุณพูดได้ มันจะบอกว่า?",
+                    "สไตล์การเล้าโลมที่คุณชอบ?",
+                    "ระดับความหื่นของคุณ (1-10)?",
+                    "พร็อพประกอบฉากที่ขาดไม่ได้?",
+                    "สิ่งแรกที่ทำถ้าสลับร่างกับแฟน?",
+                    "คุณคิดว่าตัวเองเป็นคนแบบไหนในความรัก?"
                 ],
+                 // Options mapped to potential archetypes (Logic Weighting)
+                 // Pattern: [Sweet/Victim, Playful/Manipulator, Intense/Dictator, Detached/Libertine, Chaotic/Vampire]
                  options: [
-                    ["🍫 ช็อกโกแลต (หอมหวานน่ากิน)", "🍿 ป๊อปคอร์น (กลิ่นเนยๆ เค็มๆ)", "🍭 ลูกอม (หวานเจี๊ยบชื่นใจ)", "🥓 ส้มตำปลาร้า (นัวๆ ท้าทายจมูก)", "🍪 คุกกี้ (หอมกรุ่นเหมือนเพิ่งอบ)"], 
-                    ["🐶 หมาน้อย (อ้อนเก่ง ขี้เล่น)", "🐱 แมวเหมียว (คลอเคลีย ยั่วๆ)", "🐰 กระต่ายป่า (ซุกซน พลังเยอะ)", "🦉 นกฮูก (สุขุม รอบคอบ แต่ถึงใจ)", "🐢 เต่าทะเล (ช้าๆ แต่มั่นคง)"], 
-                    ["💬 นอนคุยกระหนุงกระหนิง", "🎁 ของขวัญแทนใจ (ชิ้นใหญ่ๆ!)", "🤗 กอดแน่นๆ ฟัดๆ", "🍳 ทำอาหารเช้าถึงเตียง", "🎵 ร้องเพลงกล่อม (หรือแร็ป?)"], 
-                    ["🌈 สีรุ้ง (สดใสทุกเฉด)", "💗 สีชมพูบานเย็น (หวานแหวว)", "💙 สีน้ำเงินมหาสมุทร (ลึกลับน่าค้นหา)", "💚 สีเขียวนีออน (แสบตาไปเลย!)", "💛 สีทอง (อร่ามดั่งทองคำ)"], 
-                    ["📚 อ่านนิยายวายฟินๆ", "🎨 วาดรูปสื่ออารมณ์", "🎮 ไถ ROV/FreeFire จนตาแฉะ", "🏀 ออกกำลังกายเรียกเหงื่อ", "🎤 ซ้อมร้องเพลงประกวด"], 
-                    ["☀️ แดดเปรี้ยง (ร้อนแรงต่อเนื่อง)", "🌧️ ฝนพรำ (โรแมนติก ชวนซุก)", "❄️ หิมะตก (อยากกอดให้อุ่น)", "🌙 กลางคืนต่อเลยได้ไหม?", "🌤️ ฟ้าหลังฝน (สดชื่น สบายตัว)"], 
-                    ["🏖️ ทะเลสวย น้ำใส (แอบส่องชุดว่ายน้ำ)", "🏔️ ยอดดอยดูดาว (บรรยากาศดี)", "🏰 เมืองเก่า (ขลังๆ มีเรื่องเล่า)", "🏞️ น้ำตกกลางป่า (ธรรมชาติสุดๆ)", "🛍️ ห้างหรู (เดินชิล แอร์เย็น)"], 
-                    ["🎧 ป๊อปสากลจังหวะดีๆ", "🎸 อินดี้ฟังสบาย (แต่แอบเซ็กซี่)", "🎼 ลูกทุ่งโจ๊ะๆ", "🎹 เพลงบรรเลงเคลิ้มๆ", "🎤 เพลงไวรัล TikTok (เต้นตามได้!)"], 
-                    ["🍣 ซูชิ/ซาชิมิ (สดชื่น ละมุนลิ้น)", "🍕 พิซซ่า/พาสต้า (อิ่ม อร่อย ชีสเยิ้ม)", "🍜 ก๋วยเตี๋ยว/ส้มตำ (แซ่บๆ ถึงใจ)", "🍔 เบอร์เกอร์/ฟรายส์ (ง่ายๆ แต่ฟิน)", "🍰 เค้ก/ไอศกรีม (ตบท้ายหวานๆ)"], 
-                    ["👕 เสื้อยืดกางเกงเก่าๆ (เซอร์ๆ)", "👔 เชิ้ตเรียบๆ (ดูดีมีภูมิฐาน)", "👗 ชุดเปิดนิดโชว์หน่อย (เซ็กซี่ขยี้ใจ)", "👘 ชุดแฟนซี (เอาฮา หรือเอาจริง?)", "🩳 ชุดนอน (ไม่ได้นอน!)"], 
-                    ["🥚 ไข่สั่นจั๊กจี้", "🥒 แตงกวาสดจากสวน", "🕹️ จอยเกม (เอาไว้กดท่าไม้ตาย?)", "✋ มือเปล่า (คลาสสิค!)", "🥖 ขนมปังฝรั่งเศส (ยาวๆ ใหญ่ๆ)"], 
-                    ["🎶 เสียงสูงปรี๊ด", "🗣️ เสียงทุ้มกระซิบ", "😂 เสียงหัวเราะคิกคัก", "🤐 เงียบกริบ (ลุ้นเอาเอง)", "🐷 เสียงเหมือนหมูโดนน้ำร้อน"], 
-                    ["🌶️ ต้มยำกุ้ง (แซ่บซี๊ด)", "🍦 ไอติมวนิลา (หวานละมุน)", "☕ กาแฟดำ (ขมแต่ดี)", "🍺 เบียร์เย็นๆ (ซ่าถึงใจ)", "🍬 ทุเรียน (หอม...มั้ง?)"], 
-                    ["🚿 ตอนอาบน้ำด้วยกัน", "👀 ตอนเผลอสบตากัน", "💪 ตอนเห็นเหงื่อตอนออกกำลังกาย", "😴 ตอนแอบมองตอนหลับ", "🍳 ตอนทำอาหารในครัว"], 
-                    ["🔥 รูปไฟลุกโชน", "🐍 รูปงูเลื้อย", "🍑 รูปพีชกลมๆ", "🍆 รูปมะเขือม่วง", "🚫 ไม่สัก! (กลัวเจ็บ)"], 
-                    ["\"อ๊าาา!\" (คลาสสิค)", "\"ที่รัก...\" (หวานๆ)", "\"เร็วอีก!\" (สายโหด)", "\"สุดยอด!\" (ชมเก่ง)", "\"... (เงียบ ตั้งใจทำ)\""], 
-                    ["🚀 พลังความเร็วสูง", "💪 พลังอึดถึกทน", "✨ พลังสร้างภาพลวงตา", "🧠 พลังอ่านใจ", "⏳ พลังหยุดเวลา"], 
-                    ["🕯️ แสงเทียนสลัวๆ", "💡 ไฟสว่างจ้า (เห็นชัดๆ)", "🌃 วิวเมืองตอนกลางคืน", "🌳 ท่ามกลางธรรมชาติ", "🎉 เสียงดัง ปาร์ตี้ๆ"], 
-                    ["🏎️ รถแข่ง F1 (เร็ว แรง)", "🚜 รถไถ (ลุยได้ทุกสภาพ)", "🚲 จักรยาน (เรื่อยๆ ชิลๆ)", "🚂 รถไฟ (ยาวๆ ไป)", "🛵 มอเตอร์ไซค์ (คล่องตัว ซอกแซก)"], 
-                    ["🤫 ชอบลองท่าแปลกๆ", "😍 แอบดูหนังโป๊บ่อยๆ", "😬 ไม่เคยถึงจุดสุดยอด", "😂 เคยหลับคาอกแฟน", "🤥 โกหกแฟนว่าฟิน"], 
-                    ["🦸 กัปตันอเมริกา (หุ่นแน่น)", "🧙 แฮร์รี่ พอตเตอร์ (มีเวทมนตร์)", "🥷 นารูโตะ (มีคาถาแยกเงา)", "👸 เอลซ่า (เย็นๆ ดี)", "👾 Shrek (ตัวใหญ่ อบอุ่น?)"], 
-                    ["👍 สำคัญมาก!", "👌 สำคัญปานกลาง", "🤷 ไม่สำคัญเท่าลีลา", "🤔 แล้วแต่อารมณ์", "😂 ขอใหญ่ไว้ก่อน อุ่นใจ"], 
-                    ["🎬 โรงหนังแถวหลังสุด", "🚻 ห้องน้ำห้าง", "🌳 พุ่มไม้ในสวนสาธารณะ", "🚗 ในรถที่จอดลับตาคน", "🙅 ไม่เอา! เสี่ยงเกินไป"], 
-                    ["👙 บิกินี่ตัวจิ๋ว", "🎀 ลูกไม้ซีทรู", "⚫ สีดำเรียบๆ แต่ดึงดูด", "🐯 ลายเสือดาวสุดแซ่บ", "⚪ ไม่ใส่เลย (ดีที่สุด!)"], 
-                    ["“นายท่าน สุดยอด!”", "“ขอพักแป๊บ เหนื่อย”", "“ตรงนั้นแหละ ดี!”", "“เมื่อไหร่จะโต?”", "“วันนี้ขอลาป่วย”"], 
-                    ["⏳ เล้าโลมนานๆ ฟินกว่า", "🚀 เข้าเรื่องเลย เสียเวลา", "☯️ แล้วแต่สถานการณ์", "🤔 ขอแบบผสมๆ", "🤷 อีกฝ่ายนำเลยจ้า"], 
-                    ["1-3 (ใสๆ วัยรุ่นชอบ)", "4-6 (พอประมาณ กรุบกริบ)", "7-8 (หื่นนะ แต่เก็บอาการ)", "9 (เก็บอาการไม่ค่อยอยู่)", "10+ (ทะลุปรอทไปเลยจ้า!)"], 
-                    ["🍓 สตรอว์เบอร์รี/วิปครีม", "⛓️ โซ่ แส้ กุญแจมือ", "👔 เนคไท/เชิ้ตขาว", "👠 รองเท้าส้นสูง", "🕯️ เทียนไข (ร้อนๆ)"], 
-                    ["👀 สำรวจร่างกายตัวเอง (ร่างใหม่)", "🤳 ถ่ายรูปเก็บไว้", "💪 ลองใช้พลัง (?) ของอีกฝ่าย", "🤫 แอบดูมือถือแฟน", "😂 ทำตัวปกติ (เนียนๆ)"], 
-                    ["😇 แบบเทพบุตรจุติ", "😈 แบบปีศาจเจ้าเลห์", "😂 แบบตลกโบ๊ะบ๊ะ", "🤔 แบบลึกลับน่าค้นหา", "🤷 แบบไหนก็ได้ ขอให้ใช้ได้ดี!"]
+                    ["🍫 ช็อกโกแลต (หวานซ่อนขม)", "🍿 ป๊อปคอร์น (เค็มมันเพลินๆ)", "🍷 ไวน์แดง (หรูหราเมามาย)", "🥓 ปลาร้า (นัวลึกถึงแก่น)", "🧊 น้ำแข็ง (เย็นชาแต่กัดกิน)"], 
+                    ["🐶 ลูกหมา (ขี้อ้อนต้องการเจ้าของ)", "🐱 แมว (เอาแต่ใจคาดเดายาก)", "🦁 สิงโต (จ่าฝูงผู้ควบคุม)", "🦅 เหยี่ยว (นักล่าสายตาคม)", "🐍 งู (เจ้าเล่ห์รัดแน่น)"], 
+                    ["🤗 กอดอุ่นๆ (ความปลอดภัย)", "💎 ของแบรนด์เนม (มูลค่า)", "👑 การยอมจำนน (อำนาจ)", "✈️ ตั๋วเครื่องบินเที่ยวเดียว (อิสระ)", "🔗 โซ่แส้กุญแจมือ (พันธนาการ)"], 
+                    ["💗 ชมพู (บริสุทธิ์จอมปลอม)", "💜 ม่วง (ลึกลับน่าค้นหา)", "❤️ แดงเลือด (รุนแรงอันตราย)", "🖤 ดำสนิท (ดำมืดอำพราง)", "💚 เขียวนีออน (เป็นพิษเย้ายวน)"], 
+                    ["📚 อ่านนิยายเศร้า (จมดิ่ง)", "🎭 เล่นละครตบตาคน (สวมบทบาท)", "🥊 ต่อยมวยระบายอารมณ์ (ระเบิด)", "🎮 เล่นเกมคนเดียว (ตัดขาดโลก)", "📱 เช็คมือถือแฟน (ระแวง)"], 
+                    ["🌧️ ฝนพรำ (เศร้าเหงา)", "🌩️ พายุเข้า (บ้าคลั่งโกลาหล)", "☀️ แดดจัด (ร้อนแรงแผดเผา)", "🌫️ หมอกหนา (อำพรางซ่อนเร้น)", "🌙 คืนเดือนดับ (ลึกลับน่ากลัว)"], 
+                    ["🎡 สวนสนุก (ย้อนวัยไร้เดียงสา)", "🍸 รูฟท็อปบาร์ (หรูหรามองลงต่ำ)", "🏰 ปราสาทผีสิง (ตื่นเต้นหวาดเสียว)", "🏨 ม่านรูด (ตรงประเด็นไม่อ้อมค้อม)", "⛺ เข้าป่า (ตัดขาดจากผู้คน)"], 
+                    ["🎻 เพลงคลาสสิคเศร้าๆ", "🎷 แจ๊สยั่วเย้า", "🎸 ร็อคหนักหน่วง", "🎧 EDM กระแทกใจ", "🎤 เพลงที่ตัวเองแต่ง (หลงตัวเอง)"], 
+                    ["🍦 ไอติมวนิลา (ละมุนลิ้น)", "🌶️ ต้มยำ (แซ่บซี๊ด)", "🥩 สเต็กแรร์ (ดิบเถื่อน)", "🍣 โอมากาเสะ (เรื่องมาก)", "🍲 แกงโฮะ (มั่วซั่วคาดเดาไม่ได้)"], 
+                    ["👗 เดรสลูกไม้ (หวานซ่อนเปรี้ยว)", "🕴️ สูทเนี้ยบกริบ (ทางการทรงอำนาจ)", "👙 หนังรัดรูป (Dominatrix)", "👕 เสื้อยืดไม่ใส่กางเกง (ยั่วเย้า)", "🧖 ผ้าขนหนูผืนเดียว (พร้อมเสมอ)"], 
+                    ["🧸 ตุ๊กตาหมี (ตัวแทน)", "🎭 หน้ากาก (ปิดบังตัวตน)", "📏 ไม้เรียว (ลงโทษ)", "📷 กล้องถ่ายคลิป (บันทึก)", "🔮 ลูกแก้วพยากรณ์ (ควบคุมอนาคต)"], 
+                    ["🥺 ร้องไห้เบาๆ (ยอมจำนน)", "😏 เสียงหัวเราะในลำคอ (พึงพอใจ)", "😱 กรีดร้องขอชีวิต (หวาดกลัว)", "🤐 ห้ามส่งเสียง (ควบคุม)", "😩 เรียกชื่อคนอื่น (เจ็บปวด)"], 
+                    ["🍬 ลูกอมฮาร์ทบีท (หวาน)", "🍾 แชมเปญราคาแพง (มึนเมา)", "🚬 บุหรี่ (ขมปร่า)", "🧊 มินต์เย็นจัด (เย็นชา)", "🩸 เลือดฝาด (คาวคลุ้ง)"], 
+                    ["🥺 ตอนเขาอ้อนวอน", "😒 ตอนเขาทำเมิน", "😡 ตอนเขาท้าทาย", "🫣 ตอนแอบทำในที่ลับ", "😴 ตอนเขาหลับไม่รู้ตัว"], 
+                    ["🕊️ ปีกนางฟ้า (อิสรภาพ)", "👑 มงกุฎ (ราชินี)", "⛓️ โซ่ตรวน (พันธะ)", "👁️ ดวงตาที่สาม (การรู้แจ้ง)", "🔤 ชื่อแฟน (ที่อกซ้าย)"], 
+                    ["💬 รักเค้าไหม?", "🙇‍♀️ กราบสิคะ", "🛑 เสร็จยัง?", "🔒 อย่าเพิ่งไป", "🚫 ใครอนุญาตให้เสร็จ?"], 
+                    ["❤️ ฮีลใจ (รักษา)", "🧠 อ่านใจ (รู้ทัน)", "💪 พละกำลัง (ข่มเหง)", "👻 ล่องหน (สอดแนม)", "⏳ หยุดเวลา (ควบคุมสถานการณ์)"], 
+                    ["🕯️ เทียนหอม (โรแมนติก)", "💡 สปอร์ตไลท์ (เปิดเผย)", "🔦 ไฟฉายส่องหน้า (สอบสวน)", "🌃 แสงจันทร์ (สลัว)", "🔴 ไฟสีแดง (ซ่อง/อันตราย)"], 
+                    ["🚲 จักรยานแม่บ้าน (เรื่อยๆ)", "🏎️ เฟอร์รารี่ (เร็วแรง)", "🚜 รถถัง (บดขยี้)", "🏍️ บิ๊กไบค์ (โฉบเฉี่ยว)", "🛸 ยานอวกาศ (หลุดโลก)"], 
+                    ["😭 แอบร้องไห้คนเดียว", "📲 มีแอพหาคู่ลับๆ", "🔄 อยากลองสวิงกิ้ง", "💔 ไม่เคยรักใครจริง", "🔪 โรคจิตนิดๆ"], 
+                    ["👠 Cinderella (รอเจ้าชาย)", "🃏 Joker (ปั่นประสาท)", "⛓️ Christian Grey (นายท่าน)", "🔫 James Bond (เจ้าชู้)", "⚡ Voldemort (อำนาจมืด)"], 
+                    ["💖 ใจสำคัญกว่า", "🤸 ลีลาสำคัญกว่า", "🍆 ใหญ่ไว้ข่ม", "🏁 ไม่สน ขอแค่เสร็จ", "📏 ต้องพอดีเป๊ะ"], 
+                    ["📚 ห้องสมุด (เงียบเชียบ)", "👗 ห้องลองเสื้อ (เสี่ยง)", "🎤 เวทีคอนเสิร์ต (โชว์)", "✈️ ห้องน้ำเครื่องบิน (แคบ)", "🏡 ระเบียงบ้านเพื่อน (ท้าทาย)"], 
+                    ["☁️ สีขาวบริสุทธิ์", "🕸️ ลูกไม้สีดำ", "⛓️ สายหนัง Harness", "❌ ไม่ใส่เลย", "🩲 กางเกงในตัวเก่า"], 
+                    ["🤗 กอดหนูหน่อย", "🙇 รับใช้ฉันซะ", "💥 กระแทกอีก", "🥱 เบื่อแล้ว", "🤤 หิว"], 
+                    ["🐢 เนิบนาบ อ่อนโยน", "🧠 เล่นเกมทายใจ", "🐎 รุนแรง รวดเร็ว", "⏩ ข้ามไปเลย", "👽 แปลกประหลาด"], 
+                    ["👶 1-3 (ใสซื่อ)", "😉 4-6 (บริหารเสน่ห์)", "🔥 7-8 (ร้อนแรง)", "🤪 9-10 (บ้าคลั่ง)", "🌌 Infinity (ถมไม่เต็ม)"], 
+                    ["🤧 ผ้าเช็ดหน้า (ซับน้ำตา)", "🔗 กุญแจมือ (จับกุม)", "鞭 แส้ (ลงทัณฑ์)", "💵 เงินสด (ซื้อกิน)", "📱 โทรศัพท์ (ถ่ายคลิป)"], 
+                    ["🪞 ส่องกระจกชมตัวเอง", "📱 เช็คมือถือเขา", "💸 โอนเงินเข้าบัญชีตัวเอง", "🏩 ไปมีเซ็กส์กับคนอื่น", "🛌 นอนเฉยๆ"], 
+                    ["🥺 ผู้เสียสละ (The Victim)", "👑 ผู้คุมเกม (The Master)", "💣 ผู้ทำลายล้าง (The Destroyer)", "🏃 ผู้แสวงหา (The Seeker)", "📦 ผู้ถูกกระทำ (The Object)"]
                 ]
             },
             en: {
-                title: "Velvet Aura",
-                slogan: "Unveil your hidden desires.",
-                startBtn: "Start Experience",
-                followTitle: "Wait a moment",
-                followText: `To unlock your true aura result...<br>Follow <strong class="text-pink-400">@hatchedboy</strong> on X<br>to support the creator.`,
-                followLink: "Follow Now",
-                followClose: "Reveal Result",
-                loadingText: "Analyzing Energy Signature...",
-                saveBtn: "Save to Photos",
-                restartBtn: "Restart Experience",
+                title: "Noir: Meet your shadow.",
+                slogan: "Unveil your dark romantic archetype.",
+                startBtn: "Start Analysis",
+                followTitle: "Unlock Results",
+                followText: "Your dark traits have been analyzed.<br>Follow <strong class='text-purple-400'>@hatchedboy</strong> to reveal.",
+                followLink: "Follow on X",
+                followClose: "Reveal Now",
+                loadingText: "Analyzing Subconscious...",
+                restartBtn: "Analyze Again",
+                statusQuestion: "Current Relationship Status?",
+                statusOptions: ["🖤 Single / It's Complicated", "💍 Taken / Married / Committed"],
                 questions: [
-                    "If your scent was a perfume... what would the base note be?",
-                    "Which animal's instinct matches your bedroom style?",
-                    "The perfect reward after a night of passion?",
-                    "A color that represents your inner fire?",
-                    "A hobby that stimulates your soul?",
-                    "The perfect weather to wake up to after intimacy?",
-                    "A first date location that spikes adrenaline?",
-                    "The genre of music for the prelude?",
-                    "If your sex life was a meal, what would it be?",
-                    "The outfit for a seductive second date?",
-                    "One toy to enhance the experience?",
-                    "The sound that makes your heart tremble?",
-                    "If a kiss had a flavor, what would it be?",
-                    "A situation that instantly ignites you?",
-                    "A symbol for a secret tattoo?",
-                    "Your signature phrase in the heat of the moment?",
-                    "A superpower for the bedroom?",
-                    "The lighting that sets the perfect mood?",
-                    "If prowess was a vehicle, what do you drive?",
-                    "Your deepest intimate secret?",
-                    "A fictional character for one night?",
-                    "Does size truly matter?",
-                    "A risky public place for a quick encounter?",
-                    "Lingerie that weakens your knees?",
-                    "If it could speak, what would it say?",
-                    "Foreplay: Long and slow or straight to it?",
-                    "Rate your drive (1-10)?",
-                    "The sexiest prop?",
-                    "First thing you'd do if you swapped bodies?",
-                    "What kind of aura do you expect?"
+                    "Scent that defines you?",
+                    "Your primal instinct animal in bed?",
+                    "Ideal gift from a lover?",
+                    "Color of your inner desire?",
+                    "Hobby that attracts you?",
+                    "Weather that turns you on?",
+                    "First date location to 'kill' them?",
+                    "Music for the prelude?",
+                    "Flavor of your ideal sex life?",
+                    "Outfit to kill on the second date?",
+                    "Toy of choice?",
+                    "Sound you want to hear?",
+                    "Flavor of your kiss?",
+                    "Situation that ignites you?",
+                    "Symbol for a secret tattoo?",
+                    "Phrase at the climax?",
+                    "Superpower in the bedroom?",
+                    "Ideal lighting?",
+                    "If your prowess was a vehicle?",
+                    "Secret you keep from your partner?",
+                    "Fictional character for a fling?",
+                    "Does size matter?",
+                    "Riskiest public place?",
+                    "Lingerie that conquers?",
+                    "If 'it' could speak?",
+                    "Foreplay style?",
+                    "Libido level (1-10)?",
+                    "Sexiest prop?",
+                    "First thing if you swapped bodies?",
+                    "How do you see yourself in love?"
                 ],
                 options: [
-                    ["🍫 Chocolate (Sweet & Edible)", "🍿 Popcorn (Buttery & Salty)", "🍭 Candy (Sugary Sweet)", "🥓 Fermented Fish (Pungent & Wild)", "🍪 Cookie (Warm & Fresh)"], 
-                    ["🐶 Puppy (Needy & Playful)", "🐱 Kitten (Cuddly & Teasing)", "🐰 Wild Rabbit (Mischievous)", "🦉 Owl (Wise & Intense)", "🐢 Sea Turtle (Slow & Steady)"], 
-                    ["💬 Pillow talk cuddles", "🎁 A lavish gift", "🤗 Tight embrace", "🍳 Breakfast in bed", "🎵 A private serenade"], 
-                    ["🌈 Rainbow (Vibrant)", "💗 Hot Pink (Sweet)", "💙 Ocean Blue (Mysterious)", "💚 Neon Green (Bold)", "💛 Gold (Radiant)"], 
-                    ["📚 Reading romance", "🎨 Expressive art", "🎮 Gaming marathon", "🏀 Intense workout", "🎤 Singing practice"], 
-                    ["☀️ Blazing Sun (Heat)", "🌧️ Gentle Rain (Cozy)", "❄️ Snowfall (Warmth)", "🌙 Eternal Night", "🌤️ Fresh Morning"], 
-                    ["🏖️ Beach (Voyeuristic)", "🏔️ Mountain Stargazing", "🏰 Historic City", "🏞️ Deep Forest", "🛍️ Luxury Mall"], 
-                    ["🎧 Upbeat Pop", "🎸 Indie Chill", "🎼 Local Folk", "🎹 Dreamy Instrumental", "🎤 Viral Hits"], 
-                    ["🍣 Sushi (Delicate)", "🍕 Pizza (Comfort)", "🍜 Spicy Noodles", "🍔 Burger (Classic)", "🍰 Dessert (Sweet)"], 
-                    ["👕 Casual Wear", "👔 Formal Shirt", "👗 Revealing Dress", "👘 Costume", "🩳 Lingerie"], 
-                    ["🥚 Vibrating Egg", "🥒 Fresh Produce", "🕹️ Controller", "✋ Bare Hands", "🥖 Baguette"], 
-                    ["🎶 High Pitch", "🗣️ Deep Whisper", "😂 Giggles", "🤐 Silence", "🐷 Animalistic"], 
-                    ["🌶️ Spicy Tom Yum", "🍦 Vanilla", "☕ Black Coffee", "🍺 Cold Beer", "🍬 Exotic Fruit"], 
-                    ["🚿 Showering", "👀 Eye Contact", "💪 Sweat", "😴 Sleeping", "🍳 Cooking"], 
-                    ["🔥 Fire", "🐍 Snake", "🍑 Peach", "🍆 Eggplant", "🚫 None"], 
-                    ["\"Aaaah!\"", "\"Darling...\"", "\"Faster!\"", "\"Amazing!\"", "\"... (Focus)\""], 
-                    ["🚀 Speed", "💪 Endurance", "✨ Illusion", "🧠 Mind Reading", "⏳ Time Stop"], 
-                    ["🕯️ Candlelight", "💡 Bright Light", "🌃 City Views", "🌳 Nature", "🎉 Party Lights"], 
-                    ["🏎️ F1 Racer", "🚜 Tractor", "🚲 Bicycle", "🚂 Train", "🛵 Scooter"], 
-                    ["🤫 Weird positions", "😍 Secret porn habit", "😬 Never climaxed", "😂 Fell asleep", "🤥 Faked it"], 
-                    ["🦸 Captain America", "🧙 Harry Potter", "🥷 Naruto", "👸 Elsa", "👾 Shrek"], 
-                    ["👍 Crucial", "👌 Moderate", "🤷 Technique First", "🤔 Depends", "😂 Bigger is better"], 
-                    ["🎬 Cinema Back Row", "🚻 Mall Restroom", "🌳 Park Bushes", "🚗 Parked Car", "🙅 Never"], 
-                    ["👙 Bikini", "🎀 Lace", "⚫ Black", "🐯 Leopard", "⚪ Nothing"], 
-                    ["“You're the best!”", "“Need a break.”", "“Right there!”", "“Grow up!”", "“Sick day.”"], 
-                    ["⏳ Slow & Steady", "🚀 Fast & Furious", "☯️ Context Dependent", "🤔 Mixed", "🤷 Follow Lead"], 
-                    ["1-3 (Innocent)", "4-6 (Moderate)", "7-8 (Hidden Fire)", "9 (Untamable)", "10+ (Explosive)"], 
-                    ["🍓 Strawberries", "⛓️ Chains", "👔 Tie", "👠 Heels", "🕯️ Wax"], 
-                    ["👀 Explore Body", "🤳 Selfies", "💪 Test Strength", "🤫 Check Phone", "😂 Act Normal"], 
-                    ["😇 Angelic", "😈 Demonic", "😂 Comical", "🤔 Mysterious", "🤷 Functional"]
+                    ["🍫 Chocolate (Sweet)", "🍿 Popcorn (Salty)", "🍷 Red Wine (Classy)", "🥓 Fermented (Deep)", "🧊 Ice (Cold)"], 
+                    ["🐶 Puppy (Needy)", "🐱 Cat (Selfish)", "🦁 Lion (Alpha)", "🦅 Hawk (Hunter)", "🐍 Snake (Deceptive)"], 
+                    ["🤗 Warm Hugs", "💎 Luxury Goods", "👑 Submission", "✈️ One-way Ticket", "🔗 Chains"], 
+                    ["💗 Pink (Innocent)", "💜 Purple (Mysterious)", "❤️ Blood Red (Violent)", "🖤 Pitch Black (Dark)", "💚 Toxic Green (Poison)"], 
+                    ["📚 Sad Novels", "🎭 Acting", "🥊 Boxing", "🎮 Solo Gaming", "📱 Checking Partner's Phone"], 
+                    ["🌧️ Drizzle (Melancholy)", "🌩️ Storm (Chaos)", "☀️ Scorching Sun (Intense)", "🌫️ Fog (Hiding)", "🌙 New Moon (Secret)"], 
+                    ["🎡 Theme Park", "🍸 Rooftop Bar", "🏰 Haunted House", "🏨 Motel", "⛺ Deep Woods"], 
+                    ["🎻 Sad Classical", "🎷 Seductive Jazz", "🎸 Hard Rock", "🎧 EDM", "🎤 Self-composed"], 
+                    ["🍦 Vanilla", "🌶️ Spicy", "🥩 Rare Steak", "🍣 Omakase", "🍲 Leftovers"], 
+                    ["👗 Lace Dress", "🕴️ Sharp Suit", "👙 Leather", "👕 Just a T-shirt", "🧖 Towel Only"], 
+                    ["🧸 Teddy Bear", "🎭 Mask", "📏 Cane", "📷 Camera", "🔮 Crystal Ball"], 
+                    ["🥺 Soft Crying", "😏 Smirk/Laugh", "😱 Screaming", "🤐 Silence", "😩 Another Name"], 
+                    ["🍬 Candy", "🍾 Champagne", "🚬 Tobacco", "🧊 Mint", "🩸 Blood"], 
+                    ["🥺 Begging", "😒 Ignoring", "😡 Challenging", "🫣 Sneaking", "😴 Sleeping"], 
+                    ["🕊️ Angel Wings", "👑 Crown", "⛓️ Chains", "👁️ Third Eye", "Partner's Name"], 
+                    ["Do you love me?", "Bow down.", "Done yet?", "Don't leave.", "Did I say you could?"], 
+                    ["❤️ Healing", "🧠 Mind Reading", "💪 Strength", "👻 Invisibility", "⏳ Time Stop"], 
+                    ["🕯️ Candles", "💡 Spotlight", "🔦 Flashlight", "🌃 Moonlight", "🔴 Red Light"], 
+                    ["🚲 Bicycle", "🏎️ Ferrari", "🚜 Tank", "🏍️ Big Bike", "🛸 UFO"], 
+                    ["😭 Crying alone", "📲 Secret dating apps", "🔄 Wanting swinging", "💔 Never loved truly", "🔪 Psycho tendencies"], 
+                    ["👠 Cinderella", "🃏 Joker", "⛓️ Christian Grey", "🔫 James Bond", "⚡ Voldemort"], 
+                    ["💖 Heart matters", "🤸 Skill matters", "🍆 Size dominates", "🏁 Result matters", "📏 Perfectionist"], 
+                    ["📚 Library", "👗 Fitting Room", "🎤 Concert Stage", "✈️ Airplane Bathroom", "🏡 Friend's Balcony"], 
+                    ["☁️ White Cotton", "🕸️ Black Lace", "⛓️ Leather Harness", "❌ Naked", "🩲 Old Panties"], 
+                    ["🤗 Hug me", "🙇 Serve me", "💥 Harder", "🥱 Bored", "🤤 Hungry"], 
+                    ["🐢 Slow & Gentle", "🧠 Mind Games", "🐎 Rough & Fast", "⏩ Skip it", "👽 Weird"], 
+                    ["👶 1-3 (Innocent)", "😉 4-6 (Charming)", "🔥 7-8 (Hot)", "🤪 9-10 (Crazy)", "🌌 Infinity (Void)"], 
+                    ["🤧 Handkerchief", "🔗 Handcuffs", "鞭 Whip", "💵 Cash", "📱 Phone"], 
+                    ["🪞 Admire self", "📱 Check their phone", "💸 Transfer money", "🏩 Sex with others", "🛌 Sleep"], 
+                    ["🥺 The Victim", "👑 The Master", "💣 The Destroyer", "🏃 The Seeker", "📦 The Object"]
                 ]
             }
         };
 
-        const resultsData = [
-    {
-        titleTH: "จู๋ฝังมุก",
-        titleEN: "Manipulate",
-        single: "อย่าเรียกว่าโสดเลย เรียกว่ายังหาเหยื่อที่ใสซื่อให้หลอกไม่ได้ดีกว่า การศึกษาดี เหยื่อก็พากันฉลาดขึ้น เห็นทีคงเหลือแค่หลอกตัวเองแล้ว",
-        taken: "เป็นแฟนประเภทที่แฟนของคุณจะคิดกับตัวเองว่า 'ไม่มีใครเข้าใจเราเท่าเขาอีกแล้ว' แผนการปั่นหัวอีกฝั่งของคุณสำเร็จไปทั้งชีวิตแล้วแหละ"
-    },
-    {
-        titleTH: "จู๋ขี้เปียก",
-        titleEN: "Constantly Negative",
-        single: "คุณขี้บ่นและเกลียดโลกเกินกว่าที่ใครเขาจะทนคุณได้ รู้แหละว่าชีวิตมันลำบาก แต่ไม่ต้องทุกอย่างมั้ย ไม่มีใครอยากฟังคุณบ่นเรื่องสัพเพเหระของคุณ แต่เอาเถอะ อย่างน้อยก็ยังมีคุณที่รักตัวเองนะ (มั้ง)",
-        taken: "แฟนคุณเสพติดน้ำลายของคุณแล้ว เขาไม่สามารถอยู่ได้โดยปราศจากเสียงบ่นของคุณแม้เพียงเสี้ยววินาที เลิกกันคือเขาลงแดง ความสัมพันธ์ของคุณกับเขาคือผู้ป่วยติดยากับเฮโรอีน"
-    },
-    {
-        titleTH: "จู๋ฉีดสาร",
-        titleEN: "Gaslighting",
-        single: "คุณโสดเพราะชอบปั่นหัวคนอื่น จนเขารู้ตัวและพากันหนีกันหมดแล้ว อยู่ใกล้คุณมีแต่จะโดนทำให้ self-esteem ต่ำ หรือพูดให้สุภาพคือดีเกินจนต้องอยู่คนเดียวก็ได้นะ",
-        taken: "แฟนคุณโดนสะกดจิตค่ะ เลยเห็นมีมตบหน้าผัวปลุกให้ตื่น แล้วตอแหลบอกเขาว่าเตงฝันร้ายไหม นั่นแหละ ความสัมพันธ์ของคุณและแฟน สงสารเขาอ่ะ"
-    },
-    {
-        titleTH: "จู๋หดเหี่ยว",
-        titleEN: "Jealous and Envious",
-        single: "ก่อนที่คุณจะมีแฟนได้ คุณต้องเลิกเปรียบเทียบตัวเองกับคนอื่นก่อนนะ ไม่มีใครในโลกนี้เหมือนกัน ความสัมพันธ์ของคุณด้วย เป็นตัวของตัวเอง ภูมิใจในตัวเองให้ได้ก่อน แล้วจะมีเอง",
-        taken: "แฟนคุณกลัวที่จะพูดคุยกับแม่ค้าไก่ย่าง เพราะกลัวคุณจะหึง ผ่อนคลายกับอีกฝ่ายหน่อย เขาเลือกคุณแล้ว ทั้งๆ ที่มีตัวเลือกดีกว่าตั้งเยอะ แสดงว่าเขาคงรักในตัวคุณแหละ"
-    },
-    {
-        titleTH: "จู๋ไร้ถุง",
-        titleEN: "Never Takes Responsibility",
-        single: "'ไม่มีใครคู่ควรกับฉัน' - โลกนี้ไม่มีอะไรเลยมั้งที่คุณเป็นฝ่ายผิด ไม่มีแฟนเหรอ เพราะบิวตี้สแตนดาร์ดสังคมไทยมันแย่ คนไทยเป็นอะไรไปหมด ลืมไป! เรามันเทสฝรั่ง",
-        taken: "ทุกปัญหาของคุณเป็นความผิดของแฟนทั้งหมด สาเหตุที่ความรักยังคงไปได้ดี เพราะตอนนี้แฟนคุณกลายเป็นมาโซคิส ชอบเป็นฝ่ายถูกกระทำ - ฟาดฉันมาเลยเบบี้"
-    },
-    {
-        titleTH: "จู๋เผด็จการ",
-        titleEN: "Excessively Controlling",
-        single: "คุณโสดเพราะอับราฮัม ลินคอล์นประกาศเลิกทาส ไม่มีใครอยากเป็นทาสคุณแล้วจ้า นี่มันปีไหนแล้วคะ ต่อให้พอมีบางคน ที่หัวใจอยากเป็นทาสอยู่ แต่ไม่ใช่ทาสรักคุณเน้อ",
-        taken: "กดขี่ รู้จัก internalized oppression ป่ะ ที่ผู้ถูกกดขี่ไม่ยอมปลดแอก เพราะรู้สึกว่าไม่คู่ควรกับสิ่งที่ดีกว่า นั่นแหละแฟนคุณกำลังเป็น อย่าลืมมอบคำอนุญาตให้เขาหายใจออกด้วยล่ะ"
-    },
-    {
-        titleTH: "จู๋สองแฉก",
-        titleEN: "Two-Faced",
-        single: "คุณไม่มีแฟน เพราะมันยากมากที่จะต้องโดนโกหกให้ใครสักคนฟังซ้ำๆ โดยที่เรื่องเล่ายังคงเหมือนเดิม คุณเลยตัดสินใจอยู่คนเดียวดีกว่า หรือบางทีคุณอาจเป็นเด็กเลี้ยงแกะที่ถูกจับได้แล้ว",
-        taken: "แฟนคุณคบกันคุณได้เพราะเขาก็พอๆ กับคุณ ต่างคนต่างกั๊ก จับไม่ได้ไล่ไม่ทันกันและกัน แบบนี้แหละกิ่งทองใบหยก ผีเน่าโลงผุที่แท้จริง"
-    },
-    {
-        titleTH: "จู๋ยาคุม",
-        titleEN: "Always the Victim",
-        single: "'ไม่มีใครรักฉันจริงหรอกๆ ทุกคนหวังหลอกฟัน พวกผู้(ช/ญ)มันเลวทุกคน' - ไม่มีใครเชื่อคุณหรอกนะ ว่าในการเลิกราทั้ง 128 ครั้งที่ผ่านมา คุณจะเป็นฝ่ายถูกทำร้ายเสมอ",
-        taken: "แฟนคุณเป็นนักจิตบำบัด หรือจิตแพทย์ที่กำลังเก็บเคสทำ ป.เอก เขาเลยยินดีคบกับคุณต่อเพื่อรับฟังความเจ็บปวดจากก้นบึ้งหัวใจของคุณต่อไป"
-    },
-    {
-        titleTH: "จู๋หลุมดำ",
-        titleEN: "Drains Energy",
-        single: "คุณโสดอย่างแฮปปี้ มีคนคุยเป็นสิบ แต่คนที่น่าเป็นห่วงคือเพื่อนคุณเนอะ เริ่มไม่มีแรงแล้ว รีบป้อนอาหารหมาให้พวกมันสิ",
-        taken: "แฟนของคุณเหมือนแบต 1% ที่กำลังนับถอยหลังปิดเครื่องตลอดเวลา อยู่กับคุณช่างทุกข์ทรมาน แต่จะให้เลิกก็ไม่ได้ เพราะคุณดีที่สุด (ที่เขาจะหาได้แล้ว)"
-    },
-    {
-        titleTH: "จู๋เบียดขาหนีบ",
-        titleEN: "Disrespect Boundaries",
-        single: "คุณโสดเพราะทุกที่ในชีวิตคุณคือของของคุณ ไม่มีใครสามารถล้ำเส้นเข้ามาได้ หรือหากคุณมีแฟนคุณก็จะล้ำเส้นและยึดครองพื้นที่อีกฝั่ง จึงไม่มีใครโอเคหรอกนะ",
-        taken: "คุณบังเอิญหาคนที่ดันโอเคคนนั้นเจอ แฟนของคุณไม่เหลือพื้นที่ส่วนตัวอีกต่อไป ชีวิตของเขากลายเป็นคุณในเวอร์ชั่นแฟนตัวเอง ทุกเรื่องของเขาคือเรื่องของคุณ แต่เรื่องของคุณยังเป็นของคุณนะ"
-    }
-];
-
+        // --- 3. Logic & State ---
         let currentLang = 'th';
-        let currentQuestion = 0;
-        let answers = [];
+        let currentQuestionIndex = -1; 
+        let statusAnswer = 0; 
+        let archetypeScores = new Array(10).fill(0); 
 
-        // DOM References
         const els = {
             landing: document.getElementById('landing-page'),
             quiz: document.getElementById('quiz-page'),
@@ -484,7 +516,6 @@
             title: document.querySelector('h1'),
             slogan: document.getElementById('app-slogan'),
             startBtnText: document.getElementById('start-btn-text'),
-            resultImg: document.getElementById('result-image'),
             resultContent: document.getElementById('result-content'),
             loading: document.getElementById('loading-indicator'),
             loadingText: document.getElementById('loading-text')
@@ -498,18 +529,14 @@
             els.loadingText.textContent = t.loadingText;
             document.title = t.title;
             
-            // Update Follow Prompt
             document.getElementById('follow-title').textContent = t.followTitle;
             document.getElementById('follow-text').innerHTML = t.followText;
-            document.getElementById('follow-button-link').textContent = t.followLink;
+            document.getElementById('follow-button-link').innerHTML = `<i class="ph-bold ph-x-logo"></i> ${t.followLink}`;
             document.getElementById('follow-button-close').textContent = t.followClose;
-            
-            // Update Result Buttons
-            document.getElementById('download-button').innerHTML = `<i class="ph-bold ph-download-simple"></i> <span>${t.saveBtn}</span>`;
             document.getElementById('restart-button').innerHTML = `<i class="ph-bold ph-arrow-counter-clockwise"></i> <span>${t.restartBtn}</span>`;
 
             if (!els.quiz.classList.contains('hidden')) {
-                renderQuestion(false);
+                renderCurrentStep();
             }
         }
 
@@ -519,10 +546,10 @@
         }
 
         function startQuiz() {
-            answers = new Array(translations[currentLang].questions.length).fill(null);
-            currentQuestion = 0;
+            currentQuestionIndex = -1;
+            archetypeScores = new Array(10).fill(0);
             switchView(els.landing, els.quiz);
-            renderQuestion();
+            renderCurrentStep();
         }
 
         function switchView(hideEl, showEl) {
@@ -531,30 +558,42 @@
             setTimeout(() => {
                 hideEl.classList.add('hidden');
                 hideEl.classList.remove('fade-exit-active');
-                
                 showEl.classList.remove('hidden');
                 showEl.classList.add('fade-enter');
                 setTimeout(() => showEl.classList.add('fade-enter-active'), 50);
             }, 500);
         }
 
-        function renderQuestion(animate = true) {
+        function renderCurrentStep() {
             const t = translations[currentLang];
-            if (currentQuestion >= t.questions.length) return;
-
-            const progressPercent = ((currentQuestion + 1) / t.questions.length) * 100;
-            els.progress.style.width = `${progressPercent}%`;
             
-            els.backBtn.style.opacity = currentQuestion > 0 ? '1' : '0';
-            els.backBtn.style.pointerEvents = currentQuestion > 0 ? 'auto' : 'none';
+            if (currentQuestionIndex === -1) {
+                renderQuestionHTML(t.statusQuestion, t.statusOptions, 0);
+                els.backBtn.style.opacity = '0';
+                els.backBtn.style.pointerEvents = 'none';
+                return;
+            }
+
+            if (currentQuestionIndex < t.questions.length) {
+                const progressPercent = ((currentQuestionIndex + 1) / t.questions.length) * 100;
+                renderQuestionHTML(t.questions[currentQuestionIndex], t.options[currentQuestionIndex], progressPercent);
+                els.backBtn.style.opacity = '1';
+                els.backBtn.style.pointerEvents = 'auto';
+            }
+        }
+
+        function renderQuestionHTML(questionText, options, progress) {
+            els.progress.style.width = `${progress}%`;
 
             const html = `
-                <div class="${animate ? 'animate-slide-up' : ''}">
-                    <h2 class="text-2xl font-bold mb-6 leading-tight text-white">${t.questions[currentQuestion]}</h2>
+                <div class="animate-fade-in-up">
+                    <h2 class="text-2xl font-bold mb-8 leading-tight text-white drop-shadow-md min-h-[64px] flex items-center">
+                        ${questionText}
+                    </h2>
                     <div class="space-y-3">
-                        ${t.options[currentQuestion].map((opt, i) => `
+                        ${options.map((opt, i) => `
                             <div class="ios-list-item">
-                                <input type="radio" name="q" id="opt${i}" value="${i+1}" ${answers[currentQuestion] === i+1 ? 'checked' : ''}>
+                                <input type="radio" name="q" id="opt${i}" value="${i}" onclick="handleAnswer(${i})">
                                 <label for="opt${i}">${opt}</label>
                             </div>
                         `).join('')}
@@ -562,44 +601,50 @@
                 </div>
             `;
 
-            if (animate) {
-                els.questionContainer.classList.remove('fade-enter-active');
-                els.questionContainer.classList.add('fade-exit');
-                setTimeout(() => {
-                    els.questionContainer.innerHTML = html;
-                    els.questionContainer.classList.remove('fade-exit');
-                    els.questionContainer.classList.add('fade-enter-active');
-                    attachListeners();
-                }, 300);
-            } else {
+            els.questionContainer.classList.remove('fade-enter-active');
+            els.questionContainer.classList.add('fade-exit');
+            
+            setTimeout(() => {
                 els.questionContainer.innerHTML = html;
-                attachListeners();
-            }
+                els.questionContainer.classList.remove('fade-exit');
+                els.questionContainer.classList.add('fade-enter-active');
+            }, 300);
         }
 
-        function attachListeners() {
-            document.querySelectorAll('input[name="q"]').forEach(input => {
-                input.addEventListener('change', (e) => {
-                    // Haptic feedback simulation
-                    if (navigator.vibrate) navigator.vibrate(10);
-                    
-                    answers[currentQuestion] = parseInt(e.target.value);
-                    setTimeout(() => {
-                        currentQuestion++;
-                        if (currentQuestion < translations[currentLang].questions.length) {
-                            renderQuestion();
-                        } else {
-                            showFollowPrompt();
-                        }
-                    }, 400);
-                });
-            });
+        function handleAnswer(optionIndex) {
+            if (navigator.vibrate) navigator.vibrate(15);
+
+            if (currentQuestionIndex === -1) {
+                statusAnswer = optionIndex;
+            } else {
+                const weights = [
+                    [7, 3], // Victim/Anxious
+                    [0, 6], // Manipulator/Masquerade
+                    [5, 9], // Dictator/Intruder
+                    [4, 2], // Libertine/Illusionist
+                    [1, 8]  // Pessimist/Vampire
+                ];
+                if (weights[optionIndex]) {
+                    weights[optionIndex].forEach(typeIndex => archetypeScores[typeIndex] += 1);
+                    archetypeScores[optionIndex] += 0.5; 
+                }
+            }
+
+            setTimeout(() => {
+                currentQuestionIndex++;
+                const t = translations[currentLang];
+                if (currentQuestionIndex < t.questions.length) {
+                    renderCurrentStep();
+                } else {
+                    showFollowPrompt();
+                }
+            }, 400);
         }
 
         function previousQuestion() {
-            if (currentQuestion > 0) {
-                currentQuestion--;
-                renderQuestion();
+            if (currentQuestionIndex > -1) {
+                currentQuestionIndex--;
+                renderCurrentStep();
             }
         }
 
@@ -621,47 +666,79 @@
         }
 
         function calculateResult() {
-    els.loading.style.display = 'block';
-    els.resultContent.classList.add('hidden');
-    
-    // คำนวณ Index เหมือนเดิม
-    const sum = answers.reduce((a, b) => (a || 0) + (b || 0), 0);
-    const index = sum % resultsData.length;
-    const result = resultsData[index];
+            els.loading.style.display = 'block';
+            els.resultContent.classList.add('hidden');
+            
+            let maxScore = -1;
+            let resultIndex = 0;
+            archetypeScores.forEach((score, index) => {
+                if (score > maxScore) {
+                    maxScore = score;
+                    resultIndex = index;
+                }
+            });
 
-    // จำลองการโหลด (Loading Simulation)
-    setTimeout(() => {
-        els.loading.style.display = 'none';
-        els.resultContent.classList.remove('hidden');
+            const result = resultsData[resultIndex];
 
-        // แสดงผลลัพธ์เป็นข้อความ (อิงตาม HTML ใหม่ที่คุณต้องแก้)
-        // คุณต้องไปเพิ่ม Elements ใน HTML เพื่อรองรับ Text เหล่านี้ครับ
-        document.getElementById('result-title-th').textContent = result.titleTH;
-        document.getElementById('result-title-en').textContent = result.titleEN;
-        
-        // เลือกแสดงข้อความ โสด หรือ มีแฟน (สุ่มเอาก็ได้ หรือเพิ่มคำถามสถานะใน Quiz)
-        // ตัวอย่างนี้ขอสุ่มนะครับ
-        const isSingle = Math.random() < 0.5; 
-        document.getElementById('result-status').textContent = isSingle ? "สถานะ: โสด" : "สถานะ: ถูกครอบครอง";
-        document.getElementById('result-desc').textContent = isSingle ? result.single : result.taken;
+            setTimeout(() => {
+                els.loading.style.display = 'none';
+                els.resultContent.classList.remove('hidden');
 
-    }, 800);
-}
+                document.getElementById('result-title-th').textContent = result.titleTH;
+                document.getElementById('result-title-en').textContent = result.titleEN;
+                document.getElementById('result-motto').textContent = result.motto;
+                
+                // Status Badge Logic
+                const statusBadge = document.getElementById('result-status');
+                const resultDesc = document.getElementById('result-desc');
 
-        function downloadResult() {
-            const link = document.createElement('a');
-            link.href = els.resultImg.src;
-            link.download = 'Velvet-Aura-Result.png';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+                if (statusAnswer === 0) {
+                    statusBadge.textContent = currentLang === 'th' ? "สถานะ: โสด (Single)" : "Status: Single";
+                    statusBadge.className = "px-4 py-1.5 rounded-full bg-blue-500/20 text-blue-200 text-[10px] font-bold border border-blue-500/30 uppercase tracking-widest";
+                    resultDesc.textContent = result.single;
+                } else {
+                    statusBadge.textContent = currentLang === 'th' ? "สถานะ: มีเจ้าของ (Taken)" : "Status: Taken";
+                    statusBadge.className = "px-4 py-1.5 rounded-full bg-pink-500/20 text-pink-200 text-[10px] font-bold border border-pink-500/30 uppercase tracking-widest";
+                    resultDesc.textContent = result.taken;
+                }
+
+                // Render Chart
+                renderTraitChart(result.stats);
+
+            }, 1500); 
+        }
+
+        function renderTraitChart(stats) {
+            const container = document.getElementById('trait-chart-container');
+            const traits = [
+                { key: 'dom', label: 'Dominance (อำนาจ)' },
+                { key: 'dec', label: 'Deception (ซ่อนเร้น)' },
+                { key: 'int', label: 'Intensity (รุนแรง)' },
+                { key: 'nar', label: 'Narcissism (หลงตน)' }
+            ];
+
+            container.innerHTML = traits.map(t => `
+                <div class="trait-row">
+                    <div class="trait-label">${t.label}</div>
+                    <div class="trait-bar-bg">
+                        <div class="trait-bar-fill" style="width: 0%" data-width="${stats[t.key]}%"></div>
+                    </div>
+                    <div class="trait-value">${stats[t.key]}%</div>
+                </div>
+            `).join('');
+
+            // Animate bars
+            setTimeout(() => {
+                document.querySelectorAll('.trait-bar-fill').forEach(bar => {
+                    bar.style.width = bar.dataset.width;
+                });
+            }, 100);
         }
 
         function restartQuiz() {
             switchView(els.result, els.landing);
         }
 
-        // Initialize
         updateTexts();
     </script>
 </body>
